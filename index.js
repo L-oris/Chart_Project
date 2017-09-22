@@ -1,9 +1,8 @@
 const express = require('express')
-const app = express()
+      app = express()
 
-const compression = require('compression')
-
-app.use(compression())
+const {middlewares} = require('./express/middlewares'),
+      RESTfulRouter = require('./express/RESTfulRouter')
 
 if(process.env.NODE_ENV != 'production'){
   app.use('/bundle.js',require('http-proxy-middleware')({
@@ -11,8 +10,14 @@ if(process.env.NODE_ENV != 'production'){
   }))
 }
 
+//apply middlewares
+middlewares(app)
+
 //serve static files
 app.use(express.static('./public'))
+
+//apply RESTful routes
+app.use('/',RESTfulRouter)
 
 //serve React application
 app.get('*', function(req,res){
