@@ -3,8 +3,17 @@ const express = require('express'),
 
 const {uploader,uploadToS3} = require('./middlewares')
 
-router.get('/api/test',function(req,res,next){
-  res.json({success:true})
+
+//SEND BACK CSV TABLE CONVERTED TO JSON
+const {readCsvFile} = require('../csv/methods')
+router.get('/api/get_table',function(req,res,next){
+  readCsvFile('./dataSheets/mock_data.csv')
+  .then(function(jsonTable){
+    res.json(jsonTable)
+  })
+  .catch(function(err){
+    next(`Error converting csv table  to json`)
+  })
 })
 
 module.exports = router
