@@ -3,21 +3,21 @@ const express = require('express'),
 
 const {readCsvFile} = require('../csv/methods')
 const {uploader,uploadToS3} = require('./middlewares')
+const {addTable} = require('../database/methods')
+
 
 
 //UPLOAD CSV TABLE TO AWS S3
 router.post('/api/upload_table',uploader.single('file'),uploadToS3,function(req,res,next){
   const {name,description} = req.body
   const {filename} = req.file
-  console.log('file saved');
-  res.json({success:true})
-  // addTable(name,description,filename)
-  // .then(function(){
-  //   res.json({success:true})
-  // })
-  // .catch(function(err){
-  //   next('error happened adding new table into database')
-  // })
+  addTable(name,description,filename)
+  .then(function(){
+    res.json({success:true})
+  })
+  .catch(function(err){
+    next('error happened adding new table into database')
+  })
 })
 
 
