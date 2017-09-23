@@ -1,8 +1,8 @@
 export default function(state={},action){
 
-  if(action.type==='TEST'){
+  if(action.type==='GET_TABLES'){
     return Object.assign({},state,{
-      test: action.payload
+      tables: action.tables
     })
   }
 

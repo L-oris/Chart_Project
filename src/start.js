@@ -12,7 +12,7 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import {Provider} from 'react-redux'
 import reducer from './reducer'
 
-const store = createStore(reducer,composeWithDevTools(applyMiddleware(reduxPromise)))
+export const store = createStore(reducer,composeWithDevTools(applyMiddleware(reduxPromise)))
 
 //client-side routing for logged-in users
 const router = (

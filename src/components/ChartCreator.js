@@ -2,6 +2,11 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import axios from '../axios'
 
+import {
+  ChartCreator_TableSelector,
+  ChartCreator_FieldSelector
+} from '.'
+
 
 class ChartCreator extends Component {
 
@@ -15,8 +20,10 @@ class ChartCreator extends Component {
       <div>
 
         <h1>1.Select a table</h1>
+        <ChartCreator_TableSelector/>
 
         <h1>2.Select what to display</h1>
+        <ChartCreator_FieldSelector/>
 
         <h1>3.Preview the table</h1>
 
