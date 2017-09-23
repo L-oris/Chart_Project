@@ -4,7 +4,8 @@ import axios from '../axios'
 
 import {
   ChartCreator_TableSelector,
-  ChartCreator_FieldSelector
+  ChartCreator_FieldSelector,
+  ChartCreator_ChartPreview
 } from '.'
 
 
@@ -26,6 +27,7 @@ class ChartCreator extends Component {
         <ChartCreator_FieldSelector/>
 
         <h1>3.Preview the table</h1>
+        <ChartCreator_ChartPreview/>
 
         <h1>4.Add description and share!</h1>
 

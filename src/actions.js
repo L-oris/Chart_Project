@@ -33,3 +33,17 @@ export function setCreatorFields(creatorFields){
     creatorFields
   }
 }
+
+export function getCreatorData(creatorTableId,creatorFields){
+  const {XAxis,YAxis,type} = creatorFields
+  return axios.post('/api/get_chart_data',{
+    XAxis,YAxis,
+    tableId: creatorTableId
+  })
+  .then(serverResponse=>{
+    return {
+      type: 'GET_CREATOR_DATA',
+      creatorData: serverResponse.data
+    }
+  })
+}

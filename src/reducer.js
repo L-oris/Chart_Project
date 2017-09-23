@@ -24,5 +24,11 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='GET_CREATOR_DATA'){
+    return Object.assign({},state,{
+      creatorData: action.creatorData
+    })
+  }
+
   return state
 }

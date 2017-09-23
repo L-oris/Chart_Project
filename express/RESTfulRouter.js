@@ -43,6 +43,7 @@ router.get('/api/get_tables',function(req,res,next){
   })
 })
 
+//SEND BACK AVAILABLE FIELDS FOR CHART CREATOR
 router.get('/api/get_table_fields/:tableId',function(req,res,next){
   getTableById(req.params.tableId)
   .then(function({tableUrl}){
@@ -52,6 +53,31 @@ router.get('/api/get_table_fields/:tableId',function(req,res,next){
     res.json(Object.keys(jsonData[0]))
   })
 })
+
+//SEND BACK DATA TO DISPLAY INSIDE CHART
+router.post('/api/get_chart_data',function(req,res,next){
+  const {tableId,XAxis,YAxis} = req.body
+  getTableById(tableId)
+  .then(function({tableUrl}){
+    return readCsvFileByUrl(tableUrl)
+  })
+  .then(function(jsonData){
+    const XData = jsonData.map(row=>row[XAxis])
+    const YData = jsonData.map(row=>row[YAxis])
+    res.json({XData,YData})
+  })
+})
+
+
+
+
+
+
+
+
+
+
+
 
 
 //SEND BACK MOCK DATA TO DISPLAY
