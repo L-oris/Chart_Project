@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import axios from '../axios'
 
 //React Components
-import Chart from './Chart'
+import {Chart} from '.'
 
 
 export default class App extends Component {
