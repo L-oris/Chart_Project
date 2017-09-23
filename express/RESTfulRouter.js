@@ -1,9 +1,9 @@
 const express = require('express'),
       router = express.Router()
 
-const {readCsvFile} = require('../csv/methods')
+const {readCsvFile,readCsvFileByUrl} = require('../csv/methods')
 const {uploader,uploadToS3} = require('./middlewares')
-const {addTable} = require('../database/methods')
+const {addTable,getTables} = require('../database/methods')
 
 
 
@@ -30,6 +30,21 @@ router.get('/api/get_table',function(req,res,next){
   .catch(function(err){
     next(`Error converting csv table  to json`)
   })
+})
+
+//SEND BACK DATABASE TABLE LIST
+router.get('/api/get_tables',function(req,res,next){
+  getTables()
+  .then(function(tablesArr){
+    res.json(tablesArr)
+  })
+  .catch(function(err){
+    next(`Error converting csv table  to json`)
+  })
+})
+
+router.get('/api/get_table_fields/:tableId',function(req,res,next){
+  console.log('table Id are',req.params.tableId);
 })
 
 

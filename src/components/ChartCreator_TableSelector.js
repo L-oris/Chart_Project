@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 
 import {store} from '../start'
-import {getTables} from '../actions'
+import {getTables,setCreatorTableId} from '../actions'
 
 class ChartCreator_TableSelector extends Component {
 
@@ -10,6 +10,7 @@ class ChartCreator_TableSelector extends Component {
     super(props)
     this.state={}
     this.renderTables = this.renderTables.bind(this)
+    this.selectTable = this.selectTable.bind(this)
   }
 
   componentDidMount(){
@@ -17,7 +18,13 @@ class ChartCreator_TableSelector extends Component {
   }
 
   renderTables(tablesList){
-    console.log('new tables are',tablesList);
+    return tablesList.map(table=>(
+      <li onClick={e=>this.selectTable(table.id)} className="border--black">{table.name}</li>
+    ))
+  }
+  
+  selectTable(tableId){
+    store.dispatch(setCreatorTableId(tableId))
   }
 
   render(){

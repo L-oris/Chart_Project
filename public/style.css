@@ -1,0 +1,6 @@
+.border--black {
+  display: inline-block;
+  border: 1px solid black;
+  margin: .5em;
+  cursor: pointer;
+}

@@ -6,5 +6,23 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='SET_CREATOR_TABLE_ID'){
+    return Object.assign({},state,{
+      creatorTableId: action.tableId
+    })
+  }
+
+  if(action.type==='GET_TABLE_FIELDS'){
+    return Object.assign({},state,{
+      creatorTableFields: action.creatorTableFields
+    })
+  }
+
+  if(action.type==='SET_CREATOR_FIELDS'){
+    return Object.assign({},state,{
+      creatorFields: action.creatorFields
+    })
+  }
+
   return state
 }

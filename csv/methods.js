@@ -13,3 +13,18 @@ module.exports.readCsvFile = function(pathToFile){
     })
   })
 }
+
+module.exports.readCsvFileByUrl = function(urlToFile){
+  return new Promise(function(resolve,reject){
+    let finalJson = []
+    csv()
+    .fromStream(request.get(urlToFile))
+    .on('json',(jsonObj)=>{
+      finalJson.push(jsonObj)
+    })
+    .on('end',(err)=>{
+      resolve(finalJson)
+      reject(err)
+    })
+  })
+}

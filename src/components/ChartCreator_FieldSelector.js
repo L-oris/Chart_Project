@@ -1,8 +1,9 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import axios from '../axios'
 
 import {store} from '../start'
-import {getTableFields} from '../actions'
+import {getCreatorTableFields} from '../actions'
 
 class ChartCreator_FieldSelector extends Component {
 
@@ -12,19 +13,28 @@ class ChartCreator_FieldSelector extends Component {
     this.renderFields = this.renderFields.bind(this)
   }
 
-  componentDidMount(){
-    store.dispatch(getTableFields())
+  componentWillUpdate(nextProps,nextState){
+    const {creatorTableId} = nextProps
+    creatorTableId && store.dispatch(getCreatorTableFields(creatorTableId))
   }
 
   renderFields(fieldsList){
-    console.log('new tables are',fieldsList);
+    console.log('fields are',fieldsList);
+    // return fieldsList.map(field=>(
+    //   <li onClick={e=>this.selectFields(field.name)}>field.name</li>
+    // ))
   }
 
+  selectFields(fieldName){
+    //do something
+  }
+
+
   render(){
-    const {creatorFields} = this.props
+    const {creatorTableFields} = this.props
     return (
       <div>
-        {creatorFields && this.renderFields(creatorFields)}
+        {creatorTableFields && this.renderFields(creatorTableFields)}
       </div>
     )
   }
@@ -33,7 +43,8 @@ class ChartCreator_FieldSelector extends Component {
 
 function mapStateToProps(reduxState){
   return {
-    creatorFields: reduxState.creatorFields
+    creatorTableId: reduxState.creatorTableId,
+    creatorTableFields: reduxState.creatorTableFields
   }
 }
 
