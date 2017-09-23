@@ -10,7 +10,6 @@ class ChartCreator_ChartPreview extends Component {
   constructor(props){
     super(props)
     this.state={}
-    this.renderChart = this.renderChart.bind(this)
   }
 
   componentWillReceiveProps(nextProps){
@@ -19,15 +18,11 @@ class ChartCreator_ChartPreview extends Component {
     creatorTableId && creatorFields && !this.props.creatorFields && store.dispatch(getCreatorData(creatorTableId,creatorFields))
   }
 
-  renderChart(chartData){
-    console.log('data for chart',chartData);
-  }
-
   render(){
-    const {creatorData} = this.props
+    const {creatorFields,creatorData} = this.props
     return (
       <div>
-        {creatorData && this.renderChart(creatorData)}
+        {creatorData && <Chart type={creatorFields.type} XData={creatorData.XData} YData={creatorData.YData} YLabel={creatorFields.YAxis}/>}
       </div>
     )
   }

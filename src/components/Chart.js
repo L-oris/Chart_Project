@@ -3,14 +3,26 @@ import Chartjs from 'chart.js'
 
 export default class Chart extends Component {
 
+  componentDidMount(){
+    this.componentWillReceiveProps(this.props)
+  }
+
   componentWillReceiveProps(props){
-    const {type,data,options} = props
-    const ctx = this.refs.canvas.getContext('2d')
-    const myChart = new Chartjs(ctx, {
-      type: type,
-      data: data,
-      options: options
-    })
+    const {type,XData,YData,YLabel,options} = props
+    if(type && XData && YData && YLabel){
+      const ctx = this.refs.canvas.getContext('2d')
+      const myChart = new Chartjs(ctx, {
+        type: type,
+        data: {
+          labels: XData,
+          datasets: [{
+            label: YLabel,
+            data: YData
+          }]
+        },
+        options: options || {}
+      })
+    }
   }
 
   render(){
