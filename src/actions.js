@@ -47,3 +47,13 @@ export function getCreatorData(creatorTableId,creatorFields){
     }
   })
 }
+
+export function createChart(chartObj){
+  return axios.post('/api/create_chart',chartObj)
+  .then(serverResponse=>{
+    console.log('serverResponse for saving data',serverResponse);
+    return {
+      type: 'CREATE_CHART'
+    }
+  })
+}

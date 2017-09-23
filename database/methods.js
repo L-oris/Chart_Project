@@ -36,3 +36,19 @@ module.exports.getTableById = function(tableId){
     }
   })
 }
+
+module.exports.createChart = function({tableId,XAxis,YAxis,type,name,description}){
+  const query = 'INSERT INTO charts (user_id,table_id,x_axis,y_axis,type,name,description) VALUES (1,$1,$2,$3,$4,$5,$6) RETURNING created_at'
+  return db.query(query,[tableId,XAxis,YAxis,type,name,description])
+  .then(function(dbChart){
+    console.log('dbChart',dbChart);
+    return {}
+    // return {
+    //   id: dbChart.rows[0].id,
+    //   user_id: dbChart.rows[0].user_id,
+    //   name: dbChart.rows[0].name,
+    //   description: dbChart.rows[0].description,
+    //   timestamp: dbChart.rows[0].created_at
+    // }
+  })
+}

@@ -30,5 +30,9 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='CREATE_CHART'){
+    return Object.assign({},state,{})
+  }
+
   return state
 }
