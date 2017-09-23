@@ -21,3 +21,18 @@ module.exports.getTables = function(){
     })
   })
 }
+
+module.exports.getTableById = function(tableId){
+  const query = 'SELECT * FROM tables WHERE id = $1'
+  return db.query(query,[tableId])
+  .then(function(dbTable){
+    return {
+      id: dbTable.rows[0].id,
+      user_id: dbTable.rows[0].user_id,
+      name: dbTable.rows[0].name,
+      description: dbTable.rows[0].description,
+      tableUrl: s3Url + dbTable.rows[0].tableurl,
+      timestamp: dbTable.rows[0].created_at
+    }
+  })
+}

@@ -12,7 +12,7 @@ export default function(state={},action){
     })
   }
 
-  if(action.type==='GET_TABLE_FIELDS'){
+  if(action.type==='GET_CREATOR_TABLE_FIELDS'){
     return Object.assign({},state,{
       creatorTableFields: action.creatorTableFields
     })

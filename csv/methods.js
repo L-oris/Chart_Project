@@ -1,4 +1,6 @@
 const csv = require('csvtojson')
+const request = require('request')
+
 
 module.exports.readCsvFile = function(pathToFile){
   return new Promise(function(resolve,reject){

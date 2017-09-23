@@ -3,7 +3,7 @@ const express = require('express'),
 
 const {readCsvFile,readCsvFileByUrl} = require('../csv/methods')
 const {uploader,uploadToS3} = require('./middlewares')
-const {addTable,getTables} = require('../database/methods')
+const {addTable,getTables,getTableById} = require('../database/methods')
 
 
 
@@ -44,7 +44,13 @@ router.get('/api/get_tables',function(req,res,next){
 })
 
 router.get('/api/get_table_fields/:tableId',function(req,res,next){
-  console.log('table Id are',req.params.tableId);
+  getTableById(req.params.tableId)
+  .then(function({tableUrl}){
+    return readCsvFileByUrl(tableUrl)
+  })
+  .then(function(jsonData){
+    res.json(Object.keys(jsonData[0]))
+  })
 })
 
 

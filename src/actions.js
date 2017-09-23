@@ -27,8 +27,9 @@ export function getCreatorTableFields(tableId){
   })
 }
 
-export function setCreatorFields(){
+export function setCreatorFields(creatorFields){
   return {
-    type: 'SET_CREATOR_FIELDS'
+    type: 'SET_CREATOR_FIELDS',
+    creatorFields
   }
 }
