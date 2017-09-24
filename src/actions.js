@@ -63,7 +63,7 @@ export function setCreatorFields(creatorFields){
 
 export function getCreatorData(creatorTableId,creatorFields){
   const {XAxis,YAxis,type} = creatorFields
-  return axios.post('/api/get_chart_data',{
+  return axios.post('/api/get_unsaved_chart_data',{
     XAxis,YAxis,
     tableId: creatorTableId
   })

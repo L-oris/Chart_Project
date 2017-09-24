@@ -116,7 +116,9 @@ router.get('/api/get_chart_data/:chartId',function(req,res,next){
   })
 })
 
-router.post('/api/get_chart_data',function(req,res,next){
+//SEND BACK DATA TO DISPLAY INSIDE CHART
+// don't search for existing chart into database now, instead just pass options inside req.body and retrieve requested data to display
+router.post('/api/get_unsaved_chart_data',function(req,res,next){
   const {tableId,XAxis,YAxis} = req.body
   getTableById(tableId)
   .then(function({tableUrl}){
