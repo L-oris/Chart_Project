@@ -1,4 +1,7 @@
 import App from './App'
+import Welcome from './Welcome'
+import Registration from './Registration'
+import Login from './Login'
 import Chart from './Chart'
 import TableUploader from './TableUploader'
 import ChartCreator from './ChartCreator'
@@ -9,8 +12,12 @@ import Latest from './Latest'
 import ChartVisualizer from './ChartVisualizer'
 import ChartVisualizer_Comments from './ChartVisualizer_Comments'
 
+
 export {
   App,
+  Welcome,
+  Registration,
+  Login,
   Chart,
   TableUploader,
   ChartCreator,

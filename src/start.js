@@ -1,9 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {browserHistory,Router,Route,IndexRoute} from 'react-router'
+import {hashHistory,browserHistory,Router,Route,IndexRoute} from 'react-router'
 
 //React Components
-import {App,TableUploader,ChartCreator,Latest,ChartVisualizer} from './components'
+import {
+  App,
+  Welcome,
+  Registration,
+  Login,
+  TableUploader,
+  ChartCreator,
+  Latest,
+  ChartVisualizer
+} from './components'
 
 //Redux
 import {createStore,applyMiddleware} from 'redux'
@@ -14,8 +23,18 @@ import reducer from './reducer'
 
 export const store = createStore(reducer,composeWithDevTools(applyMiddleware(reduxPromise)))
 
+//client-side routing for non-registered users
+const welcomeRouter = (
+  <Router history={hashHistory}>
+    <Route path="/" component={Welcome}>
+      <IndexRoute component={Registration}/>
+      <Route path="login" component={Login}/>
+    </Route>
+  </Router>
+)
+
 //client-side routing for logged-in users
-const router = (
+const loggedInRouter = (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App}>
@@ -28,7 +47,11 @@ const router = (
   </Provider>
 )
 
+//rely on server-side session to know if user is registered-logged in, and display React components based on that
+let routerToRender
+location.pathname === '/welcome' ? routerToRender = welcomeRouter : routerToRender = loggedInRouter
+
 ReactDOM.render(
-  router,
+  routerToRender,
   document.querySelector('main')
 )
