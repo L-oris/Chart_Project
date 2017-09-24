@@ -11,16 +11,6 @@ function LoginForm ({error,handleInputChange,handleSubmit}){
       <h4>{error}</h4>
 
       <div>
-        <h6>First Name</h6>
-        <input required name="first" onChange={handleInputChange} placeholder=""/>
-      </div>
-
-      <div>
-        <h6>Last Name</h6>
-        <input required name="last" onChange={handleInputChange} placeholder=""/>
-      </div>
-
-      <div>
         <h6>Email</h6>
         <input required type="email" name="email" onChange={handleInputChange} placeholder=""/>
       </div>

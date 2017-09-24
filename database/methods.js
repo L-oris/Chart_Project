@@ -1,6 +1,48 @@
 const db = require('./db');
 const {hashPassword,checkPassword} = require('./hashing')
 const {s3Url} = require('../config/config.json')
+const defaultImageUrl = 'profile-default.jpg'
+
+
+module.exports.createUser = function({first,last,email,password}){
+  return hashPassword(password)
+  .then(function(hash){
+    const query = `INSERT INTO users (first,last,email,password,profilepicurl) VALUES ($1,$2,$3,$4,'${defaultImageUrl}') RETURNING id,first,last,email,profilepicurl`
+    return db.query(query,[first,last,email,hash])
+  })
+  .then(function(userData){
+    const {id:user_id,first,last,email,profilepicurl} = userData.rows[0]
+    return {
+      user_id,first,last,email,
+      profilePicUrl: s3Url + profilepicurl
+    }
+  })
+}
+
+module.exports.loginUser = function({email,password:plainTextPassword}){
+  //here password passed in has been renamed to 'plainTextPassword'
+  const query = 'SELECT id,first,last,email,password,profilepicurl FROM users WHERE email = $1'
+  return db.query(query,[email])
+  .then(function(userData){
+    const {id:user_id,first,last,email,password:hashedPassword,profilepicurl} = userData.rows[0]
+    return {
+      user_id,first,last,email,hashedPassword,
+      profilePicUrl: s3Url + profilepicurl
+    }
+  })
+  .then(function({user_id,first,last,email,hashedPassword,profilePicUrl}){
+    //compare saved password with new one provided from user
+    return checkPassword(plainTextPassword,hashedPassword)
+    .then(function(doesMatch){
+      if(!doesMatch){
+        throw 'Passwords do not match!'
+      }
+      return {
+        user_id,first,last,email,profilePicUrl
+      }
+    })
+  })
+}
 
 
 module.exports.addTable = function(name,description,filename){

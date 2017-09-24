@@ -20,9 +20,14 @@ app.use(express.static('./public'))
 app.use('/',RESTfulRouter)
 
 //serve React application
+//(REDIRECT USER BASED ON HIS REGISTRATION STATUS)
 app.get('*', function(req,res){
+  if(!req.session.user && req.url !== '/welcome'){
+    return res.redirect('/welcome')
+  }
   res.sendFile(__dirname + '/index.html')
 })
+
 
 //handle 'Express' errors
 app.use(function (err, req, res, next){
