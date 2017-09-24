@@ -5,6 +5,7 @@ import ChartCreator from './ChartCreator'
 import ChartCreator_TableSelector from './ChartCreator_TableSelector'
 import ChartCreator_FieldSelector from './ChartCreator_FieldSelector'
 import ChartCreator_ChartPreview from './ChartCreator_ChartPreview'
+import Latest from './Latest'
 
 export {
   App,
@@ -13,5 +14,6 @@ export {
   ChartCreator,
   ChartCreator_TableSelector,
   ChartCreator_FieldSelector,
-  ChartCreator_ChartPreview
+  ChartCreator_ChartPreview,
+  Latest
 }

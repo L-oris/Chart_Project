@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import {browserHistory,Router,Route,IndexRoute} from 'react-router'
 
 //React Components
-import {App,TableUploader,ChartCreator} from './components'
+import {App,TableUploader,ChartCreator,Latest} from './components'
 
 //Redux
 import {createStore,applyMiddleware} from 'redux'
@@ -19,6 +19,7 @@ const router = (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App}>
+        <IndexRoute component={Latest}/>
         <Route path='table_uploader' component={TableUploader}/>
         <Route path='chart_creator' component={ChartCreator}/>
       </Route>

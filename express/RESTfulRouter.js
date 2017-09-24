@@ -71,10 +71,9 @@ router.post('/api/create_chart',function(req,res,next){
   //const {tableId,XAxis,YAxis,type,name,description} = req.body
   createChart(req.body)
   .then(function(dbChart){
-    res.json({success: true})
+    res.json(dbChart)
   })
   .catch(function(err){
-    console.log('error',err);
     next(`Error creating new chart into database`)
   })
 })

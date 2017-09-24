@@ -1,8 +1,14 @@
-export default function(state={},action){
+export default function(state={tables:[],charts:[]},action){
 
   if(action.type==='GET_TABLES'){
     return Object.assign({},state,{
       tables: action.tables
+    })
+  }
+
+  if(action.type==='GET_CHARTS'){
+    return Object.assign({},state,{
+      charts: action.charts
     })
   }
 
@@ -31,7 +37,13 @@ export default function(state={},action){
   }
 
   if(action.type==='CREATE_CHART'){
-    return Object.assign({},state,{})
+    return Object.assign({},state,{
+      charts: [...state.charts, action.chart],
+      creatorTableId: '',
+      creatorTableFields: '',
+      creatorFields: '',
+      creatorData: ''
+    })
   }
 
   return state

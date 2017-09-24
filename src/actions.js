@@ -10,6 +10,27 @@ export function getTables(){
   })
 }
 
+export function getCharts(){
+  return axios.get('/api/get_charts')
+  .then(serverResponse=>{
+    console.log('charts received',serverResponse.data);
+    return {
+      type: 'GET_CHARTS',
+      charts: serverResponse.data
+    }
+  })
+}
+
+export function createChart(chartObj){
+  return axios.post('/api/create_chart',chartObj)
+  .then(serverResponse=>{
+    return {
+      type: 'CREATE_CHART',
+      chart: serverResponse.data
+    }
+  })
+}
+
 export function setCreatorTableId(tableId){
   return {
     type: 'SET_CREATOR_TABLE_ID',
@@ -44,16 +65,6 @@ export function getCreatorData(creatorTableId,creatorFields){
     return {
       type: 'GET_CREATOR_DATA',
       creatorData: serverResponse.data
-    }
-  })
-}
-
-export function createChart(chartObj){
-  return axios.post('/api/create_chart',chartObj)
-  .then(serverResponse=>{
-    console.log('serverResponse for saving data',serverResponse);
-    return {
-      type: 'CREATE_CHART'
     }
   })
 }
