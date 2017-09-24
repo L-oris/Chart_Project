@@ -1,4 +1,5 @@
 import axios from './axios'
+import {store} from './start'
 
 export function getTables(){
   return axios.get('/api/get_tables')
@@ -10,6 +11,7 @@ export function getTables(){
   })
 }
 
+
 export function getCharts(){
   return axios.get('/api/get_charts')
   .then(serverResponse=>{
@@ -19,6 +21,7 @@ export function getCharts(){
     }
   })
 }
+
 
 export function createChart(chartObj){
   return axios.post('/api/create_chart',chartObj)
@@ -30,12 +33,14 @@ export function createChart(chartObj){
   })
 }
 
+
 export function setCreatorTableId(tableId){
   return {
     type: 'SET_CREATOR_TABLE_ID',
     tableId
   }
 }
+
 
 export function getCreatorTableFields(tableId){
   return axios.get(`/api/get_table_fields/${tableId}`)
@@ -47,12 +52,14 @@ export function getCreatorTableFields(tableId){
   })
 }
 
+
 export function setCreatorFields(creatorFields){
   return {
     type: 'SET_CREATOR_FIELDS',
     creatorFields
   }
 }
+
 
 export function getCreatorData(creatorTableId,creatorFields){
   const {XAxis,YAxis,type} = creatorFields
@@ -66,4 +73,54 @@ export function getCreatorData(creatorTableId,creatorFields){
       creatorData: serverResponse.data
     }
   })
+}
+
+
+export function setVisualizerChart(chartId){
+  //get chart from Redux store if there already, otherwise get from server
+  const reduxChart = store.getState().charts && store.getState().charts.find(chart=>chart.id==chartId)
+
+  if(!reduxChart){
+    return axios.get(`/api/get_chart/${chartId}`)
+    .then(serverResponse=>{
+      return {
+        type: 'SET_VISUALIZER_CHART',
+        visualizerChart: serverResponse.data
+      }
+    })
+  }
+
+  return {
+    type: 'SET_VISUALIZER_CHART',
+    visualizerChart: reduxChart
+  }
+}
+
+
+export function setVisualizerChartData(chartId){
+  return axios.get(`/api/get_chart_data/${chartId}`)
+  .then(serverResponse=>{
+    return {
+      type: 'SET_VISUALIZER_CHART_DATA',
+      visualizerChartData: serverResponse.data
+    }
+  })
+}
+
+
+export function setVisualizerChartComments(chartId){
+  return axios.get(`/api/get_chart_comments/${chartId}`)
+  .then(serverResponse=>{
+    return {
+      type: 'SET_VISUALIZER_CHART_COMMENTS',
+      visualizerChartComments: serverResponse.data
+    }
+  })
+}
+
+
+export function deleteVisualizer(){
+  return {
+    type: 'DELETE_VISUALIZER'
+  }
 }

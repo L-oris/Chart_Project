@@ -7,6 +7,7 @@ import ChartCreator_FieldSelector from './ChartCreator_FieldSelector'
 import ChartCreator_ChartPreview from './ChartCreator_ChartPreview'
 import Latest from './Latest'
 import ChartVisualizer from './ChartVisualizer'
+import ChartVisualizer_Comments from './ChartVisualizer_Comments'
 
 export {
   App,
@@ -17,5 +18,6 @@ export {
   ChartCreator_FieldSelector,
   ChartCreator_ChartPreview,
   Latest,
-  ChartVisualizer
+  ChartVisualizer,
+  ChartVisualizer_Comments
 }

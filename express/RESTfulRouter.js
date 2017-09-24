@@ -3,7 +3,16 @@ const express = require('express'),
 
 const {readCsvFile,readCsvFileByUrl} = require('../csv/methods')
 const {uploader,uploadToS3} = require('./middlewares')
-const {addTable,getTables,getTableById,createChart,getCharts,getCommentsByChartId} = require('../database/methods')
+const {
+  addTable,
+  getTables,
+  getTableById,
+  createChart,
+  getCharts,
+  getChartById,
+  getDataByChartId,
+  getCommentsByChartId
+} = require('../database/methods')
 
 
 
@@ -71,7 +80,41 @@ router.get('/api/get_charts',function(req,res,next){
   })
 })
 
+//SEND BACK SELECTED CHART INFO
+router.get('/api/get_chart/:chartId',function(req,res,next){
+  const {chartId} = req.params
+  getChartById(chartId)
+  .then(function(chartData){
+    res.json(chartData)
+  })
+  .catch(function(err){
+    next(`Error retrieving chart #${chartId}`)
+  })
+})
+
 //SEND BACK DATA TO DISPLAY INSIDE CHART
+router.get('/api/get_chart_data/:chartId',function(req,res,next){
+  const {chartId} = req.params
+  let _XAxis, _YAxis
+  getChartById(chartId)
+  .then(function({tableId,XAxis,YAxis}){
+    _XAxis = XAxis
+    _YAxis = YAxis
+    return getTableById(tableId)
+  })
+  .then(function({tableUrl}){
+    return readCsvFileByUrl(tableUrl)
+  })
+  .then(function(jsonData){
+    const XData = jsonData.map(row=>row[_XAxis])
+    const YData = jsonData.map(row=>row[_YAxis])
+    res.json({XData,YData})
+  })
+  .catch(function(err){
+    next(`Error retrieving chart data`)
+  })
+})
+
 router.post('/api/get_chart_data',function(req,res,next){
   const {tableId,XAxis,YAxis} = req.body
   getTableById(tableId)
@@ -84,13 +127,13 @@ router.post('/api/get_chart_data',function(req,res,next){
     res.json({XData,YData})
   })
   .catch(function(err){
-    next(`Error sending back chart data`)
+    next(`Error retrieving chart data`)
   })
 })
 
 //SEND BACK COMMENTS FOR SELECTED CHART
-router.post('/api/get_chart_comments',function(req,res,next){
-  const {chartId} = req.body
+router.get('/api/get_chart_comments/:chartId',function(req,res,next){
+  const {chartId} = req.params
   getCommentsByChartId(chartId)
   .then(function(commentsArr){
     res.json(commentsArr)

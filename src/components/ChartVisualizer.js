@@ -1,8 +1,11 @@
 import React,{Component} from 'react'
+import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import axios from '../axios'
 
-import {Chart} from '.'
+import {Chart, ChartVisualizer_Comments} from '.'
+
+import {setVisualizerChart,setVisualizerChartData,setVisualizerChartComments,deleteVisualizer} from '../actions'
 
 
 class ChartVisualizer extends Component {
@@ -11,35 +14,18 @@ class ChartVisualizer extends Component {
     super(props)
     this.state={}
     this.renderChart = this.renderChart.bind(this)
-    this.renderComments = this.renderComments.bind(this)
   }
 
   componentDidMount(){
-    const {charts} = this.props
-    const currentChart = charts && charts.find(chart=>chart.id==this.props.params.id)
-    this.setState({
-      chart: currentChart
-    })
+    const {dispatch, params:{id:chartId}} = this.props
+    dispatch(setVisualizerChart(chartId))
+    dispatch(setVisualizerChartData(chartId))
+    dispatch(setVisualizerChartComments(chartId))
+  }
 
-    const {id,tableId,XAxis,YAxis} = currentChart
-
-    //get data for current chart
-    axios.post('/api/get_chart_data',{
-      tableId, XAxis, YAxis
-    })
-    .then(serverResponse=>{
-      this.setState({
-        chartData: serverResponse.data
-      })
-    })
-
-    //get comments for current chart
-    axios.post('/api/get_chart_comments',{chartId:id})
-    .then(serverResponse=>{
-      this.setState({
-        chartComments: serverResponse.data
-      })
-    })
+  componentWillUnmount(){
+    const {dispatch} = this.props
+    dispatch(deleteVisualizer())
   }
 
   renderChart(chart,chartData){
@@ -57,31 +43,16 @@ class ChartVisualizer extends Component {
     )
   }
 
-  renderComments(comments){
-    return comments.map(_comment=>{
-      const {comment,first,last,profilePicUrl,timestamp} = _comment
-      return (
-        <li>
-          <h6>{first} {last}</h6>
-          <img className="small-img" src={profilePicUrl} alt={first + ' ' + last}/>
-          <p>{comment}</p>
-        </li>
-      )
-    })
-  }
-
   render(){
-    const {chart,chartData,chartComments} = this.state
+    const {visualizerChart,visualizerChartData} = this.props
     return (
       <div>
         <h3>Chart Visualizer</h3>
 
-        {chart && chartData && this.renderChart(chart,chartData)}
+        {visualizerChart && visualizerChartData && this.renderChart(visualizerChart,visualizerChartData)}
 
-        <ul>
-          <h2>Comments</h2>
-          {chartComments && this.renderComments(chartComments)}
-        </ul>
+        {visualizerChart && visualizerChartData && <ChartVisualizer_Comments/>}
+
       </div>
     )
   }
@@ -90,7 +61,8 @@ class ChartVisualizer extends Component {
 
 function mapStateToProps(reduxState){
   return {
-    charts: reduxState.charts
+    visualizerChart: reduxState.visualizerChart,
+    visualizerChartData: reduxState.visualizerChartData,
   }
 }
 

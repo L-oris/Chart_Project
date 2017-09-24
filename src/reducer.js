@@ -46,5 +46,31 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='SET_VISUALIZER_CHART'){
+    return Object.assign({},state,{
+      visualizerChart: action.visualizerChart
+    })
+  }
+
+  if(action.type==='SET_VISUALIZER_CHART_DATA'){
+    return Object.assign({},state,{
+      visualizerChartData: action.visualizerChartData
+    })
+  }
+
+  if(action.type==='SET_VISUALIZER_CHART_COMMENTS'){
+    return Object.assign({},state,{
+      visualizerChartComments: action.visualizerChartComments
+    })
+  }
+
+  if(action.type==='DELETE_VISUALIZER'){
+    return Object.assign({},state,{
+      visualizerChart: '',
+      visualizerChartData: '',
+      visualizerChartComments: ''
+    })
+  }
+
   return state
 }
