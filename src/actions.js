@@ -118,6 +118,17 @@ export function setVisualizerChartComments(chartId){
   })
 }
 
+export function addVisualizerChartComment(chartId,comment){
+  return axios.post('/api/add_chart_comment',{chartId,comment})
+  .then(serverResponse=>{
+    console.log('serverResponse',serverResponse);
+    return {
+      type: 'ADD_VISUALIZER_CHART_COMMENT',
+      comment: serverResponse.data
+    }
+  })
+}
+
 
 export function deleteVisualizer(){
   return {

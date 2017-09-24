@@ -104,3 +104,21 @@ module.exports.getCommentsByChartId = function(chartId){
     })
   })
 }
+
+module.exports.addChartComment = function(chartId,comment){
+  const query = 'INSERT INTO comments (user_id,chart_id,comment) VALUES (1,$1,$2) RETURNING id'
+  return db.query(query,[chartId,comment])
+  .then(function(dbCommentId){
+    const query = `
+      SELECT comment, comments.created_at,first,last,profilepicurl FROM comments
+      INNER JOIN users ON users.id = comments.user_id
+      WHERE comments.id = $1`
+    return db.query(query,[dbCommentId.rows[0].id])
+  })
+  .then(function(dbComment){
+    const {comment,created_at:timestamp,first,last,profilepicurl:profilePicUrl} = dbComment.rows[0]
+    return {
+      comment,timestamp,first,last,profilePicUrl
+    }
+  })
+}

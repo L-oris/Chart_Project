@@ -1,13 +1,33 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 
+import {addVisualizerChartComment} from '../actions'
+
 
 class ChartVisualizer_Comments extends Component {
 
   constructor(props){
     super(props)
     this.state={}
-    this.renderComments = this.renderComments.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.createNewComment = this.createNewComment.bind(this)
+  }
+
+  handleInputChange(e){
+    this.setState({
+      newComment: e.target.value
+    })
+  }
+
+  createNewComment(e){
+    e.preventDefault()
+    const {id:chartId} = this.props.visualizerChart
+    const {newComment} = this.state
+    this.props.dispatch(addVisualizerChartComment(chartId,newComment))
+    //clear the input field
+    this.setState({
+      newComment: ''
+    })
   }
 
   renderComments(comments){
@@ -31,6 +51,12 @@ class ChartVisualizer_Comments extends Component {
 
         {visualizerChartComments && this.renderComments(visualizerChartComments)}
 
+        <form onSubmit={this.createNewComment}>
+          Your comment:
+          <textarea required name="newComment" value={this.state.newComment} onChange={this.handleInputChange}></textarea>
+          <button type="submit">Save it!</button>
+        </form>
+
       </div>
     )
   }
@@ -39,6 +65,7 @@ class ChartVisualizer_Comments extends Component {
 
 function mapStateToProps(reduxState){
   return {
+    visualizerChart: reduxState.visualizerChart,
     visualizerChartComments: reduxState.visualizerChartComments
   }
 }

@@ -11,7 +11,8 @@ const {
   getCharts,
   getChartById,
   getDataByChartId,
-  getCommentsByChartId
+  getCommentsByChartId,
+  addChartComment
 } = require('../database/methods')
 
 
@@ -140,6 +141,18 @@ router.get('/api/get_chart_comments/:chartId',function(req,res,next){
   })
   .catch(function(err){
     next(`Error retrieving comments for chart #${chartId}`)
+  })
+})
+
+//ADD NEW COMMENT FOR SELECTED CHART
+router.post('/api/add_chart_comment',function(req,res,next){
+  const {chartId,comment} = req.body
+  addChartComment(chartId,comment)
+  .then(function(newComment){
+    res.json(newComment)
+  })
+  .catch(function(err){
+    next(`Error adding new comment for chart #${chartId}`)
   })
 })
 

@@ -64,6 +64,12 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='ADD_VISUALIZER_CHART_COMMENT'){
+    return Object.assign({},state,{
+      visualizerChartComments: [...state.visualizerChartComments, action.comment]
+    })
+  }
+
   if(action.type==='DELETE_VISUALIZER'){
     return Object.assign({},state,{
       visualizerChart: '',
