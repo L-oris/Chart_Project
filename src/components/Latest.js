@@ -1,4 +1,5 @@
 import React,{Component} from 'react'
+import {Link} from 'react-router'
 import {connect} from 'react-redux'
 
 import {getCharts} from '../actions'
@@ -18,7 +19,19 @@ class Latest extends Component {
   }
 
   renderCharts(chartsList){
-    console.log('now charts has come',chartsList);
+    return chartsList.map(chart=>{
+      const {id,name,description,timestamp,first,last,profilePicUrl} = chart
+      return (
+        <li className="border--black">
+          <Link to={`/chart/${id}`}>
+            <img className="small-img" src={profilePicUrl} alt={first + ' ' + last}/>
+            <h4>{name}</h4>
+            <h6>By {first + ' ' + last}</h6>
+            <p>{timestamp}</p>
+          </Link>
+        </li>
+      )
+    })
   }
 
   render(){

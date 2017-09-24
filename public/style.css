@@ -4,3 +4,6 @@
   margin: .5em;
   cursor: pointer;
 }
+.small-img {
+  width: 15%;
+}

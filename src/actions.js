@@ -13,7 +13,6 @@ export function getTables(){
 export function getCharts(){
   return axios.get('/api/get_charts')
   .then(serverResponse=>{
-    console.log('charts received',serverResponse.data);
     return {
       type: 'GET_CHARTS',
       charts: serverResponse.data

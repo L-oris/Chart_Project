@@ -60,8 +60,18 @@ module.exports.createChart = function({tableId,XAxis,YAxis,type,name,description
       profilePicUrl: dbChart.rows[0].profilepicurl
     }
   })
+}
 
-
-
-
-} //end createChart
+module.exports.getCharts = function(){
+  const query = 'SELECT first,last,profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id LIMIT 20'
+  return db.query(query)
+  .then(function(dbCharts){
+    return dbCharts.rows.map(chart=>{
+      const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,created_at:timestamp,first,last,profilepicurl} = chart
+      return {
+        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+        profilePicUrl: profilepicurl
+      }
+    })
+  })
+}

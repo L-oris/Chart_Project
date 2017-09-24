@@ -3,7 +3,7 @@ const express = require('express'),
 
 const {readCsvFile,readCsvFileByUrl} = require('../csv/methods')
 const {uploader,uploadToS3} = require('./middlewares')
-const {addTable,getTables,getTableById,createChart} = require('../database/methods')
+const {addTable,getTables,getTableById,createChart,getCharts} = require('../database/methods')
 
 
 
@@ -21,7 +21,7 @@ router.post('/api/upload_table',uploader.single('file'),uploadToS3,function(req,
 })
 
 
-//SEND BACK DATABASE TABLE LIST
+//SEND BACK DATABASE TABLES LIST
 router.get('/api/get_tables',function(req,res,next){
   getTables()
   .then(function(tablesArr){
@@ -48,6 +48,29 @@ router.get('/api/get_table_fields/:tableId',function(req,res,next){
 })
 
 
+//CREATE NEW CHART INTO DATABASE
+router.post('/api/create_chart',function(req,res,next){
+  //const {tableId,XAxis,YAxis,type,name,description} = req.body
+  createChart(req.body)
+  .then(function(dbChart){
+    res.json(dbChart)
+  })
+  .catch(function(err){
+    next(`Error creating new chart into database`)
+  })
+})
+
+//SEND BACK DATABASE CHARTS LIST
+router.get('/api/get_charts',function(req,res,next){
+  getCharts()
+  .then(function(chartsArr){
+    res.json(chartsArr)
+  })
+  .catch(function(err){
+    next('Error retrieving charts list from database')
+  })
+})
+
 //SEND BACK DATA TO DISPLAY INSIDE CHART
 router.post('/api/get_chart_data',function(req,res,next){
   const {tableId,XAxis,YAxis} = req.body
@@ -64,20 +87,6 @@ router.post('/api/get_chart_data',function(req,res,next){
     next(`Error sending back chart data`)
   })
 })
-
-
-//CREATE NEW CHART INTO DATABASE
-router.post('/api/create_chart',function(req,res,next){
-  //const {tableId,XAxis,YAxis,type,name,description} = req.body
-  createChart(req.body)
-  .then(function(dbChart){
-    res.json(dbChart)
-  })
-  .catch(function(err){
-    next(`Error creating new chart into database`)
-  })
-})
-
 
 
 
