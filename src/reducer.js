@@ -1,4 +1,4 @@
-export default function(state={tables:[],charts:[]},action){
+export default function(state={},action){
 
   if(action.type==='GET_TABLES'){
     return Object.assign({},state,{

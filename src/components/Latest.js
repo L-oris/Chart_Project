@@ -14,8 +14,10 @@ class Latest extends Component {
   }
 
   componentDidMount(){
-    const {dispatch} = this.props
-    dispatch(getCharts())
+    const {dispatch,charts} = this.props
+    if(!charts){
+      dispatch(getCharts())
+    }
   }
 
   renderCharts(chartsList){

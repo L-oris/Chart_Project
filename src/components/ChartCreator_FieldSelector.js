@@ -1,8 +1,6 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
-import axios from '../axios'
 
-import {store} from '../start'
 import {getCreatorTableFields,setCreatorFields} from '../actions'
 
 
@@ -19,9 +17,9 @@ class ChartCreator_FieldSelector extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    const {creatorTableId} = nextProps
+    const {dispatch,creatorTableId} = nextProps
     //make sure action is dispatched only once
-    creatorTableId && !this.props.creatorTableId && store.dispatch(getCreatorTableFields(creatorTableId))
+    creatorTableId && !this.props.creatorTableId && dispatch(getCreatorTableFields(creatorTableId))
   }
 
   renderFields(selectedAxis,fieldsList){
@@ -37,9 +35,10 @@ class ChartCreator_FieldSelector extends Component {
   }
 
   saveFields(){
+    const {dispatch} = this.props
     const {XAxis,YAxis,type} = this.state
     if(XAxis && YAxis && type){
-      store.dispatch(setCreatorFields({XAxis,YAxis,type}))
+      dispatch(setCreatorFields({XAxis,YAxis,type}))
     }
   }
 

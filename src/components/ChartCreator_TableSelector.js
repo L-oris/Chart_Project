@@ -1,7 +1,6 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 
-import {store} from '../start'
 import {getTables,setCreatorTableId} from '../actions'
 
 class ChartCreator_TableSelector extends Component {
@@ -14,7 +13,8 @@ class ChartCreator_TableSelector extends Component {
   }
 
   componentDidMount(){
-    store.dispatch(getTables())
+    const {dispatch} = this.props
+    dispatch(getTables())
   }
 
   renderTables(tablesList){
@@ -22,9 +22,10 @@ class ChartCreator_TableSelector extends Component {
       <li onClick={e=>this.selectTable(table.id)} className="border--black">{table.name}</li>
     ))
   }
-  
+
   selectTable(tableId){
-    store.dispatch(setCreatorTableId(tableId))
+    const {dispatch} = this.props
+    dispatch(setCreatorTableId(tableId))
   }
 
   render(){

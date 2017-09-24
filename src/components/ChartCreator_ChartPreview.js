@@ -3,7 +3,6 @@ import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 
 import {Chart} from '.'
-import {store} from '../start'
 import {getCreatorData,createChart} from '../actions'
 
 class ChartCreator_ChartPreview extends Component {
@@ -16,9 +15,9 @@ class ChartCreator_ChartPreview extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    const {creatorTableId,creatorFields} = nextProps
+    const {dispatch,creatorTableId,creatorFields} = nextProps
     //make sure action is dispatched only once
-    creatorTableId && creatorFields && !this.props.creatorFields && store.dispatch(getCreatorData(creatorTableId,creatorFields))
+    creatorTableId && creatorFields && !this.props.creatorFields && dispatch(getCreatorData(creatorTableId,creatorFields))
   }
 
   handleInputChange(e){
@@ -29,11 +28,11 @@ class ChartCreator_ChartPreview extends Component {
 
   createChart(e){
     e.preventDefault()
-    const {creatorTableId,creatorFields,creatorData} = this.props
+    const {dispatch,creatorTableId,creatorFields,creatorData} = this.props
     const {name,description} = this.state
     if(creatorData && name && description){
 
-      store.dispatch(createChart({
+      dispatch(createChart({
         tableId: creatorTableId,
         XAxis: creatorFields.XAxis,
         YAxis: creatorFields.YAxis,
