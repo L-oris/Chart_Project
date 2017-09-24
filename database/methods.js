@@ -75,3 +75,20 @@ module.exports.getCharts = function(){
     })
   })
 }
+
+module.exports.getCommentsByChartId = function(chartId){
+  const query = `
+    SELECT comment, comments.created_at,first,last,profilepicurl FROM comments
+    RIGHT OUTER JOIN charts ON charts.id = comments.chart_id
+    INNER JOIN users ON users.id = comments.user_id
+    WHERE charts.id = $1`
+  return db.query(query,[chartId])
+  .then(function(dbComments){
+    return dbComments.rows.map(dbComment=>{
+      const {comment,created_at:timestamp,first,last,profilepicurl:profilePicUrl} = dbComment
+      return {
+        comment,timestamp,first,last,profilePicUrl
+      }
+    })
+  })
+}

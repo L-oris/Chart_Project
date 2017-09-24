@@ -3,7 +3,7 @@ const express = require('express'),
 
 const {readCsvFile,readCsvFileByUrl} = require('../csv/methods')
 const {uploader,uploadToS3} = require('./middlewares')
-const {addTable,getTables,getTableById,createChart,getCharts} = require('../database/methods')
+const {addTable,getTables,getTableById,createChart,getCharts,getCommentsByChartId} = require('../database/methods')
 
 
 
@@ -85,6 +85,18 @@ router.post('/api/get_chart_data',function(req,res,next){
   })
   .catch(function(err){
     next(`Error sending back chart data`)
+  })
+})
+
+//SEND BACK COMMENTS FOR SELECTED CHART
+router.post('/api/get_chart_comments',function(req,res,next){
+  const {chartId} = req.body
+  getCommentsByChartId(chartId)
+  .then(function(commentsArr){
+    res.json(commentsArr)
+  })
+  .catch(function(err){
+    next(`Error retrieving comments for chart #${chartId}`)
   })
 })
 
