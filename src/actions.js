@@ -163,9 +163,9 @@ export function addVisualizerChartComment(chartId,comment){
 }
 
 
-export function deleteVisualizer(){
+export function deleteVisualizerChart(){
   return {
-    type: 'DELETE_VISUALIZER'
+    type: 'DELETE_VISUALIZER_CHART'
   }
 }
 
@@ -186,6 +186,13 @@ export function getVisualizerTablePreview(tableId){
       visualizerTablePreview: serverResponse.data
     }
   })
+}
+
+
+export function deleteVisualizerTable(){
+  return {
+    type: 'DELETE_VISUALIZER_TABLE'
+  }
 }
 
 

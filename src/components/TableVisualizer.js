@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 
 import {TableVisualizer_TablePreview,TableUploader} from '.'
-import {getTables,setVisualizerTable,setTableUploaderIsVisible} from '../actions'
+import {getTables,setVisualizerTable,setTableUploaderIsVisible,deleteVisualizerTable} from '../actions'
 
 
 class TableVisualizer extends Component {
@@ -22,6 +22,11 @@ class TableVisualizer extends Component {
       const {dispatch} = this.props
       dispatch(getTables())
     }
+  }
+
+  componentWillUnmount(){
+    const {dispatch} = this.props
+    dispatch(deleteVisualizerTable())
   }
 
   renderTables(tablesList){

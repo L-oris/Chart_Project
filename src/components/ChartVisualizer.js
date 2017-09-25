@@ -5,7 +5,7 @@ import axios from '../axios'
 
 import {Chart, ChartVisualizer_Comments} from '.'
 
-import {setVisualizerChart,setVisualizerChartData,setVisualizerChartComments,deleteVisualizer} from '../actions'
+import {setVisualizerChart,setVisualizerChartData,setVisualizerChartComments,deleteVisualizerChart} from '../actions'
 
 
 class ChartVisualizer extends Component {
@@ -25,7 +25,7 @@ class ChartVisualizer extends Component {
 
   componentWillUnmount(){
     const {dispatch} = this.props
-    dispatch(deleteVisualizer())
+    dispatch(deleteVisualizerChart())
   }
 
   renderChart(chart,chartData){

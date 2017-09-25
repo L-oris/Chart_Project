@@ -90,7 +90,7 @@ export default function(state={},action){
     })
   }
 
-  if(action.type==='DELETE_VISUALIZER'){
+  if(action.type==='DELETE_VISUALIZER_CHART'){
     return Object.assign({},state,{
       visualizerChart: '',
       visualizerChartData: '',
@@ -107,6 +107,13 @@ export default function(state={},action){
   if(action.type==='GET_VISUALIZER_TABLE_PREVIEW'){
     return Object.assign({},state,{
       visualizerTablePreview: action.visualizerTablePreview
+    })
+  }
+
+  if(action.type==='DELETE_VISUALIZER_TABLE'){
+    return Object.assign({},state,{
+      visualizerTable: '',
+      visualizerTablePreview: ''
     })
   }
 
