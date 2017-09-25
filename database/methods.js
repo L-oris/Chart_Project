@@ -45,9 +45,9 @@ module.exports.loginUser = function({email,password:plainTextPassword}){
 }
 
 
-module.exports.addTable = function(name,description,filename){
-  const query = 'INSERT INTO tables (user_id,name,description,tableurl) VALUES (1,$1,$2,$3)'
-  return db.query(query,[name,description,filename])
+module.exports.addTable = function(userId,name,description,filename){
+  const query = 'INSERT INTO tables (user_id,name,description,tableurl) VALUES ($1,$2,$3,$4)'
+  return db.query(query,[userId,name,description,filename])
 }
 
 module.exports.getTables = function(){
@@ -55,10 +55,10 @@ module.exports.getTables = function(){
   return db.query(query)
   .then(function(dbTables){
     return dbTables.rows.map(table=>{
-      const {id,user_id,name,description,tableurl,created_at} = table
+      const {id,user_id:userId,name,description,tableurl,created_at:timestamp} = table
       return {
-        id,user_id,name,description,created_at,
-        tableUrl: s3Url+tableurl
+        id,userId,name,description,timestamp,
+        tableUrl: s3Url + tableurl
       }
     })
   })
@@ -68,38 +68,27 @@ module.exports.getTableById = function(tableId){
   const query = 'SELECT * FROM tables WHERE id = $1'
   return db.query(query,[tableId])
   .then(function(dbTable){
+    const {id,user_id:userId,name,description,tableurl,created_at:timestamp} = dbTable.rows[0]
     return {
-      id: dbTable.rows[0].id,
-      user_id: dbTable.rows[0].user_id,
-      name: dbTable.rows[0].name,
-      description: dbTable.rows[0].description,
-      tableUrl: s3Url + dbTable.rows[0].tableurl,
-      timestamp: dbTable.rows[0].created_at
+      id,userId,name,description,timestamp,
+      tableUrl: s3Url + tableurl
     }
   })
 }
 
-module.exports.createChart = function({tableId,XAxis,YAxis,type,name,description}){
-  const query = 'INSERT INTO charts (user_id,table_id,x_axis,y_axis,type,name,description) VALUES (1,$1,$2,$3,$4,$5,$6) RETURNING id'
-  return db.query(query,[tableId,XAxis,YAxis,type,name,description])
+module.exports.createChart = function({userId,tableId,XAxis,YAxis,type,name,description}){
+  const query = 'INSERT INTO charts (user_id,table_id,x_axis,y_axis,type,name,description) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id'
+  return db.query(query,[userId,tableId,XAxis,YAxis,type,name,description])
   .then(function(dbChartId){
     const chartId = dbChartId.rows[0].id
     const query = `SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id WHERE charts.id = $1`
     return db.query(query,[chartId])
   })
   .then(function(dbChart){
+    const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,created_at:timestamp,first,last,profilepicurl} = dbChart.rows[0]
     return {
-      id: dbChart.rows[0].id,
-      tableId: dbChart.rows[0].table_id,
-      XAxis: dbChart.rows[0].x_axis,
-      YAxis: dbChart.rows[0].y_axis,
-      type: dbChart.rows[0].type,
-      name: dbChart.rows[0].name,
-      description: dbChart.rows[0].description,
-      timestamp: dbChart.rows[0].created_at,
-      first: dbChart.rows[0].first,
-      last: dbChart.rows[0].last,
-      profilePicUrl: dbChart.rows[0].profilepicurl
+      id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+      profilePicUrl: s3Url + profilepicurl
     }
   })
 }
@@ -112,20 +101,20 @@ module.exports.getCharts = function(){
       const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,created_at:timestamp,first,last,profilepicurl} = chart
       return {
         id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
-        profilePicUrl: profilepicurl
+        profilePicUrl: s3Url + profilepicurl
       }
     })
   })
 }
 
 module.exports.getChartById = function(chartId){
-  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id where charts.id = $1'
+  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id WHERE charts.id = $1'
   return db.query(query,[chartId])
   .then(function(dbChart){
     const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,created_at:timestamp,first,last,profilepicurl} = dbChart.rows[0]
     return {
       id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
-      profilePicUrl: profilepicurl
+      profilePicUrl: s3Url + profilepicurl
     }
   })
 }
@@ -139,28 +128,31 @@ module.exports.getCommentsByChartId = function(chartId){
   return db.query(query,[chartId])
   .then(function(dbComments){
     return dbComments.rows.map(dbComment=>{
-      const {comment,created_at:timestamp,first,last,profilepicurl:profilePicUrl} = dbComment
+      const {comment,created_at:timestamp,first,last,profilepicurl} = dbComment.rows[0]
       return {
-        comment,timestamp,first,last,profilePicUrl
+        comment,timestamp,first,last,
+        profilePicUrl: s3Url + profilepicurl
       }
     })
   })
 }
 
-module.exports.addChartComment = function(chartId,comment){
-  const query = 'INSERT INTO comments (user_id,chart_id,comment) VALUES (1,$1,$2) RETURNING id'
-  return db.query(query,[chartId,comment])
+module.exports.addChartComment = function(userId,chartId,comment){
+  const query = 'INSERT INTO comments (user_id,chart_id,comment) VALUES ($1,$2,$3) RETURNING id'
+  return db.query(query,[userId,chartId,comment])
   .then(function(dbCommentId){
+    const {id:commentId} = dbCommentId.rows[0]
     const query = `
       SELECT comment, comments.created_at,first,last,profilepicurl FROM comments
       INNER JOIN users ON users.id = comments.user_id
       WHERE comments.id = $1`
-    return db.query(query,[dbCommentId.rows[0].id])
+    return db.query(query,[commentId])
   })
   .then(function(dbComment){
-    const {comment,created_at:timestamp,first,last,profilepicurl:profilePicUrl} = dbComment.rows[0]
+    const {comment,created_at:timestamp,first,last,profilepicurl} = dbComment.rows[0]
     return {
-      comment,timestamp,first,last,profilePicUrl
+      comment,timestamp,first,last,
+      profilePicUrl: s3Url + profilepicurl
     }
   })
 }
