@@ -111,6 +111,21 @@ router.get('/api/get_table_fields/:tableId',function(req,res,next){
 })
 
 
+//SEND BACK FIRST 4 ROWS OF REQUESTED TABLE
+router.get('/api/get_table_preview/:tableId',function(req,res,next){
+  getTableById(req.params.tableId)
+  .then(function({tableUrl}){
+    return readCsvFileByUrl(tableUrl)
+  })
+  .then(function(jsonData){  
+    res.json(jsonData.slice(0,4))
+  })
+  .catch(function(err){
+    next(`Error getting json preview of table #${tableId}`)
+  })
+})
+
+
 //CREATE NEW CHART INTO DATABASE
 router.post('/api/create_chart',function(req,res,next){
   //const {tableId,XAxis,YAxis,type,name,description} = req.body

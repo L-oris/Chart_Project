@@ -22,6 +22,7 @@ class App extends Component {
         <h1>Here is my main app component!</h1>
         <Link to="/">Home</Link>
         <Link to="/chart_creator">Chart creator</Link>
+        <Link to="/tables">Table Visualizer</Link>
         <Link to="/table_uploader">Table Uploader</Link>
         <a href="/api/logout">Logout</a>
 

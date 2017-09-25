@@ -83,6 +83,7 @@ module.exports.getTableById = function(tableId){
   })
 }
 
+
 module.exports.createChart = function({userId,tableId,XAxis,YAxis,type,name,description}){
   const query = 'INSERT INTO charts (user_id,table_id,x_axis,y_axis,type,name,description) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id'
   return db.query(query,[userId,tableId,XAxis,YAxis,type,name,description])

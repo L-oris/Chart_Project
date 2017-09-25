@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 
-import {addTable} from '../actions'
+import {addTable,setTableUploaderIsVisible} from '../actions'
 
 
 class TableUploader extends Component {
@@ -43,9 +43,16 @@ class TableUploader extends Component {
   }
 
   render(){
+    const {dispatch} = this.props
     return (
       <div>
         Table Uploader here
+
+        <p onClick={e=>dispatch(setTableUploaderIsVisible())}>
+          X
+        </p>
+
+
         <form onSubmit={this.uploadTable}>
           Name:
           <input required name="name" onChange={this.handleInputChange}/>
@@ -55,6 +62,7 @@ class TableUploader extends Component {
           <input required type="file" onChange={this.handleFileChange}/>
           <button type="submit">Save it!</button>
         </form>
+        
       </div>
     )
   }

@@ -90,5 +90,23 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='SET_VISUALIZER_TABLE'){
+    return Object.assign({},state,{
+      visualizerTable: action.visualizerTable
+    })
+  }
+
+  if(action.type==='GET_VISUALIZER_TABLE_PREVIEW'){
+    return Object.assign({},state,{
+      visualizerTablePreview: action.visualizerTablePreview
+    })
+  }
+
+  if(action.type==='SET_TABLE_UPLOADER_IS_VISIBLE'){
+    return Object.assign({},state,{
+      tableUploaderIsVisible: !state.tableUploaderIsVisible
+    })
+  }
+
   return state
 }

@@ -11,6 +11,8 @@ import ChartCreator_ChartPreview from './ChartCreator_ChartPreview'
 import Latest from './Latest'
 import ChartVisualizer from './ChartVisualizer'
 import ChartVisualizer_Comments from './ChartVisualizer_Comments'
+import TableVisualizer from './TableVisualizer'
+import TableVisualizer_TablePreview from './TableVisualizer_TablePreview'
 
 
 export {
@@ -26,5 +28,7 @@ export {
   ChartCreator_ChartPreview,
   Latest,
   ChartVisualizer,
-  ChartVisualizer_Comments
+  ChartVisualizer_Comments,
+  TableVisualizer,
+  TableVisualizer_TablePreview
 }

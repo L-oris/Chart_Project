@@ -11,7 +11,8 @@ import {
   TableUploader,
   ChartCreator,
   Latest,
-  ChartVisualizer
+  ChartVisualizer,
+  TableVisualizer
 } from './components'
 
 //Redux
@@ -42,6 +43,7 @@ const loggedInRouter = (
         <Route path='chart/:id' component={ChartVisualizer}/>
         <Route path='table_uploader' component={TableUploader}/>
         <Route path='chart_creator' component={ChartCreator}/>
+        <Route path='tables' component={TableVisualizer}/>
       </Route>
     </Router>
   </Provider>

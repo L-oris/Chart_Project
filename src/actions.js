@@ -27,7 +27,6 @@ export function getTables(){
 export function addTable(formData){
   return axios.post('/api/upload_table',formData)
   .then(serverResponse=>{
-    console.log('action correctly dispatched, serverResponse',serverResponse);
     return {
       type: 'ADD_TABLE',
       table: serverResponse.data
@@ -156,5 +155,29 @@ export function addVisualizerChartComment(chartId,comment){
 export function deleteVisualizer(){
   return {
     type: 'DELETE_VISUALIZER'
+  }
+}
+
+
+export function setVisualizerTable(tableId){
+  return {
+    type: 'SET_VISUALIZER_TABLE',
+    visualizerTable: store.getState().tables.find(table=>table.id==tableId)
+  }
+}
+
+export function getVisualizerTablePreview(tableId){
+  return axios.get(`/api/get_table_preview/${tableId}`)
+  .then(function(serverResponse){
+    return {
+      type: 'GET_VISUALIZER_TABLE_PREVIEW',
+      visualizerTablePreview: serverResponse.data
+    }
+  })
+}
+
+export function setTableUploaderIsVisible(){
+  return {
+    type: 'SET_TABLE_UPLOADER_IS_VISIBLE'
   }
 }
