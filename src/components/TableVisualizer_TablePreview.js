@@ -49,10 +49,13 @@ class TableVisualizer_TablePreview extends Component {
   }
 
   render(){
-    const {visualizerTablePreview} = this.props
+    const {visualizerTable:{name,description,timestamp},visualizerTablePreview} = this.props
     return (
       <div>
         <h4>Table Preview here</h4>
+        <h3>Name: {name}</h3>
+        <p>Description: {description}</p>
+        <h6>Created: {timestamp}</h6>
 
         <ul>
           {visualizerTablePreview && this.renderTableHeaders(visualizerTablePreview)}

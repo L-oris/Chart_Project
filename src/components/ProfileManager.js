@@ -1,9 +1,9 @@
 import React,{Component} from 'react'
-import {Link} from 'react-router'
+import {browserHistory,Link} from 'react-router'
 import {connect} from 'react-redux'
 
 import {TableUploader} from '.'
-import {updateUserProfilePic,getUserTables,getUserCharts,setTableUploaderIsVisible} from '../actions'
+import {updateUserProfilePic,getUserTables,getUserCharts,setTableUploaderIsVisible,setVisualizerTable} from '../actions'
 
 
 class ProfileManager extends Component {
@@ -29,6 +29,12 @@ class ProfileManager extends Component {
     dispatch(updateUserProfilePic(formData))
   }
 
+  selectTable(tableId){
+    const {dispatch} = this.props
+    dispatch(setVisualizerTable(tableId))
+    browserHistory.push('/tables')
+  }
+
   renderProfileDetails(user){
     const {first,last,profilePicUrl} = user
     return (
@@ -42,9 +48,9 @@ class ProfileManager extends Component {
 
   renderUserTables(tablesList){
     return tablesList.map(table=>{
-      const {name,description,timestamp} = table
+      const {id,name,description,timestamp} = table
       return (
-        <li>
+        <li onClick={e=>this.selectTable(id)}>
           <h5>{name}</h5>
           <p>{description}</p>
           <h6>{timestamp}</h6>

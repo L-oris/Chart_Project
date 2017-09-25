@@ -171,9 +171,22 @@ export function deleteVisualizerChart(){
 
 
 export function setVisualizerTable(tableId){
+  //get table from Redux store if there already, otherwise get from server
+  const reduxTable = store.getState().tables && store.getState().tables.find(table=>table.id==tableId)
+
+  if(!reduxTable){
+    return axios.get(`/api/get_table/${tableId}`)
+    .then(serverResponse=>{
+      return {
+        type: 'SET_VISUALIZER_TABLE',
+        visualizerTable: serverResponse.data
+      }
+    })
+  }
+
   return {
     type: 'SET_VISUALIZER_TABLE',
-    visualizerTable: store.getState().tables.find(table=>table.id==tableId)
+    visualizerTable: reduxTable
   }
 }
 

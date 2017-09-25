@@ -143,6 +143,19 @@ router.get('/api/get_tables',function(req,res,next){
 })
 
 
+//SEND BACK SELECTED CHART INFO
+router.get('/api/get_table/:tableId',function(req,res,next){
+  const {tableId} = req.params
+  getTableById(tableId)
+  .then(function(tableData){
+    res.json(tableData)
+  })
+  .catch(function(err){
+    next(`Error retrieving table #${tableId}`)
+  })
+})
+
+
 //SEND BACK AVAILABLE FIELDS FOR CHART CREATOR
 router.get('/api/get_table_fields/:tableId',function(req,res,next){
   getTableById(req.params.tableId)
