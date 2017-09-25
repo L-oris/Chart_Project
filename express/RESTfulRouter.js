@@ -73,7 +73,7 @@ router.get('/api/logout',function(req,res){
 router.post('/api/upload_table',uploader.single('file'),uploadToS3,function(req,res,next){
   const {name,description} = req.body
   const {filename} = req.file
-  const {user_id:userId} = req.session.user
+  const {userId} = req.session.user
   addTable(userId,name,description,filename)
   .then(function(){
     res.json({success:true})
@@ -114,7 +114,7 @@ router.get('/api/get_table_fields/:tableId',function(req,res,next){
 //CREATE NEW CHART INTO DATABASE
 router.post('/api/create_chart',function(req,res,next){
   //const {tableId,XAxis,YAxis,type,name,description} = req.body
-  const {user_id:userId} = req.session.user
+  const {userId} = req.session.user
   createChart({...req.body,userId})
   .then(function(dbChart){
     res.json(dbChart)
@@ -203,7 +203,7 @@ router.get('/api/get_chart_comments/:chartId',function(req,res,next){
 //ADD NEW COMMENT FOR SELECTED CHART
 router.post('/api/add_chart_comment',function(req,res,next){
   const {chartId,comment} = req.body
-  const {user_id:userId} = req.session.user
+  const {userId} = req.session.user
   addChartComment(userId,chartId,comment)
   .then(function(newComment){
     res.json(newComment)

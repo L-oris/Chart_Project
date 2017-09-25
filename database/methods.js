@@ -11,9 +11,9 @@ module.exports.createUser = function({first,last,email,password}){
     return db.query(query,[first,last,email,hash])
   })
   .then(function(userData){
-    const {id:user_id,first,last,email,profilepicurl} = userData.rows[0]
+    const {id:userId,first,last,email,profilepicurl} = userData.rows[0]
     return {
-      user_id,first,last,email,
+      userId,first,last,email,
       profilePicUrl: s3Url + profilepicurl
     }
   })
@@ -24,13 +24,13 @@ module.exports.loginUser = function({email,password:plainTextPassword}){
   const query = 'SELECT id,first,last,email,password,profilepicurl FROM users WHERE email = $1'
   return db.query(query,[email])
   .then(function(userData){
-    const {id:user_id,first,last,email,password:hashedPassword,profilepicurl} = userData.rows[0]
+    const {id:userId,first,last,email,password:hashedPassword,profilepicurl} = userData.rows[0]
     return {
-      user_id,first,last,email,hashedPassword,
+      userId,first,last,email,hashedPassword,
       profilePicUrl: s3Url + profilepicurl
     }
   })
-  .then(function({user_id,first,last,email,hashedPassword,profilePicUrl}){
+  .then(function({userId,first,last,email,hashedPassword,profilePicUrl}){
     //compare saved password with new one provided from user
     return checkPassword(plainTextPassword,hashedPassword)
     .then(function(doesMatch){
@@ -38,7 +38,7 @@ module.exports.loginUser = function({email,password:plainTextPassword}){
         throw 'Passwords do not match!'
       }
       return {
-        user_id,first,last,email,profilePicUrl
+        userId,first,last,email,profilePicUrl
       }
     })
   })

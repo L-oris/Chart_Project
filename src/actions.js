@@ -1,6 +1,18 @@
 import axios from './axios'
 import {store} from './start'
 
+
+export function getUser(){
+  return axios.get('/api/get_current_user')
+  .then(serverResponse=>{
+    return {
+      type: 'GET_USER',
+      user: serverResponse.data
+    }
+  })
+}
+
+
 export function getTables(){
   return axios.get('/api/get_tables')
   .then(serverResponse=>{
@@ -121,7 +133,6 @@ export function setVisualizerChartComments(chartId){
 export function addVisualizerChartComment(chartId,comment){
   return axios.post('/api/add_chart_comment',{chartId,comment})
   .then(serverResponse=>{
-    console.log('serverResponse',serverResponse);
     return {
       type: 'ADD_VISUALIZER_CHART_COMMENT',
       comment: serverResponse.data

@@ -1,13 +1,19 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router'
-import axios from '../axios'
+import {connect} from 'react-redux'
 
+import {getUser} from '../actions'
 
-export default class App extends Component {
+class App extends Component {
 
   constructor(props){
     super(props)
     this.state={}
+  }
+
+  componentDidMount(){
+    const {dispatch} = this.props
+    dispatch(getUser())
   }
 
   render(){
@@ -25,3 +31,10 @@ export default class App extends Component {
     )
   }
 }
+
+
+function mapStateToProps(reduxState){
+  return {}
+}
+
+export default connect(mapStateToProps)(App)

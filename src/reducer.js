@@ -1,5 +1,11 @@
 export default function(state={},action){
 
+  if(action.type==='GET_USER'){
+    return Object.assign({},state,{
+      user: action.user
+    })
+  }
+
   if(action.type==='GET_TABLES'){
     return Object.assign({},state,{
       tables: action.tables
