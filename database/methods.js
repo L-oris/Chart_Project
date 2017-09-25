@@ -92,6 +92,20 @@ module.exports.getTableById = function(tableId){
   })
 }
 
+module.exports.getTablesByUserId = function(userId){
+  const query = 'SELECT * FROM tables WHERE user_id = $1'
+  return db.query(query,[userId])
+  .then(function(dbTables){
+    return dbTables.rows.map(table=>{
+      const {id,user_id:userId,name,description,tableurl,created_at:timestamp} = table
+      return {
+        id,userId,name,description,timestamp,
+        tableUrl: s3Url + tableurl
+      }
+    })
+  })
+}
+
 
 module.exports.createChart = function({userId,tableId,XAxis,YAxis,type,name,description}){
   const query = 'INSERT INTO charts (user_id,table_id,x_axis,y_axis,type,name,description) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id'
@@ -133,6 +147,20 @@ module.exports.getChartById = function(chartId){
       id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
       profilePicUrl: s3Url + profilepicurl
     }
+  })
+}
+
+module.exports.getChartsByUserId = function(userId){
+  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id WHERE users.id = $1'
+  return db.query(query,[userId])
+  .then(function(dbCharts){
+    return dbCharts.rows.map(chart=>{
+      const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,created_at:timestamp,first,last,profilepicurl} = chart
+      return {
+        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+        profilePicUrl: s3Url + profilepicurl
+      }
+    })
   })
 }
 

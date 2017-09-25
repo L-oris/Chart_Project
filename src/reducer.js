@@ -116,5 +116,17 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='GET_USER_TABLES'){
+    return Object.assign({},state,{
+      userTables: action.userTables
+    })
+  }
+
+  if(action.type==='GET_USER_CHARTS'){
+    return Object.assign({},state,{
+      userCharts: action.userCharts
+    })
+  }
+
   return state
 }

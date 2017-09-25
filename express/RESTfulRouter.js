@@ -10,9 +10,11 @@ const {
   addTable,
   getTables,
   getTableById,
+  getTablesByUserId,
   createChart,
   getCharts,
   getChartById,
+  getChartsByUserId,
   getDataByChartId,
   getCommentsByChartId,
   addChartComment
@@ -79,6 +81,29 @@ router.put('/api/update_profile_pic',uploader.single('file'),uploadToS3,function
   })
 })
 
+//GET ALL TABLES OWNED BY USER
+router.get('/api/get_user_tables',function(req,res,next){
+  const {userId} = req.session.user
+  getTablesByUserId(userId)
+  .then(function(tablesArr){
+    res.json(tablesArr)
+  })
+  .catch(function(err){
+    next(`Error getting tables of user #${userId}`)
+  })
+})
+
+//GET ALL TABLES OWNED BY USER
+router.get('/api/get_user_charts',function(req,res,next){
+  const {userId} = req.session.user
+  getChartsByUserId(userId)
+  .then(function(chartsArr){
+    res.json(chartsArr)
+  })
+  .catch(function(err){
+    next(`Error getting charts of user #${userId}`)
+  })
+})
 
 //LOGOUT USER
 router.get('/api/logout',function(req,res){

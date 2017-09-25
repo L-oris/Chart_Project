@@ -177,6 +177,7 @@ export function setVisualizerTable(tableId){
   }
 }
 
+
 export function getVisualizerTablePreview(tableId){
   return axios.get(`/api/get_table_preview/${tableId}`)
   .then(function(serverResponse){
@@ -187,8 +188,31 @@ export function getVisualizerTablePreview(tableId){
   })
 }
 
+
 export function setTableUploaderIsVisible(){
   return {
     type: 'SET_TABLE_UPLOADER_IS_VISIBLE'
   }
+}
+
+
+export function getUserTables(){
+  return axios.get('/api/get_user_tables')
+  .then(serverResponse=>{
+    return {
+      type: 'GET_USER_TABLES',
+      userTables: serverResponse.data
+    }
+  })
+}
+
+
+export function getUserCharts(){
+  return axios.get('/api/get_user_charts')
+  .then(serverResponse=>{
+    return {
+      type: 'GET_USER_CHARTS',
+      userCharts: serverResponse.data
+    }
+  })
 }
