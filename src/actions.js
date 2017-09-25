@@ -13,6 +13,17 @@ export function getUser(){
 }
 
 
+export function updateUserProfilePic(formData){
+  return axios.put('/api/update_profile_pic',formData)
+  .then(serverResponse=>{
+    return {
+      type: 'UPDATE_USER_PROFILE_PIC',
+      profilePicUrl: serverResponse.data.profilePicUrl
+    }
+  })
+}
+
+
 export function getTables(){
   return axios.get('/api/get_tables')
   .then(serverResponse=>{

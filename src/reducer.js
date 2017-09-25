@@ -6,6 +6,14 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='UPDATE_USER_PROFILE_PIC'){
+    return Object.assign({},state,{
+      user: Object.assign({},state.user,{
+        profilePicUrl: action.profilePicUrl
+      })
+    })
+  }
+
   if(action.type==='GET_TABLES'){
     return Object.assign({},state,{
       tables: action.tables

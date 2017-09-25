@@ -8,11 +8,11 @@ import {
   Welcome,
   Registration,
   Login,
-  TableUploader,
   ChartCreator,
   Latest,
   ChartVisualizer,
-  TableVisualizer
+  TableVisualizer,
+  ProfileManager
 } from './components'
 
 //Redux
@@ -41,9 +41,9 @@ const loggedInRouter = (
       <Route path='/' component={App}>
         <IndexRoute component={Latest}/>
         <Route path='chart/:id' component={ChartVisualizer}/>
-        <Route path='table_uploader' component={TableUploader}/>
         <Route path='chart_creator' component={ChartCreator}/>
         <Route path='tables' component={TableVisualizer}/>
+        <Route path='user' component={ProfileManager}/>
       </Route>
     </Router>
   </Provider>

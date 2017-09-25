@@ -6,6 +6,7 @@ const {uploader,uploadToS3} = require('./middlewares')
 const {
   createUser,
   loginUser,
+  updateProfilePic,
   addTable,
   getTables,
   getTableById,
@@ -61,6 +62,24 @@ router.get('/api/get_current_user',function(req,res){
   res.json(req.session.user)
 })
 
+//UPDATE USER'S PROFILE PICTURE
+router.put('/api/update_profile_pic',uploader.single('file'),uploadToS3,function(req,res,next){
+  const {userId} = req.session.user
+  const {filename} = req.file
+  if(!filename){
+    throw 'No file to upload'
+  }
+  updateProfilePic(userId,filename)
+  .then(function(userData){
+    req.session.user.profilePicUrl = userData.profilePicUrl
+    res.json(userData)
+  })
+  .catch(function(err){
+    next('Uploading of new profile image failed')
+  })
+})
+
+
 //LOGOUT USER
 router.get('/api/logout',function(req,res){
   req.session = null
@@ -73,6 +92,9 @@ router.get('/api/logout',function(req,res){
 router.post('/api/upload_table',uploader.single('file'),uploadToS3,function(req,res,next){
   const {name,description} = req.body
   const {filename} = req.file
+  if(!filename){
+    throw 'No file to upload'
+  }
   const {userId} = req.session.user
   addTable(userId,name,description,filename)
   .then(function(newTable){
@@ -117,7 +139,7 @@ router.get('/api/get_table_preview/:tableId',function(req,res,next){
   .then(function({tableUrl}){
     return readCsvFileByUrl(tableUrl)
   })
-  .then(function(jsonData){  
+  .then(function(jsonData){
     res.json(jsonData.slice(0,4))
   })
   .catch(function(err){

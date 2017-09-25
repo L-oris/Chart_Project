@@ -44,6 +44,15 @@ module.exports.loginUser = function({email,password:plainTextPassword}){
   })
 }
 
+module.exports.updateProfilePic = function(userId,filename){
+  const query = 'UPDATE users SET profilepicurl = $1 WHERE id = $2'
+  return db.query(query,[filename,userId])
+  .then(function(){
+    return {
+      profilePicUrl: s3Url + filename
+    }
+  })
+}
 
 module.exports.addTable = function(userId,name,description,filename){
   const query = 'INSERT INTO tables (user_id,name,description,tableurl) VALUES ($1,$2,$3,$4) RETURNING *'

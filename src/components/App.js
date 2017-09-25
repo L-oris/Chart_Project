@@ -24,6 +24,7 @@ class App extends Component {
         <Link to="/chart_creator">Chart creator</Link>
         <Link to="/tables">Table Visualizer</Link>
         <Link to="/table_uploader">Table Uploader</Link>
+        <Link to="/user">Profile Manager</Link>
         <a href="/api/logout">Logout</a>
 
         {this.props.children}

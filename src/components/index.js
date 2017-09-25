@@ -13,6 +13,7 @@ import ChartVisualizer from './ChartVisualizer'
 import ChartVisualizer_Comments from './ChartVisualizer_Comments'
 import TableVisualizer from './TableVisualizer'
 import TableVisualizer_TablePreview from './TableVisualizer_TablePreview'
+import ProfileManager from './ProfileManager'
 
 
 export {
@@ -30,5 +31,6 @@ export {
   ChartVisualizer,
   ChartVisualizer_Comments,
   TableVisualizer,
-  TableVisualizer_TablePreview
+  TableVisualizer_TablePreview,
+  ProfileManager
 }
