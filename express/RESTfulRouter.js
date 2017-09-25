@@ -75,8 +75,8 @@ router.post('/api/upload_table',uploader.single('file'),uploadToS3,function(req,
   const {filename} = req.file
   const {userId} = req.session.user
   addTable(userId,name,description,filename)
-  .then(function(){
-    res.json({success:true})
+  .then(function(newTable){
+    res.json(newTable)
   })
   .catch(function(err){
     next('error happened adding new table into database')
@@ -116,8 +116,8 @@ router.post('/api/create_chart',function(req,res,next){
   //const {tableId,XAxis,YAxis,type,name,description} = req.body
   const {userId} = req.session.user
   createChart({...req.body,userId})
-  .then(function(dbChart){
-    res.json(dbChart)
+  .then(function(newChart){
+    res.json(newChart)
   })
   .catch(function(err){
     next(`Error creating new chart into database`)

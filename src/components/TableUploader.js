@@ -1,9 +1,11 @@
 import React,{Component} from 'react'
 import {browserHistory} from 'react-router'
-import axios from '../axios'
+import {connect} from 'react-redux'
+
+import {addTable} from '../actions'
 
 
-export default class TableUploader extends Component {
+class TableUploader extends Component {
 
   constructor(props){
     super(props)
@@ -27,6 +29,7 @@ export default class TableUploader extends Component {
 
   uploadTable(e){
     e.preventDefault()
+    const {dispatch} = this.props
     const {name,description,file} = this.state
     if(name&&description&&file){
       //use built-in FormData API
@@ -34,13 +37,8 @@ export default class TableUploader extends Component {
       formData.append('file',file)
       formData.append('name',name)
       formData.append('description',description)
-      axios.post('/api/upload_table',formData)
-      .then(serverResponse=>{
-        browserHistory.push('/')
-      })
-      .catch((err)=>{
-        console.log('Error happened uploading new table',err);
-      })
+      dispatch(addTable(formData))
+      browserHistory.push('/')
     }
   }
 
@@ -61,3 +59,10 @@ export default class TableUploader extends Component {
     )
   }
 }
+
+
+function mapStateToProps(reduxState){
+  return {}
+}
+
+export default connect(mapStateToProps)(TableUploader)

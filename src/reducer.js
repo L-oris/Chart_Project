@@ -12,6 +12,12 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='ADD_TABLE'){
+    return Object.assign({},state,{
+      tables: [...state.tables,action.table]
+    })
+  }
+
   if(action.type==='GET_CHARTS'){
     return Object.assign({},state,{
       charts: action.charts

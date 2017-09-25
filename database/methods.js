@@ -46,8 +46,15 @@ module.exports.loginUser = function({email,password:plainTextPassword}){
 
 
 module.exports.addTable = function(userId,name,description,filename){
-  const query = 'INSERT INTO tables (user_id,name,description,tableurl) VALUES ($1,$2,$3,$4)'
+  const query = 'INSERT INTO tables (user_id,name,description,tableurl) VALUES ($1,$2,$3,$4) RETURNING *'
   return db.query(query,[userId,name,description,filename])
+  .then(function(dbTable){
+    const {id,user_id:userId,name,description,tableurl,created_at:timestamp} = dbTable.rows[0]
+    return {
+      id,userId,name,description,timestamp,
+      tableUrl: s3Url + tableurl
+    }
+  })
 }
 
 module.exports.getTables = function(){

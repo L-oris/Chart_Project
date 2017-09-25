@@ -13,8 +13,11 @@ class ChartCreator_TableSelector extends Component {
   }
 
   componentDidMount(){
-    const {dispatch} = this.props
-    dispatch(getTables())
+    const {tables} = this.props
+    if(!tables || tables.length===0){
+      const {dispatch} = this.props
+      dispatch(getTables())
+    }
   }
 
   renderTables(tablesList){

@@ -24,6 +24,18 @@ export function getTables(){
 }
 
 
+export function addTable(formData){
+  return axios.post('/api/upload_table',formData)
+  .then(serverResponse=>{
+    console.log('action correctly dispatched, serverResponse',serverResponse);
+    return {
+      type: 'ADD_TABLE',
+      table: serverResponse.data
+    }
+  })
+}
+
+
 export function getCharts(){
   return axios.get('/api/get_charts')
   .then(serverResponse=>{
