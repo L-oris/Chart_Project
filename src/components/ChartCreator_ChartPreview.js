@@ -20,6 +20,16 @@ class ChartCreator_ChartPreview extends Component {
     creatorTableId && creatorFields && !this.props.creatorFields && dispatch(getCreatorData(creatorTableId,creatorFields))
   }
 
+  shouldComponentUpdate(nextProps,nextState){
+    //prevent component re-rendering every time 'name' or 'description' fields change
+    const {name:previousName,description:previousDescription} = this.state
+    const {name:nextName,description:nextDescription} = nextState
+    if(previousName !== nextName || previousDescription !== nextDescription){
+      return false
+    }
+    return true
+  }
+
   handleInputChange(e){
     this.setState({
       [e.target.name]: e.target.value
@@ -46,6 +56,7 @@ class ChartCreator_ChartPreview extends Component {
   }
 
   render(){
+    console.log('Component updating');
     const {creatorFields,creatorData} = this.props
     return (
       <div>

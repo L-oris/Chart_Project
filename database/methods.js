@@ -111,7 +111,7 @@ module.exports.createChart = function({userId,tableId,XAxis,YAxis,type,name,desc
 }
 
 module.exports.getCharts = function(){
-  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id LIMIT 20'
+  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id ORDER BY created_at DESC LIMIT 20'
   return db.query(query)
   .then(function(dbCharts){
     return dbCharts.rows.map(chart=>{
