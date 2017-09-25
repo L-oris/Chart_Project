@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 
+import {Navbar} from '.'
 import {getUser} from '../actions'
 
 class App extends Component {
@@ -20,11 +21,8 @@ class App extends Component {
     return (
       <div>
         <h1>Here is my main app component!</h1>
-        <Link to="/">Home</Link>
-        <Link to="/chart_creator">Chart creator</Link>
-        <Link to="/tables">Table Visualizer</Link>
-        <Link to="/user">Profile Manager</Link>
-        <a href="/api/logout">Logout</a>
+
+        <Navbar/>
 
         {this.props.children}
 

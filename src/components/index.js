@@ -1,4 +1,5 @@
 import App from './App'
+import Navbar from './Navbar'
 import Welcome from './Welcome'
 import Registration from './Registration'
 import Login from './Login'
@@ -18,6 +19,7 @@ import ProfileManager from './ProfileManager'
 
 export {
   App,
+  Navbar,
   Welcome,
   Registration,
   Login,
