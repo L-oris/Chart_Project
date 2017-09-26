@@ -244,7 +244,7 @@ module.exports.getCommentsByChartId = function(chartId){
   return db.query(query,[chartId])
   .then(function(dbComments){
     return dbComments.rows.map(dbComment=>{
-      const {comment,created_at:timestamp,first,last,profilepicurl} = dbComment.rows[0]
+      const {comment,created_at:timestamp,first,last,profilepicurl} = dbComment
       return {
         comment,timestamp,first,last,
         profilePicUrl: s3Url + profilepicurl

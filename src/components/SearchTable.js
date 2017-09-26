@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 
-import {getSearchTableResults,deleteSearchTableResults} from '../actions'
+import {getSearchTableResults,deleteSearchTableResults,setVisualizerTable} from '../actions'
 
 
 class SearchTable extends Component {
@@ -14,6 +14,7 @@ class SearchTable extends Component {
     }
     this.handleSelectChange = this.handleSelectChange.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.selectTable = this.selectTable.bind(this)
   }
 
   componentWillUnmount(){
@@ -30,10 +31,13 @@ class SearchTable extends Component {
   handleInputChange(e){
     clearTimeout(this.ajaxTimer)
     const {dispatch} = this.props
-    const {searchTableType} = this.state
     const searchTableText = e.target.value
+    this.setState({
+      searchTableText
+    })
     if(searchTableText.length>0){
       //prevent fast-typing users to make too many ajax calls --> set a timer
+      const {searchTableType} = this.state
       this.ajaxTimer = setTimeout(()=>{
         dispatch(getSearchTableResults(searchTableType,searchTableText))
       },250)
@@ -42,11 +46,20 @@ class SearchTable extends Component {
     }
   }
 
+  selectTable(tableId){
+    const {dispatch} = this.props
+    dispatch(setVisualizerTable(tableId))
+    dispatch(deleteSearchTableResults())
+    this.setState({
+      searchTableText: ''
+    })
+  }
+
   renderSearchTableResults(tablesList){
     return tablesList.map(table=>{
-      const {name} = table
+      const {id,name} = table
       return (
-        <li>
+        <li onClick={e=>this.selectTable(id)}>
           <h6>{name}</h6>
         </li>
       )
@@ -55,11 +68,12 @@ class SearchTable extends Component {
 
   render(){
     const {searchTableResults} = this.props
+    const {searchTableText} = this.state
     return (
       <div>
 
-        <input onChange={this.handleInputChange}/>
-        <select name="searchChartType" onChange={this.handleSelectChange}>
+        <input name="searchTableText" value={searchTableText} onChange={this.handleInputChange}/>
+        <select name="searchTableType" onChange={this.handleSelectChange}>
           <option value="name">Name</option>
           <option value="user">User</option>
         </select>

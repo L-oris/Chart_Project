@@ -45,11 +45,13 @@ class SearchChart extends Component {
 
   renderSearchChartResults(chartsList){
     return chartsList.map(chart=>{
-      const {name,first,last,profilePicUrl} = chart
+      const {id,name,first,last,profilePicUrl} = chart
       return (
         <li>
-          <img className="small-img" src={profilePicUrl} alt={first + ' ' + last}/>
-          <h6>{name}</h6>
+          <Link to={`/chart/${id}`}>
+            <img className="small-img" src={profilePicUrl} alt={first + ' ' + last}/>
+            <h6>{name}</h6>
+          </Link>
         </li>
       )
     })
