@@ -62,7 +62,7 @@ class TableUploader extends Component {
           <input required type="file" onChange={this.handleFileChange}/>
           <button type="submit">Save it!</button>
         </form>
-        
+
       </div>
     )
   }

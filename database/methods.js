@@ -55,25 +55,36 @@ module.exports.updateProfilePic = function(userId,filename){
 }
 
 module.exports.addTable = function(userId,name,description,filename){
-  const query = 'INSERT INTO tables (user_id,name,description,tableurl) VALUES ($1,$2,$3,$4) RETURNING *'
+  const query = 'INSERT INTO tables (user_id,name,description,tableurl) VALUES ($1,$2,$3,$4) RETURNING id'
   return db.query(query,[userId,name,description,filename])
+  .then(function(dbTableId){
+    const tableId = dbTableId.rows[0].id
+    const query = `
+      SELECT first,last,profilepicurl,tables.id,tables.user_id,name,description,tableurl,tables.created_at
+      FROM tables INNER JOIN users ON tables.user_id = users.id WHERE tables.id = $1`
+    return db.query(query,[tableId])
+  })
   .then(function(dbTable){
-    const {id,user_id:userId,name,description,tableurl,created_at:timestamp} = dbTable.rows[0]
+    const {first,last,profilepicurl,id,user_id:userId,name,description,tableurl,created_at:timestamp} = dbTable.rows[0]
     return {
-      id,userId,name,description,timestamp,
+      first,last,id,userId,name,description,timestamp,
+      profilePicUrl: s3Url + profilepicurl,
       tableUrl: s3Url + tableurl
     }
   })
 }
 
 module.exports.getTables = function(){
-  const query = 'SELECT * FROM tables'
+  const query = `
+    SELECT first,last,profilepicurl,tables.id,tables.user_id,name,description,tableurl,tables.created_at
+    FROM tables INNER JOIN users ON tables.user_id = users.id LIMIT 20`
   return db.query(query)
   .then(function(dbTables){
     return dbTables.rows.map(table=>{
-      const {id,user_id:userId,name,description,tableurl,created_at:timestamp} = table
+      const {first,last,profilepicurl,id,user_id:userId,name,description,tableurl,created_at:timestamp} = table
       return {
-        id,userId,name,description,timestamp,
+        first,last,id,userId,name,description,timestamp,
+        profilePicUrl: s3Url + profilepicurl,
         tableUrl: s3Url + tableurl
       }
     })
@@ -81,25 +92,31 @@ module.exports.getTables = function(){
 }
 
 module.exports.getTableById = function(tableId){
-  const query = 'SELECT * FROM tables WHERE id = $1'
+  const query = `
+    SELECT first,last,profilepicurl,tables.id,tables.user_id,name,description,tableurl,tables.created_at
+    FROM tables INNER JOIN users ON tables.user_id = users.id WHERE tables.id = $1`
   return db.query(query,[tableId])
   .then(function(dbTable){
-    const {id,user_id:userId,name,description,tableurl,created_at:timestamp} = dbTable.rows[0]
+    const {first,last,profilepicurl,id,user_id:userId,name,description,tableurl,created_at:timestamp} = dbTable.rows[0]
     return {
-      id,userId,name,description,timestamp,
+      first,last,id,userId,name,description,timestamp,
+      profilePicUrl: s3Url + profilepicurl,
       tableUrl: s3Url + tableurl
     }
   })
 }
 
 module.exports.getTablesByUserId = function(userId){
-  const query = 'SELECT * FROM tables WHERE user_id = $1'
+  const query = `
+    SELECT first,last,profilepicurl,tables.id,tables.user_id,name,description,tableurl,tables.created_at
+    FROM tables INNER JOIN users ON tables.user_id = users.id WHERE tables.user_id = $1`
   return db.query(query,[userId])
   .then(function(dbTables){
     return dbTables.rows.map(table=>{
-      const {id,user_id:userId,name,description,tableurl,created_at:timestamp} = table
+      const {first,last,profilepicurl,id,user_id:userId,name,description,tableurl,created_at:timestamp} = table
       return {
-        id,userId,name,description,timestamp,
+        first,last,id,userId,name,description,timestamp,
+        profilePicUrl: s3Url + profilepicurl,
         tableUrl: s3Url + tableurl
       }
     })
@@ -108,13 +125,13 @@ module.exports.getTablesByUserId = function(userId){
 
 module.exports.searchTable = function(searchType,searchText){
   let query = `
-    SELECT tables.id,tables.user_id,name,description,tableurl,tables.created_at FROM tables
-    INNER JOIN users ON tables.user_id = users.id `
+    SELECT first,last,profilepicurl,tables.id,tables.user_id,name,description,tableurl,tables.created_at
+    FROM tables INNER JOIN users ON tables.user_id = users.id `
   if(searchType === 'name'){
     query += 'WHERE name ILIKE $1'
     searchText = '%' + searchText + '%'
   } else if(searchType === 'user'){
-    query += 'WHERE users.first ILIKE $1 OR users.last ILIKE $1'
+    query += 'WHERE first ILIKE $1 OR last ILIKE $1'
     searchText = searchText + '%'
   }
   query += ' LIMIT 4'
@@ -122,9 +139,10 @@ module.exports.searchTable = function(searchType,searchText){
   return db.query(query,[searchText])
   .then(function(dbTables){
     return dbTables.rows.map(table=>{
-      const {id,user_id:userId,name,description,tableurl,created_at:timestamp} = table
+      const {first,last,profilepicurl,id,user_id:userId,name,description,tableurl,created_at:timestamp} = table
       return {
-        id,userId,name,description,timestamp,
+        first,last,id,userId,name,description,timestamp,
+        profilePicUrl: s3Url + profilepicurl,
         tableUrl: s3Url + tableurl
       }
     })
