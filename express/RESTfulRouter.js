@@ -11,6 +11,7 @@ const {
   getTables,
   getTableById,
   getTablesByUserId,
+  searchTable,
   createChart,
   getCharts,
   getChartById,
@@ -187,6 +188,20 @@ router.get('/api/get_table_preview/:tableId',function(req,res,next){
 })
 
 
+//SEARCH FOR TABLES, GIVE BACK MAXIMUM 4 RESULTS
+router.post('/api/search_table',function(req,res,next){
+  const {searchType,searchText} = req.body
+  searchTable(searchType,searchText)
+  .then(function(tablesArr){
+    res.json(tablesArr)
+  })
+  .catch(function(err){
+    console.log('error',err);
+    next('Error searching for tables')
+  })
+})
+
+
 //CREATE NEW CHART INTO DATABASE
 router.post('/api/create_chart',function(req,res,next){
   //const {tableId,XAxis,YAxis,type,name,description} = req.body
@@ -200,6 +215,7 @@ router.post('/api/create_chart',function(req,res,next){
   })
 })
 
+
 //SEND BACK DATABASE CHARTS LIST
 router.get('/api/get_charts',function(req,res,next){
   getCharts()
@@ -210,6 +226,7 @@ router.get('/api/get_charts',function(req,res,next){
     next('Error retrieving charts list from database')
   })
 })
+
 
 //SEND BACK SELECTED CHART INFO
 router.get('/api/get_chart/:chartId',function(req,res,next){
@@ -222,6 +239,7 @@ router.get('/api/get_chart/:chartId',function(req,res,next){
     next(`Error retrieving chart #${chartId}`)
   })
 })
+
 
 //SEND BACK DATA TO DISPLAY INSIDE CHART
 router.get('/api/get_chart_data/:chartId',function(req,res,next){
@@ -246,6 +264,7 @@ router.get('/api/get_chart_data/:chartId',function(req,res,next){
   })
 })
 
+
 //SEND BACK DATA TO DISPLAY INSIDE CHART
 // don't search for existing chart into database now, instead just pass options inside req.body and retrieve requested data to display
 router.post('/api/get_unsaved_chart_data',function(req,res,next){
@@ -264,6 +283,7 @@ router.post('/api/get_unsaved_chart_data',function(req,res,next){
   })
 })
 
+
 //SEARCH FOR CHARTS, GIVE BACK MAXIMUM 4 RESULTS
 router.post('/api/search_chart',function(req,res,next){
   const {searchType,searchText} = req.body
@@ -276,6 +296,7 @@ router.post('/api/search_chart',function(req,res,next){
   })
 })
 
+
 //SEND BACK COMMENTS FOR SELECTED CHART
 router.get('/api/get_chart_comments/:chartId',function(req,res,next){
   const {chartId} = req.params
@@ -287,6 +308,7 @@ router.get('/api/get_chart_comments/:chartId',function(req,res,next){
     next(`Error retrieving comments for chart #${chartId}`)
   })
 })
+
 
 //ADD NEW COMMENT FOR SELECTED CHART
 router.post('/api/add_chart_comment',function(req,res,next){

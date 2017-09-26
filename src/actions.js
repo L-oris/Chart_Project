@@ -238,6 +238,27 @@ export function getUserCharts(){
 }
 
 
+export function getSearchTableResults(searchTableType,searchTableText){
+  return axios.post('/api/search_table',{
+    searchType: searchTableType,
+    searchText: searchTableText
+  })
+  .then(serverResponse=>{
+    return {
+      type: 'GET_SEARCH_TABLE_RESULTS',
+      searchTableResults: serverResponse.data
+    }
+  })
+}
+
+
+export function deleteSearchTableResults(){
+  return {
+    type: 'DELETE_SEARCH_TABLE_RESULTS'
+  }
+}
+
+
 export function getSearchChartResults(searchChartType,searchChartText){
   return axios.post('/api/search_chart',{
     searchType: searchChartType,

@@ -106,6 +106,30 @@ module.exports.getTablesByUserId = function(userId){
   })
 }
 
+module.exports.searchTable = function(searchType,searchText){
+  let query = `
+    SELECT tables.id,tables.user_id,name,description,tableurl,tables.created_at FROM tables
+    INNER JOIN users ON tables.user_id = users.id `
+  if(searchType === 'name'){
+    query += 'WHERE name ILIKE $1'
+    searchText = '%' + searchText + '%'
+  } else if(searchType === 'user'){
+    query += 'WHERE users.first ILIKE $1 OR users.last ILIKE $1'
+    searchText = searchText + '%'
+  }
+  query += ' LIMIT 4'
+
+  return db.query(query,[searchText])
+  .then(function(dbTables){
+    return dbTables.rows.map(table=>{
+      const {id,user_id:userId,name,description,tableurl,created_at:timestamp} = table
+      return {
+        id,userId,name,description,timestamp,
+        tableUrl: s3Url + tableurl
+      }
+    })
+  })
+}
 
 module.exports.createChart = function({userId,tableId,XAxis,YAxis,type,name,description}){
   const query = 'INSERT INTO charts (user_id,table_id,x_axis,y_axis,type,name,description) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id'
@@ -168,16 +192,18 @@ module.exports.searchChart = function(searchType,searchText){
   let query = `
     SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at
     FROM users INNER JOIN charts
-    ON users.id = charts.user_id `
-  searchText = searchText + '%'
+    ON users.id = charts.user_id  `
   if(searchType === 'name'){
     query += 'WHERE charts.name ILIKE $1'
+    searchText = '%' + searchText + '%'
   } else if(searchType === 'type'){
     query += 'WHERE charts.type ILIKE $1'
+    searchText = '%' + searchText + '%'
   } else if(searchType === 'user'){
     query += 'WHERE users.first ILIKE $1 OR users.last ILIKE $1'
+    searchText = searchText + '%'
   }
-  query += 'LIMIT 4'
+  query += ' LIMIT 4'
 
   return db.query(query,[searchText])
   .then(function(dbCharts){

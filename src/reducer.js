@@ -147,5 +147,17 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='GET_SEARCH_TABLE_RESULTS'){
+    return Object.assign({},state,{
+      searchTableResults: action.searchTableResults
+    })
+  }
+
+  if(action.type==='DELETE_SEARCH_TABLE_RESULTS'){
+    return Object.assign({},state,{
+      searchTableResults: ''
+    })
+  }
+
   return state
 }

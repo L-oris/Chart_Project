@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 
-import {TableVisualizer_TablePreview,TableUploader} from '.'
+import {TableVisualizer_TablePreview,TableUploader,SearchTable} from '.'
 import {getTables,setVisualizerTable,setTableUploaderIsVisible,deleteVisualizerTable} from '../actions'
 
 
@@ -49,6 +49,8 @@ class TableVisualizer extends Component {
         {tableUploaderIsVisible && <TableUploader/>}
 
         <h3>Table Visualizer</h3>
+
+        <SearchTable/>
 
         <ul>
           <li onClick={e=>dispatch(setTableUploaderIsVisible())}>

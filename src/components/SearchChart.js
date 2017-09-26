@@ -52,7 +52,6 @@ class SearchChart extends Component {
   // }
 
   renderSearchChartResults(chartsList){
-    console.log('results inside Latest component are',chartsList);
     return chartsList.map(chart=>{
       const {name,first,last,profilePicUrl} = chart
       return (
