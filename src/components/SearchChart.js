@@ -29,27 +29,19 @@ class SearchChart extends Component {
   }
 
   handleInputChange(e){
+    clearTimeout(this.ajaxTimer)
     const {dispatch} = this.props
     const {searchChartType} = this.state
-    if(e.target.value.length>0){
-      dispatch(getSearchChartResults(searchChartType,e.target.value))
+    const searchChartText = e.target.value
+    if(searchChartText.length>0){
+      //prevent fast-typing users to make too many ajax calls --> set a timer
+      this.ajaxTimer = setTimeout(()=>{
+        dispatch(getSearchChartResults(searchChartType,searchChartText))
+      },250)
     } else {
       dispatch(deleteSearchChartResults())
     }
   }
-
-  // handleInputChange(e){
-  //   const {dispatch} = this.props
-  //   const {searchChartManner} = this.state
-  //   if(e.target.value.length>0){
-  //     clearTimeout(this.ajaxTimer)
-  //     this.ajaxTimer = setTimeout(()=>{
-  //       dispatch(getSearchChartResults(searchChartManner,e.target.value))
-  //     },1000)
-  //   } else {
-  //     dispatch(deleteSearchChartResults())
-  //   }
-  // }
 
   renderSearchChartResults(chartsList){
     return chartsList.map(chart=>{

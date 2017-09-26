@@ -28,10 +28,15 @@ class SearchTable extends Component {
   }
 
   handleInputChange(e){
+    clearTimeout(this.ajaxTimer)
     const {dispatch} = this.props
     const {searchTableType} = this.state
-    if(e.target.value.length>0){
-      dispatch(getSearchTableResults(searchTableType,e.target.value))
+    const searchTableText = e.target.value
+    if(searchTableText.length>0){
+      //prevent fast-typing users to make too many ajax calls --> set a timer
+      this.ajaxTimer = setTimeout(()=>{
+        dispatch(getSearchTableResults(searchTableType,searchTableText))
+      },250)
     } else {
       dispatch(deleteSearchTableResults())
     }
