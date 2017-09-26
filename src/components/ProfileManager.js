@@ -2,8 +2,7 @@ import React,{Component} from 'react'
 import {browserHistory,Link} from 'react-router'
 import {connect} from 'react-redux'
 
-import {TableUploader} from '.'
-import {updateUserProfilePic,getUserTables,getUserCharts,setTableUploaderIsVisible,setVisualizerTable} from '../actions'
+import {updateUserProfilePic,getUserTables,getUserCharts,setVisualizerTable} from '../actions'
 
 
 class ProfileManager extends Component {
@@ -75,11 +74,9 @@ class ProfileManager extends Component {
   }
 
   render(){
-    const {dispatch,user,userTables,userCharts,tableUploaderIsVisible} = this.props
+    const {user,userTables,userCharts} = this.props
     return (
       <div>
-
-        {tableUploaderIsVisible && <TableUploader/>}
 
         <h1>Profile Manager here</h1>
 
@@ -87,10 +84,7 @@ class ProfileManager extends Component {
 
         <ul>
           <h4>Tables:</h4>
-          <p onClick={e=>dispatch(setTableUploaderIsVisible())}>
-            Upload a new table
-          </p>
-
+          <Link to="/tables">Upload a new table!</Link>
           {userTables && this.renderUserTables(userTables)}
         </ul>
 
@@ -111,7 +105,6 @@ function mapStateToProps(reduxState){
     user: reduxState.user,
     userTables: reduxState.userTables,
     userCharts: reduxState.userCharts,
-    tableUploaderIsVisible: reduxState.tableUploaderIsVisible
   }
 }
 

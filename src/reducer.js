@@ -22,7 +22,8 @@ export default function(state={},action){
 
   if(action.type==='ADD_TABLE'){
     return Object.assign({},state,{
-      tables: [...state.tables,action.table]
+      tables: [...state.tables,action.table],
+      userTables: ''
     })
   }
 
@@ -58,7 +59,8 @@ export default function(state={},action){
 
   if(action.type==='CREATE_CHART'){
     return Object.assign({},state,{
-      charts: [...state.charts, action.chart],
+      charts: [action.chart, ...state.charts],
+      userCharts: '',
       creatorTableId: '',
       creatorTableFields: '',
       creatorFields: '',
