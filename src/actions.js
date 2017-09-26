@@ -236,3 +236,24 @@ export function getUserCharts(){
     }
   })
 }
+
+
+export function getSearchChartResults(searchChartType,searchChartText){
+  return axios.post('/api/search_chart',{
+    searchType: searchChartType,
+    searchText: searchChartText
+  })
+  .then(serverResponse=>{
+    return {
+      type: 'GET_SEARCH_CHART_RESULTS',
+      searchChartResults: serverResponse.data
+    }
+  })
+}
+
+
+export function deleteSearchChartResults(){
+  return {
+    type: 'DELETE_SEARCH_CHART_RESULTS'
+  }
+}

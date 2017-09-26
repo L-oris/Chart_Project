@@ -10,6 +10,7 @@ import ChartCreator_TableSelector from './ChartCreator_TableSelector'
 import ChartCreator_FieldSelector from './ChartCreator_FieldSelector'
 import ChartCreator_ChartPreview from './ChartCreator_ChartPreview'
 import Latest from './Latest'
+import SearchChart from './SearchChart'
 import ChartVisualizer from './ChartVisualizer'
 import ChartVisualizer_Comments from './ChartVisualizer_Comments'
 import TableVisualizer from './TableVisualizer'
@@ -30,6 +31,7 @@ export {
   ChartCreator_FieldSelector,
   ChartCreator_ChartPreview,
   Latest,
+  SearchChart,
   ChartVisualizer,
   ChartVisualizer_Comments,
   TableVisualizer,

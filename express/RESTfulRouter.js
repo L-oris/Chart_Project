@@ -16,6 +16,7 @@ const {
   getChartById,
   getChartsByUserId,
   getDataByChartId,
+  searchChart,
   getCommentsByChartId,
   addChartComment
 } = require('../database/methods')
@@ -260,6 +261,18 @@ router.post('/api/get_unsaved_chart_data',function(req,res,next){
   })
   .catch(function(err){
     next(`Error retrieving chart data`)
+  })
+})
+
+//SEARCH FOR CHARTS, GIVE BACK MAXIMUM 4 RESULTS
+router.post('/api/search_chart',function(req,res,next){
+  const {searchType,searchText} = req.body
+  searchChart(searchType,searchText)
+  .then(function(chartsArr){
+    res.json(chartsArr)
+  })
+  .catch(function(err){
+    next('Error searching for charts')
   })
 })
 

@@ -135,5 +135,17 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='GET_SEARCH_CHART_RESULTS'){
+    return Object.assign({},state,{
+      searchChartResults: action.searchChartResults
+    })
+  }
+
+  if(action.type==='DELETE_SEARCH_CHART_RESULTS'){
+    return Object.assign({},state,{
+      searchChartResults: ''
+    })
+  }
+
   return state
 }

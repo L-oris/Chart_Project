@@ -2,7 +2,8 @@ import React,{Component} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 
-import {getCharts} from '../actions'
+import {SearchChart} from '.'
+import {getCharts,getSearchChartResults,deleteSearchChartResults} from '../actions'
 
 
 class Latest extends Component {
@@ -38,10 +39,11 @@ class Latest extends Component {
 
   render(){
     const {charts} = this.props
-
     return (
       <div>
         <h3>Latest charts here!</h3>
+
+        <SearchChart/>
 
         <ul>
           {charts && this.renderCharts(charts)}
