@@ -38,7 +38,7 @@ class TableUploader extends Component {
       formData.append('name',name)
       formData.append('description',description)
       dispatch(addTable(formData))
-      browserHistory.push('/')
+      dispatch(setTableUploaderIsVisible())
     }
   }
 
