@@ -7,3 +7,123 @@
 .small-img {
   width: 15%;
 }
+
+:root {
+  --dark-blue: #153B50;
+  --blue: #7AA7C9;
+  --light-blue: #E5F4FF;
+  --light-green: #C5E0D9;
+  --white: #FFF;
+  font-family: 'Lato', sans-serif;
+}
+
+body, nav header {
+  box-sizing: border-box;
+}
+
+
+/*==========*/
+/*APP*/
+/*==========*/
+.app {
+  background-color: var(--blue);
+  padding-top: 100px;
+  padding-bottom: 1.5em;
+}
+.app__children {
+  margin: 1em;
+  background-color: var(--light-blue);
+  box-shadow: 1px 4px 5px var(--dark-blue);
+  padding: .8em;
+}
+
+
+
+/*==========*/
+/*NAVBAR*/
+/*==========*/
+nav {}
+
+  nav header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    background-color: var(--dark-blue);
+  }
+    nav .logo, nav .profile-pic {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+    }
+    nav .logo {}
+    nav .profile-pic {}
+
+  nav main {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    background-color: var(--white);
+    box-shadow: 1px 4px 5px var(--dark-blue);
+  }
+    nav main a {
+      font-size: 1.8em;
+      color: var(--dark-blue);
+    }
+    nav main a h6 {
+      display: none;
+    }
+
+
+
+@media screen and (min-width: 1024px){
+
+  .app__children {
+    margin-left: 20em;
+    margin-right: 2em;
+    padding: 2em;
+  }
+
+
+  /*==========*/
+  /*NAVBAR*/
+  /*==========*/
+  nav header {
+    padding: .8em 2em;
+  }
+    nav .logo, nav .profile-pic {
+      width: 60px;
+      height: 60px;
+    }
+
+  nav main {
+    top: 18%;
+    left: 1em;
+    width: 15em;
+    height: inherit;
+    flex-direction: column;
+    background-color: var(--white);
+    box-shadow: 1px 4px 5px var(--dark-blue);
+  }
+  nav main a {
+    margin: 0 1em;
+  }
+  nav main a i {
+    vertical-align: middle;
+  }
+  nav main a h6 {
+    display: inline-block;
+    margin: 1.8em;
+  }
+
+
+
+}

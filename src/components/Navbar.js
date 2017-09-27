@@ -1,15 +1,46 @@
 import React from 'react'
 import {Link} from 'react-router'
+import {connect} from 'react-redux'
 
-export default function Navbar (props){
+function Navbar (props){
+  const {user} = props
   return (
     <nav>
-      Navbar component
-      <Link to="/">Home</Link>
-      <Link to="/chart_creator">Chart creator</Link>
-      <Link to="/tables">Table Visualizer</Link>
-      <Link to="/user">Profile Manager</Link>
-      <a href="/api/logout">Logout</a>
+
+      <header>
+        <Link to="/">
+          <img className="logo" src="/images/logo.png" alt="logo"/>
+        </Link>
+        <img className="profile-pic" src={user && user.profilePicUrl}/>
+      </header>
+
+      <main>
+        <Link to="/tables">
+          <i className="fa fa-table" aria-hidden="true"></i>
+          <h6>Tables</h6>
+        </Link>
+        <Link to="/chart_creator">
+          <i className="fa fa-pie-chart" aria-hidden="true"></i>
+          <h6>Creator</h6>
+        </Link>
+        <Link to="/user">
+          <i className="fa fa-user" aria-hidden="true"></i>
+          <h6>Profile</h6>
+        </Link>
+        <a href="/api/logout">
+          <i className="fa fa-sign-out" aria-hidden="true"></i>
+          <h6>Logout</h6>
+        </a>
+      </main>
+
     </nav>
   )
 }
+
+function mapStateToProps(reduxState){
+  return {
+    user: reduxState.user
+  }
+}
+
+export default connect(mapStateToProps)(Navbar)
