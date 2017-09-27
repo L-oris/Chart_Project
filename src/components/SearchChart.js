@@ -13,7 +13,7 @@ class SearchChart extends Component {
       searchChartType: 'name'
     }
     this.ajaxTimer
-    this.handleSelectChange = this.handleSelectChange.bind(this)
+    this.handleRadioChange = this.handleRadioChange.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
@@ -22,7 +22,7 @@ class SearchChart extends Component {
     dispatch(deleteSearchChartResults())
   }
 
-  handleSelectChange(e){
+  handleRadioChange(e){
     this.setState({
       [e.target.name]: e.target.value
     })
@@ -49,7 +49,7 @@ class SearchChart extends Component {
       return (
         <li>
           <Link to={`/chart/${id}`}>
-            <img className="small-img" src={profilePicUrl} alt={first + ' ' + last}/>
+            <img src={profilePicUrl} alt={first + ' ' + last}/>
             <h6>{name}</h6>
           </Link>
         </li>
@@ -59,19 +59,35 @@ class SearchChart extends Component {
 
   render(){
     const {searchChartResults} = this.props
+    const {searchChartType} = this.state
     return (
-      <div>
+      <div className="search-chart">
 
-        <input onChange={this.handleInputChange}/>
-        <select name="searchChartType" onChange={this.handleSelectChange}>
-          <option value="name">Name</option>
-          <option value="user">User</option>
-          <option value="type">Type</option>
-        </select>
+        <div className="search-chart__input">
+          <input onChange={this.handleInputChange}/>
+          <i className="fa fa-search" aria-hidden="true"></i>
 
-        <ul>
-          {searchChartResults && this.renderSearchChartResults(searchChartResults)}
-        </ul>
+          <ul>
+            {searchChartResults && this.renderSearchChartResults(searchChartResults)}
+          </ul>
+          
+        </div>
+
+        <div className="search-chart__radio">
+          <label for="search-chart--name">
+            <input onChange={this.handleRadioChange} checked={searchChartType === 'name'} type="radio" id="search-chart--name" name="searchChartType" value="name"/>
+            Name
+          </label>
+          <label for="search-chart--user">
+            <input onChange={this.handleRadioChange} checked={searchChartType === 'user'} type="radio" id="search-chart--user" name="searchChartType" value="user"/>
+            User
+          </label>
+          <label for="search-chart--type">
+            <input onChange={this.handleRadioChange} checked={searchChartType === 'type'} type="radio" id="search-chart--type" name="searchChartType" value="type"/>
+            Type
+          </label>
+        </div>
+
 
       </div>
     )

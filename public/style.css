@@ -14,12 +14,28 @@
   --light-blue: #E5F4FF;
   --light-green: #C5E0D9;
   --white: #FFF;
+  --dark-grey: #6D788C;
   font-family: 'Lato', sans-serif;
 }
 
 body, nav header {
   box-sizing: border-box;
 }
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: var(--dark-blue);
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
 
 
 /*==========*/
@@ -47,6 +63,7 @@ nav {}
 
   nav header {
     position: fixed;
+    z-index: 100;
     top: 0;
     left: 0;
     width: 100%;
@@ -65,6 +82,7 @@ nav {}
 
   nav main {
     position: fixed;
+    z-index: 100;
     top: 50px;
     left: 0;
     width: 100%;
@@ -81,6 +99,155 @@ nav {}
     }
     nav main a h6 {
       display: none;
+    }
+
+
+
+/*==========*/
+/*LATEST*/
+/*==========*/
+.latest {}
+  .latest h1 {
+    text-align: center;
+    margin: .3em;
+  }
+
+  .latest__charts {}
+    .latest__charts li {
+      background-color: var(--white);
+      border: 1px solid var(--dark-blue);
+      margin: 1em 0;
+      border-radius: 8px;
+    }
+      .latest__charts li header {
+        background-color: var(--dark-blue);
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        padding: .3em .6em;
+      }
+        .latest__charts li header img {
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+          border-radius: 50%;
+          vertical-align: middle;
+        }
+        .latest__charts li header h5 {
+          display: inline;
+          color: white;
+          margin-left: 10px;
+        }
+      .latest__charts li main {
+        display: flex;
+        padding: .8em;
+      }
+        .latest__charts li main img {
+          width: 100px;
+          height: 80px;
+          object-fit: cover;
+        }
+        .latest__charts li aside {
+          margin: 0 .5em;
+        }
+          .latest__charts li main h3 {
+            text-decoration: none;
+            margin: 0;
+          }
+          .latest__charts li main p {
+            font-size: .8em;
+          }
+
+      .latest__charts li footer {
+        padding: .5em .8em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        color: var(--dark-grey);
+      }
+        .latest__charts li footer h5,
+        .latest__charts li footer h4 {
+          margin: 0;
+        }
+        .latest__charts li footer i {}
+
+.search-chart {
+  text-align: center;
+  margin: 1.5em;
+}
+  .search-chart__input {
+    display: inline-block;
+    position: relative;
+  }
+    .search-chart__input input {
+      box-sizing: border-box;
+      border: 1px solid var(--dark-blue);
+      width: 180px;
+      height: 25px;
+      padding: 0 .2em;
+      border-radius: 3px;
+    }
+    .search-chart__input i {
+      border-top-right-radius: 3px;
+      text-align: center;
+      box-sizing: border-box;
+      position: absolute;
+      right: 0;
+      height: 25px;
+      width: 25px;
+      padding: .2em;
+      background-color: var(--dark-blue);
+      color: var(--white);
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+
+    .search-chart__input ul {
+      position: absolute;
+      top: 25px;
+      left: 0;
+      text-align: left;
+      width: 180px;
+      background-color: var(--white);
+    }
+      .search-chart__input li {
+        border-left: 1px solid var(--dark-blue);
+        border-right: 1px solid var(--dark-blue);
+        padding: .5em .3em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .search-chart__input li:last-child {
+        border-bottom: 1px solid var(--dark-blue);
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+        .search-chart__input img {
+          vertical-align: middle;
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+        .search-chart__input li h6 {
+          display: inline;
+          margin-left: .4em;
+          font-size: .85em;
+        }
+
+
+  .search-chart__radio {
+    display: inline-flex;
+    flex-flow: column;
+    margin-left: 1em;
+    vertical-align: top;
+  }
+    .search-chart__radio label {
+      text-align: left;
+    }
+    .search-chart__radio input {
+      margin: .4em;
     }
 
 
@@ -124,6 +291,39 @@ nav {}
     display: inline-block;
     margin: 1.8em;
   }
+
+
+
+  /*==========*/
+  /*LATEST*/
+  /*==========*/
+  .latest {
+    font-size: 22px;
+  }
+    .latest li main img {
+      width: 140px;
+      height: 110px;
+    }
+      .latest li aside {
+        margin: 0 .8em;
+      }
+
+  .search-chart {}
+    .search-chart__input input {
+      width: 300px;
+      height: 40px;
+    }
+    .search-chart__input i {
+      width: 40px;
+      height: 40px;
+      padding: .4em;
+    }
+
+    .search-chart__input ul {
+      top: 40px;
+      width: 300px;
+    }
+
 
 
 

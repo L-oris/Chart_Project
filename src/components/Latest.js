@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
+import moment from 'moment'
 
 import {SearchChart} from '.'
 import {getCharts,getSearchChartResults,deleteSearchChartResults} from '../actions'
@@ -23,15 +24,32 @@ class Latest extends Component {
 
   renderCharts(chartsList){
     return chartsList.map(chart=>{
-      const {id,name,description,timestamp,first,last,profilePicUrl} = chart
+      const {id,name,description,chartPicUrl,timestamp,first,last,profilePicUrl} = chart
       return (
-        <li className="border--black">
+        <li>
+
+          <header>
+            <img className="profile-pic" src={profilePicUrl} alt={first + ' ' + last}/>
+            <h5>A chart by {first} {last}</h5>
+          </header>
+
           <Link to={`/chart/${id}`}>
-            <img className="small-img" src={profilePicUrl} alt={first + ' ' + last}/>
-            <h4>{name}</h4>
-            <h6>By {first + ' ' + last}</h6>
-            <p>{timestamp}</p>
+            <main>
+              <img className="chart-pic" src={chartPicUrl} alt={name}/>
+              <aside>
+                <h3>{name}</h3>
+                <p>{description}</p>
+              </aside>
+            </main>
           </Link>
+
+          <footer>
+            <h5>{moment(timestamp).format("MMM Do, hh:mm")}</h5>
+            <h4>
+              <i className="fa fa-comments-o" aria-hidden="true"></i>
+              13 comments
+            </h4>
+          </footer>
         </li>
       )
     })
@@ -40,12 +58,12 @@ class Latest extends Component {
   render(){
     const {charts} = this.props
     return (
-      <div>
-        <h3>Latest charts here!</h3>
+      <div className="latest">
+        <h1>Latest charts</h1>
 
         <SearchChart/>
 
-        <ul>
+        <ul className="latest__charts">
           {charts && this.renderCharts(charts)}
         </ul>
 
