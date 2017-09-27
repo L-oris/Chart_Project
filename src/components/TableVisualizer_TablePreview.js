@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import moment from 'moment'
 
 import {getVisualizerTablePreview} from '../actions'
 
@@ -27,11 +28,11 @@ class TableVisualizer_TablePreview extends Component {
 
   renderTableHeaders(tableData){
     return (
-      <li>
+      <tr>
         {Object.keys(tableData[0]).map(column=>{
-          return <p className="border--black">{column}</p>
+          return <th>{column}</th>
         })}
-      </li>
+      </tr>
     )
 
   }
@@ -39,28 +40,30 @@ class TableVisualizer_TablePreview extends Component {
   renderTableData(tableData){
     return tableData.map(row=>{
       const rowHtml = Object.keys(row).map(column=>(
-        <p className="border--black">{row[column]}</p>
+        <td>{row[column]}</td>
       ))
       return (
-        <li>
+        <tr>
           {rowHtml}
-        </li>
+        </tr>
     )})
   }
 
   render(){
-    const {visualizerTable:{name,description,timestamp},visualizerTablePreview} = this.props
+    const {visualizerTable:{name,description,timestamp,first,last},visualizerTablePreview} = this.props
     return (
-      <div>
-        <h4>Table Preview here</h4>
-        <h3>Name: {name}</h3>
-        <p>Description: {description}</p>
-        <h6>Created: {timestamp}</h6>
+      <div className="table-preview">
+        <header>
+          <h5>Uploaded by {first} {last}</h5>
+          <h6>{moment(timestamp).format("MMM Do, hh:mm")}</h6>
+        </header>
+        <h3>{name}</h3>
+        <p>{description}</p>
 
-        <ul>
+        <table>
           {visualizerTablePreview && this.renderTableHeaders(visualizerTablePreview)}
           {visualizerTablePreview && this.renderTableData(visualizerTablePreview)}
-        </ul>
+        </table>
 
       </div>
     )

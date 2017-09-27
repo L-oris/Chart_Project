@@ -12,7 +12,8 @@ class SearchTable extends Component {
     this.state={
       searchTableType: 'name'
     }
-    this.handleSelectChange = this.handleSelectChange.bind(this)
+    this.ajaxTimer
+    this.handleRadioChange = this.handleRadioChange.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.selectTable = this.selectTable.bind(this)
   }
@@ -22,7 +23,7 @@ class SearchTable extends Component {
     dispatch(deleteSearchTableResults())
   }
 
-  handleSelectChange(e){
+  handleRadioChange(e){
     this.setState({
       [e.target.name]: e.target.value
     })
@@ -57,9 +58,10 @@ class SearchTable extends Component {
 
   renderSearchTableResults(tablesList){
     return tablesList.map(table=>{
-      const {id,name} = table
+      const {id,name,profilePicUrl,first,last} = table
       return (
         <li onClick={e=>this.selectTable(id)}>
+          <img src={profilePicUrl} alt={first + ' ' + last}/>
           <h6>{name}</h6>
         </li>
       )
@@ -68,19 +70,29 @@ class SearchTable extends Component {
 
   render(){
     const {searchTableResults} = this.props
-    const {searchTableText} = this.state
+    const {searchTableText,searchTableType} = this.state
     return (
-      <div>
+      <div className="search-chart">
 
-        <input name="searchTableText" value={searchTableText} onChange={this.handleInputChange}/>
-        <select name="searchTableType" onChange={this.handleSelectChange}>
-          <option value="name">Name</option>
-          <option value="user">User</option>
-        </select>
+        <div className="search-chart__input">
+          <input name="searchTableText" value={searchTableText} onChange={this.handleInputChange}/>
+          <i className="fa fa-search" aria-hidden="true"></i>
 
-        <ul>
-          {searchTableResults && this.renderSearchTableResults(searchTableResults)}
-        </ul>
+          <ul>
+            {searchTableResults && this.renderSearchTableResults(searchTableResults)}
+          </ul>
+        </div>
+
+        <div className="search-chart__radio">
+          <label for="search-chart--name">
+            <input onChange={this.handleRadioChange} checked={searchTableType === 'name'} type="radio" id="search-chart--name" name="searchTableType" value="name"/>
+            Name
+          </label>
+          <label for="search-chart--user">
+            <input onChange={this.handleRadioChange} checked={searchTableType === 'user'} type="radio" id="search-chart--user" name="searchTableType" value="user"/>
+            User
+          </label>
+        </div>
 
       </div>
     )

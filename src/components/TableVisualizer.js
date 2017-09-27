@@ -31,7 +31,9 @@ class TableVisualizer extends Component {
 
   renderTables(tablesList){
     return tablesList.map(table=>(
-      <li onClick={e=>this.selectTable(table.id)} className="border--black">{table.name}</li>
+      <li onClick={e=>this.selectTable(table.id)}>
+        <h3>{table.name}</h3>
+      </li>
     ))
   }
 
@@ -44,21 +46,24 @@ class TableVisualizer extends Component {
     const {dispatch,tables,visualizerTable,tableUploaderIsVisible} = this.props
 
     return (
-      <div>
+      <div className="table-visualizer">
 
         {tableUploaderIsVisible && <TableUploader/>}
 
-        <h3>Table Visualizer</h3>
+        <h1>Table Visualizer</h1>
 
         <SearchTable/>
 
-        <ul>
-          <li onClick={e=>dispatch(setTableUploaderIsVisible())}>
-            Upload your table!
-          </li>
+        <h2>Latest Uploaded</h2>
+        <ul className="table-visualizer__tables">
           {tables && this.renderTables(tables)}
         </ul>
 
+        <div className="table-visualizer__upload-btn" onClick={e=>dispatch(setTableUploaderIsVisible())}>
+          Upload your table!
+        </div>
+
+        <h2>Preview</h2>
         {visualizerTable && <TableVisualizer_TablePreview/>}
 
       </div>

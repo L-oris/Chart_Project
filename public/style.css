@@ -171,6 +171,11 @@ nav {}
         }
         .latest__charts li footer i {}
 
+
+
+/*==========*/
+/*SEARCH-CHART*/
+/*==========*/
 .search-chart {
   text-align: center;
   margin: 1.5em;
@@ -249,8 +254,6 @@ nav {}
     .search-chart__radio input {
       margin: .4em;
     }
-
-
 
 
 
@@ -375,6 +378,72 @@ nav {}
 
 
 
+/*==========*/
+/*TABLE-VISUALIZER*/
+/*==========*/
+.table-visualizer {}
+  .table-visualizer h1 {
+    text-align: center;
+    margin: .3em;
+  }
+  .table-visualizer h2 {
+    text-align: center;
+    margin: .8em;
+  }
+
+  .table-visualizer__tables {}
+    .table-visualizer__tables li {}
+      .table-visualizer__tables li h3 {}
+
+  .table-visualizer__upload-btn {}
+
+  .table-preview {
+    background-color: var(--white);
+    padding: 1em .5em;
+    border-radius: 10px;
+  }
+    .table-preview header {
+      display: flex;
+      justify-content: space-between;
+    }
+      .table-preview h5 {
+        color: var(--dark-grey);
+        margin: 0;
+      }
+      .table-preview h6 {
+        margin: 0;
+      }
+    .table-preview h3 {
+      text-transform: uppercase;
+      margin: .8em 0;
+    }
+    .table-preview p {
+      font-size: .9em;
+      margin: 0;
+    }
+
+    .table-preview table {
+      width: 90%;
+      margin: 2em auto 0;
+      border: 1px solid var(--dark-blue);
+      border-collapse: collapse;
+    }
+      .table-preview tr {}
+        .table-preview th {
+          background-color: rgba(255,0,0,.5);
+          color: white;
+          border-bottom: 1px solid var(--dark-blue);
+          border-right: 1px solid var(--dark-blue);
+          font-size: .85em;
+        }
+        .table-preview td {
+          border-right: 1px solid var(--dark-blue);
+          text-align: center;
+          font-size: .85em;
+        }
+
+
+
 
 
 
@@ -467,6 +536,21 @@ nav {}
     .chart-visualizer__main section h5 {
       margin: 3em 0 1.5em;
     }
+
+
+
+  /*==========*/
+  /*TABLE-VISUALIZER*/
+  /*==========*/
+  .table-visualizer {
+    font-size: 22px;
+  }
+    .table-visualizer th,
+    .table-visualizer tr {
+      padding: .5em;
+    }
+
+
 
 
 }

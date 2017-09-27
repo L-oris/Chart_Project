@@ -70,7 +70,6 @@ class SearchChart extends Component {
           <ul>
             {searchChartResults && this.renderSearchChartResults(searchChartResults)}
           </ul>
-          
         </div>
 
         <div className="search-chart__radio">
@@ -87,7 +86,6 @@ class SearchChart extends Component {
             Type
           </label>
         </div>
-
 
       </div>
     )
