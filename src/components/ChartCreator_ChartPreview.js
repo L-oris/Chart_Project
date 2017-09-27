@@ -11,6 +11,7 @@ class ChartCreator_ChartPreview extends Component {
     super(props)
     this.state={}
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleFileChange = this.handleFileChange.bind(this)
     this.createChart = this.createChart.bind(this)
   }
 
@@ -22,9 +23,9 @@ class ChartCreator_ChartPreview extends Component {
 
   shouldComponentUpdate(nextProps,nextState){
     //prevent component re-rendering every time 'name' or 'description' fields change
-    const {name:previousName,description:previousDescription} = this.state
-    const {name:nextName,description:nextDescription} = nextState
-    if(previousName !== nextName || previousDescription !== nextDescription){
+    const {name:previousName,description:previousDescription,file:previousFile} = this.state
+    const {name:nextName,description:nextDescription,file:nextFile} = nextState
+    if(previousName !== nextName || previousDescription !== nextDescription || previousFile !== nextFile){
       return false
     }
     return true
@@ -36,21 +37,28 @@ class ChartCreator_ChartPreview extends Component {
     })
   }
 
+  handleFileChange(e){
+    this.setState({
+      file:e.target.files[0]
+    })
+  }
+
   createChart(e){
     e.preventDefault()
     const {dispatch,creatorTableId,creatorFields,creatorData} = this.props
-    const {name,description} = this.state
-    if(creatorData && name && description){
+    const {name,description,file} = this.state
+    if(creatorData && name && description && file){
+      //use built-in FormData API
+      const formData = new FormData()
+      formData.append('file',file)
+      formData.append('tableId',creatorTableId)
+      formData.append('XAxis',creatorFields.XAxis)
+      formData.append('YAxis',creatorFields.YAxis)
+      formData.append('type',creatorFields.type)
+      formData.append('name',name)
+      formData.append('description',description)
 
-      dispatch(createChart({
-        tableId: creatorTableId,
-        XAxis: creatorFields.XAxis,
-        YAxis: creatorFields.YAxis,
-        type: creatorFields.type,
-        name,
-        description
-      }))
-
+      dispatch(createChart(formData))
       browserHistory.push('/')
     }
   }
@@ -67,6 +75,7 @@ class ChartCreator_ChartPreview extends Component {
           <input required name="name" onChange={this.handleInputChange}/>
           Description:
           <textarea required name="description" onChange={this.handleInputChange}></textarea>
+          <input required type="file" onChange={this.handleFileChange}/>
           <button type="submit">Create it!</button>
         </form>
 

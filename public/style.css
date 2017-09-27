@@ -29,6 +29,7 @@ body, nav header {
   background-color: var(--blue);
   padding-top: 100px;
   padding-bottom: 1.5em;
+  min-height: 100vh;
 }
 .app__children {
   margin: 1em;

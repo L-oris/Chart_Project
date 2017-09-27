@@ -203,10 +203,14 @@ router.post('/api/search_table',function(req,res,next){
 
 
 //CREATE NEW CHART INTO DATABASE
-router.post('/api/create_chart',function(req,res,next){
+router.post('/api/create_chart',uploader.single('file'),uploadToS3,function(req,res,next){
   //const {tableId,XAxis,YAxis,type,name,description} = req.body
+  const {filename} = req.file
+  if(!filename){
+    throw 'No file to upload'
+  }
   const {userId} = req.session.user
-  createChart({...req.body,userId})
+  createChart({...req.body,userId,filename})
   .then(function(newChart){
     res.json(newChart)
   })

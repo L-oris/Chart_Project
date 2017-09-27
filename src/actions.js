@@ -57,8 +57,8 @@ export function getCharts(){
 }
 
 
-export function createChart(chartObj){
-  return axios.post('/api/create_chart',chartObj)
+export function createChart(formData){
+  return axios.post('/api/create_chart',formData)
   .then(serverResponse=>{
     return {
       type: 'CREATE_CHART',

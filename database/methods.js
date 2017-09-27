@@ -149,58 +149,62 @@ module.exports.searchTable = function(searchType,searchText){
   })
 }
 
-module.exports.createChart = function({userId,tableId,XAxis,YAxis,type,name,description}){
-  const query = 'INSERT INTO charts (user_id,table_id,x_axis,y_axis,type,name,description) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id'
-  return db.query(query,[userId,tableId,XAxis,YAxis,type,name,description])
+module.exports.createChart = function({userId,tableId,XAxis,YAxis,type,name,description,filename}){
+  const query = 'INSERT INTO charts (user_id,table_id,x_axis,y_axis,type,name,description,chartpicurl) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING id'
+  return db.query(query,[userId,tableId,XAxis,YAxis,type,name,description,filename])
   .then(function(dbChartId){
     const chartId = dbChartId.rows[0].id
-    const query = `SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id WHERE charts.id = $1`
+    const query = `SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id WHERE charts.id = $1`
     return db.query(query,[chartId])
   })
   .then(function(dbChart){
-    const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,created_at:timestamp,first,last,profilepicurl} = dbChart.rows[0]
+    const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl} = dbChart.rows[0]
     return {
       id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
-      profilePicUrl: s3Url + profilepicurl
+      profilePicUrl: s3Url + profilepicurl,
+      chartPicUrl: s3Url + chartpicurl
     }
   })
 }
 
 module.exports.getCharts = function(){
-  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id ORDER BY created_at DESC LIMIT 20'
+  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id ORDER BY created_at DESC LIMIT 20'
   return db.query(query)
   .then(function(dbCharts){
     return dbCharts.rows.map(chart=>{
-      const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,created_at:timestamp,first,last,profilepicurl} = chart
+      const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl} = chart
       return {
         id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
-        profilePicUrl: s3Url + profilepicurl
+        profilePicUrl: s3Url + profilepicurl,
+        chartPicUrl: s3Url + chartpicurl
       }
     })
   })
 }
 
 module.exports.getChartById = function(chartId){
-  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id WHERE charts.id = $1'
+  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id WHERE charts.id = $1'
   return db.query(query,[chartId])
   .then(function(dbChart){
-    const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,created_at:timestamp,first,last,profilepicurl} = dbChart.rows[0]
+    const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl} = dbChart.rows[0]
     return {
       id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
-      profilePicUrl: s3Url + profilepicurl
+      profilePicUrl: s3Url + profilepicurl,
+      chartPicUrl: s3Url + chartpicurl
     }
   })
 }
 
 module.exports.getChartsByUserId = function(userId){
-  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id WHERE users.id = $1'
+  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id WHERE users.id = $1'
   return db.query(query,[userId])
   .then(function(dbCharts){
     return dbCharts.rows.map(chart=>{
-      const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,created_at:timestamp,first,last,profilepicurl} = chart
+      const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl} = chart
       return {
         id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
-        profilePicUrl: s3Url + profilepicurl
+        profilePicUrl: s3Url + profilepicurl,
+        chartPicUrl: s3Url + chartpicurl
       }
     })
   })
@@ -208,7 +212,7 @@ module.exports.getChartsByUserId = function(userId){
 
 module.exports.searchChart = function(searchType,searchText){
   let query = `
-    SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, charts.created_at
+    SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at
     FROM users INNER JOIN charts
     ON users.id = charts.user_id  `
   if(searchType === 'name'){
@@ -226,10 +230,11 @@ module.exports.searchChart = function(searchType,searchText){
   return db.query(query,[searchText])
   .then(function(dbCharts){
     return dbCharts.rows.map(chart=>{
-      const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,created_at:timestamp,first,last,profilepicurl} = chart
+      const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl} = chart
       return {
         id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
-        profilePicUrl: s3Url + profilepicurl
+        profilePicUrl: s3Url + profilepicurl,
+        chartPicUrl: s3Url + chartpicurl
       }
     })
   })

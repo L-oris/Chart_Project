@@ -31,6 +31,7 @@ CREATE TABLE charts(
   type VARCHAR(20) NOT NULL,
   name VARCHAR(200) NOT NULL,
   description TEXT NOT NULL,
+  chartpicurl VARCHAR(200)NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -41,5 +42,3 @@ CREATE TABLE comments(
   comment VARCHAR(300) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-INSERT INTO users  (first,last,email,password,profilepicurl) VALUES ('John','Doe','john@doe','john','https://s3.amazonaws.com/chart-loris/profile-default.jpg');
