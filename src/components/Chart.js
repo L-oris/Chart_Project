@@ -28,7 +28,6 @@ export default class Chart extends Component {
   render(){
     return (
       <div>
-        <h4>Canvas here</h4>
         <canvas ref="canvas" width="400" height="400"></canvas>
       </div>
     )

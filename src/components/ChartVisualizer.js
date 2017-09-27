@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import axios from '../axios'
+import moment from 'moment'
 
 import {Chart, ChartVisualizer_Comments} from '.'
 
@@ -29,16 +30,23 @@ class ChartVisualizer extends Component {
   }
 
   renderChart(chart,chartData){
-    const {type,YAxis,name,description,first,last} = chart
+    const {type,YAxis,name,description,chartPicUrl,timestamp,first,last} = chart
     const {XData,YData} = chartData
     return (
-      <div>
-        <h4>{name}</h4>
-        <h6>A chart by {first} {last}</h6>
+      <div className="chart-visualizer__main">
 
-        <Chart type={type} XData={XData} YData={YData} YLabel={YAxis}/>
+        <header>
+          <img src={chartPicUrl} alt="chart picture"/>
+          <h2>{name}</h2>
+          <h6>{moment(timestamp).format('MMMM Do YYYY, h:mm:ss a')}</h6>
+        </header>
 
-        <p>{description}</p>
+        <section>
+          <p>{description}</p>
+          <Chart type={type} XData={XData} YData={YData} YLabel={YAxis}/>
+          <h5>A chart by {first} {last}</h5>
+        </section>
+
       </div>
     )
   }
@@ -46,8 +54,8 @@ class ChartVisualizer extends Component {
   render(){
     const {visualizerChart,visualizerChartData} = this.props
     return (
-      <div>
-        <h3>Chart Visualizer</h3>
+      <div className="chart-visualizer">
+        <h1>Chart Visualizer</h1>
 
         {visualizerChart && visualizerChartData && this.renderChart(visualizerChart,visualizerChartData)}
 

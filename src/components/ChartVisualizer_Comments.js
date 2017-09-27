@@ -35,26 +35,32 @@ class ChartVisualizer_Comments extends Component {
       const {comment,first,last,profilePicUrl,timestamp} = _comment
       return (
         <li>
-          <h6>{first} {last}</h6>
-          <img className="small-img" src={profilePicUrl} alt={first + ' ' + last}/>
-          <p>{comment}</p>
+          <img src={profilePicUrl} alt={first + ' ' + last}/>
+          <aside>
+            <h6>{first} {last}</h6>
+            <p>{comment}</p>
+          </aside>
         </li>
       )
     })
   }
 
   render(){
-    const {visualizerChartComments} = this.props
+    const {visualizerChartComments,user} = this.props
     return (
-      <div>
+      <div className="chart-comments">
         <h3>Comments</h3>
 
-        {visualizerChartComments && this.renderComments(visualizerChartComments)}
+        <ul>
+          {visualizerChartComments && this.renderComments(visualizerChartComments)}
+        </ul>
 
         <form onSubmit={this.createNewComment}>
-          Your comment:
-          <textarea required name="newComment" value={this.state.newComment} onChange={this.handleInputChange}></textarea>
-          <button type="submit">Save it!</button>
+          <div className="chart-comments__new">
+            <img src={user.profilePicUrl} alt={`${user.first} ${user.last}`}/>
+            <textarea required name="newComment" value={this.state.newComment} onChange={this.handleInputChange}></textarea>
+          </div>
+          <button type="submit">Send it</button>
         </form>
 
       </div>
@@ -66,7 +72,8 @@ class ChartVisualizer_Comments extends Component {
 function mapStateToProps(reduxState){
   return {
     visualizerChart: reduxState.visualizerChart,
-    visualizerChartComments: reduxState.visualizerChartComments
+    visualizerChartComments: reduxState.visualizerChartComments,
+    user: reduxState.user
   }
 }
 
