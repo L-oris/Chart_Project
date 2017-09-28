@@ -43,27 +43,31 @@ class ChartCreator_FieldSelector extends Component {
   }
 
   render(){
-    const {creatorTableFields} = this.props
+    const {creatorTableFields,creatorData} = this.props
     const {chartTypes} = this.state
     return (
       <div>
 
-        <ul>
-          <h4>Select X Axis</h4>
-          {creatorTableFields && this.renderFields('XAxis',creatorTableFields)}
-        </ul>
+        {creatorTableFields && !creatorData &&
+          <div>
+            <ul>
+              <h4>Select X Axis</h4>
+              {this.renderFields('XAxis',creatorTableFields)}
+            </ul>
 
-        <ul>
-          <h4>Select Y Axis</h4>
-          {creatorTableFields && this.renderFields('YAxis',creatorTableFields)}
-        </ul>
+            <ul>
+              <h4>Select Y Axis</h4>
+              {this.renderFields('YAxis',creatorTableFields)}
+            </ul>
 
-        <ul>
-          <h4>Select Chart Type</h4>
-          {creatorTableFields && this.renderFields('type',chartTypes)}
-        </ul>
+            <ul>
+              <h4>Select Chart Type</h4>
+              {this.renderFields('type',chartTypes)}
+            </ul>
 
-        <button onClick={this.saveFields}>Go</button>
+            <button onClick={this.saveFields}>Go</button>
+          </div>
+        }
       </div>
     )
   }
@@ -73,7 +77,8 @@ class ChartCreator_FieldSelector extends Component {
 function mapStateToProps(reduxState){
   return {
     creatorTableId: reduxState.creatorTableId,
-    creatorTableFields: reduxState.creatorTableFields
+    creatorTableFields: reduxState.creatorTableFields,
+    creatorData: reduxState.creatorData
   }
 }
 

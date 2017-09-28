@@ -70,14 +70,16 @@ class ChartCreator_ChartPreview extends Component {
 
         {creatorData && <Chart type={creatorFields.type} XData={creatorData.XData} YData={creatorData.YData} YLabel={creatorFields.YAxis}/>}
 
-        <form onSubmit={this.createChart}>
-          Name:
-          <input required name="name" onChange={this.handleInputChange}/>
-          Description:
-          <textarea required name="description" onChange={this.handleInputChange}></textarea>
-          <input required type="file" onChange={this.handleFileChange}/>
-          <button type="submit">Create it!</button>
-        </form>
+        {creatorData &&
+          <form onSubmit={this.createChart}>
+            Name:
+            <input required name="name" onChange={this.handleInputChange}/>
+            Description:
+            <textarea required name="description" onChange={this.handleInputChange}></textarea>
+            <input required type="file" onChange={this.handleFileChange}/>
+            <button type="submit">Create it!</button>
+          </form>
+        }
 
       </div>
     )

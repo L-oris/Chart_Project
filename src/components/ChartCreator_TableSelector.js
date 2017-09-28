@@ -33,13 +33,16 @@ class ChartCreator_TableSelector extends Component {
   }
 
   render(){
-    const {tables} = this.props
+    const {tables,creatorTableFields} = this.props
     return (
       <div>
+        {tables && !creatorTableFields &&
+          <div>
+            <ChartCreator_SearchTable/>
 
-        <ChartCreator_SearchTable/>
-
-        {tables && this.renderTables(tables)}
+            {this.renderTables(tables)}
+          </div>
+        }
       </div>
     )
   }
@@ -48,7 +51,8 @@ class ChartCreator_TableSelector extends Component {
 
 function mapStateToProps(reduxState){
   return {
-    tables: reduxState.tables
+    tables: reduxState.tables,
+    creatorTableFields: reduxState.creatorTableFields
   }
 }
 

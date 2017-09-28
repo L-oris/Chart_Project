@@ -76,6 +76,13 @@ export function setCreatorTableId(tableId){
 }
 
 
+export function deleteCreatorTableId(){
+  return {
+    type: 'DELETE_CREATOR_TABLE_ID'
+  }
+}
+
+
 export function getCreatorTableFields(tableId){
   return axios.get(`/api/get_table_fields/${tableId}`)
   .then(serverResponse=>{
@@ -91,6 +98,13 @@ export function setCreatorFields(creatorFields){
   return {
     type: 'SET_CREATOR_FIELDS',
     creatorFields
+  }
+}
+
+
+export function deleteCreatorFields(){
+  return {
+    type: 'DELETE_CREATOR_FIELDS'
   }
 }
 

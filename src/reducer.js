@@ -39,6 +39,15 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='DELETE_CREATOR_TABLE_ID'){
+    return Object.assign({},state,{
+      creatorTableId: '',
+      creatorTableFields: '',
+      creatorFields: '',
+      creatorData: ''
+    })
+  }
+
   if(action.type==='GET_CREATOR_TABLE_FIELDS'){
     return Object.assign({},state,{
       creatorTableFields: action.creatorTableFields
@@ -48,6 +57,13 @@ export default function(state={},action){
   if(action.type==='SET_CREATOR_FIELDS'){
     return Object.assign({},state,{
       creatorFields: action.creatorFields
+    })
+  }
+
+  if(action.type==='DELETE_CREATOR_FIELDS'){
+    return Object.assign({},state,{
+      creatorFields: '',
+      creatorData: ''
     })
   }
 
