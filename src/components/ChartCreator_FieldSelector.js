@@ -9,7 +9,7 @@ class ChartCreator_FieldSelector extends Component {
   constructor(props){
     super(props)
     this.state={
-      chartTypes: ['line','bar','radar','doughnut','polarArea','bubble']
+      chartTypes: ['line','bar','radar','doughnut','polarArea']
     }
     this.renderFields = this.renderFields.bind(this)
     this.chooseField = this.chooseField.bind(this)
