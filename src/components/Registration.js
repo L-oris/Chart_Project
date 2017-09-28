@@ -8,31 +8,35 @@ function RegistrationForm ({error,handleInputChange,handleSubmit}){
   return (
     <form onSubmit={handleSubmit}>
 
-      <h4>{error}</h4>
+      <h5 className="scale">REGISTER</h5>
+      <Link to='/login'><h5>LOGIN</h5></Link>
 
-      <div>
-        <h6>First Name</h6>
-        <input required name="first" onChange={handleInputChange} placeholder=""/>
-      </div>
+      <h4 className="text-error">{error}</h4>
 
-      <div>
-        <h6>Last Name</h6>
-        <input required name="last" onChange={handleInputChange} placeholder=""/>
-      </div>
+      <section className="registration">
+        <div className="welcome__field">
+          <h6>First Name</h6>
+          <input required name="first" onChange={handleInputChange} placeholder=""/>
+        </div>
 
-      <div>
-        <h6>Email</h6>
-        <input required type="email" name="email" onChange={handleInputChange} placeholder=""/>
-      </div>
+        <div className="welcome__field">
+          <h6>Last Name</h6>
+          <input required name="last" onChange={handleInputChange} placeholder=""/>
+        </div>
 
-      <div>
-        <h6>Password</h6>
-        <input required type="password" name="password" onChange={handleInputChange} placeholder=""/>
-      </div>
+        <div className="welcome__field">
+          <h6>Email</h6>
+          <input required type="email" name="email" onChange={handleInputChange} placeholder=""/>
+        </div>
+
+        <div className="welcome__field">
+          <h6>Password</h6>
+          <input required type="password" name="password" onChange={handleInputChange} placeholder=""/>
+        </div>
+      </section>
 
       <button type="submit">Submit</button>
 
-      <Link to='/login'>Already a member?</Link>
 
     </form>
   )

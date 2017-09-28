@@ -4,12 +4,14 @@ import {Link} from 'react-router'
 
 export default function Welcome(props){
   return (
-    <div>
+    <div className="welcome">
+      <p> </p>
 
-      <h1>Chart Project</h1>
+      <h3>Data visualization describes any effort to help people understand the significance of data by placing it in a visual context</h3>
 
       {props.children}
 
+      <p> </p>
     </div>
   )
 
