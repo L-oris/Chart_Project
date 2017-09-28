@@ -9,7 +9,7 @@ class ChartCreator_FieldSelector extends Component {
   constructor(props){
     super(props)
     this.state={
-      chartTypes: ['line','bar','radar','doughnut','polarArea']
+      chartTypes: ['line','bar','radar','doughnut']
     }
     this.renderFields = this.renderFields.bind(this)
     this.chooseField = this.chooseField.bind(this)
@@ -24,7 +24,7 @@ class ChartCreator_FieldSelector extends Component {
 
   renderFields(selectedAxis,fieldsList){
     return fieldsList.map(field=>(
-      <li onClick={e=>this.chooseField(selectedAxis,field)}>{field}</li>
+      <li className={`${this.state[selectedAxis] === field ? 'active' : ''}`} onClick={e=>this.chooseField(selectedAxis,field)}>{field}</li>
     ))
   }
 
@@ -46,26 +46,38 @@ class ChartCreator_FieldSelector extends Component {
     const {creatorTableFields,creatorData} = this.props
     const {chartTypes} = this.state
     return (
-      <div>
+      <div className="chart-creator__field-selector">
 
         {creatorTableFields && !creatorData &&
           <div>
-            <ul>
+
+            <h4>Select the type</h4>
+            <ul className="type">
+              <li className={`${this.state.type === 'line' && 'active'}`} onClick={e=>this.chooseField('type','line')}>
+                <i className="fa fa-line-chart" aria-hidden="true"></i>
+              </li>
+              <li className={`${this.state.type === 'bar' && 'active'}`} onClick={e=>this.chooseField('type','bar')}>
+                <i className="fa fa-bar-chart" aria-hidden="true"></i>
+              </li>
+              <li className={`${this.state.type === 'radar' && 'active'}`} onClick={e=>this.chooseField('type','radar')}>
+                <i className="fa fa-connectdevelop" aria-hidden="true"></i>
+              </li>
+              <li className={`${this.state.type === 'doughnut' && 'active'}`} onClick={e=>this.chooseField('type','doughnut')}>
+                <i className="fa fa-pie-chart" aria-hidden="true"></i>
+              </li>
+            </ul>
+
+            <ul className="x-axis">
               <h4>Select X Axis</h4>
               {this.renderFields('XAxis',creatorTableFields)}
             </ul>
 
-            <ul>
+            <ul className="y-axis">
               <h4>Select Y Axis</h4>
               {this.renderFields('YAxis',creatorTableFields)}
             </ul>
 
-            <ul>
-              <h4>Select Chart Type</h4>
-              {this.renderFields('type',chartTypes)}
-            </ul>
-
-            <button onClick={this.saveFields}>Go</button>
+            <button onClick={this.saveFields}>Next</button>
           </div>
         }
       </div>

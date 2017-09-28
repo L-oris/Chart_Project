@@ -22,8 +22,8 @@ class ChartCreator_TableSelector extends Component {
   }
 
   renderTables(tablesList){
-    return tablesList.map(table=>(
-      <li onClick={e=>this.selectTable(table.id)} className="border--black">{table.name}</li>
+    return tablesList.slice(0,4).map(table=>(
+      <li onClick={e=>this.selectTable(table.id)}>{table.name}</li>
     ))
   }
 
@@ -35,12 +35,15 @@ class ChartCreator_TableSelector extends Component {
   render(){
     const {tables,creatorTableFields} = this.props
     return (
-      <div>
+      <div className="chart-creator__table-selector">
         {tables && !creatorTableFields &&
           <div>
             <ChartCreator_SearchTable/>
 
-            {this.renderTables(tables)}
+            <h4>LATEST</h4>
+            <ul>
+              {this.renderTables(tables)}
+            </ul>
           </div>
         }
       </div>

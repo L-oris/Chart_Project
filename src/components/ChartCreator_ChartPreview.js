@@ -66,18 +66,23 @@ class ChartCreator_ChartPreview extends Component {
   render(){
     const {creatorFields,creatorData} = this.props
     return (
-      <div>
+      <div className="chart-creator__chart-preview">
 
         {creatorData && <Chart type={creatorFields.type} XData={creatorData.XData} YData={creatorData.YData} YLabel={creatorFields.YAxis}/>}
 
         {creatorData &&
           <form onSubmit={this.createChart}>
-            Name:
+
+            Name
             <input required name="name" onChange={this.handleInputChange}/>
-            Description:
+
+            Description
             <textarea required name="description" onChange={this.handleInputChange}></textarea>
-            <input required type="file" onChange={this.handleFileChange}/>
-            <button type="submit">Create it!</button>
+
+            <input required type="text" id="chart-creator__chart-preview--file" type="file" onChange={this.handleFileChange}/>
+            <label htmlFor="chart-creator__chart-preview--file">Choose a file</label>
+
+            <button type="submit">Share</button>
           </form>
         }
 

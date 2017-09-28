@@ -35,6 +35,11 @@ export default class Chart extends Component {
         borderColor: color,
         backgroundColor: bgLightColor
       }
+      options = {
+        layout: {
+          padding: {left: 5}
+        }
+      }
     } else if (type === 'bar'){
       displayOptions = {
         backgroundColor: bgLightColors,
@@ -42,7 +47,8 @@ export default class Chart extends Component {
         borderWidth: 3
       }
       options = {
-        legend: {display: false}
+        legend: {display: false},
+        layout: {padding: {left: 5}}
       }
     } else if (type === 'radar'){
       displayOptions = {
