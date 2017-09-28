@@ -595,6 +595,77 @@ nav {}
 
 
 
+/*==========*/
+/*PROFILE*/
+/*==========*/
+.profile {
+  background-color: var(--white);
+  border-radius: 10px;
+}
+  .profile__details {
+    position: relative;
+    margin-bottom: 100px;
+  }
+    .profile img.details--background {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      border-bottom: 1px solid var(--dark-blue);
+    }
+    .profile #profile-pic--file {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+      .profile #profile-pic--file + label {
+        cursor: pointer;
+      }
+        .profile img.details--profile-pic {
+          position: absolute;
+          width: 100%;
+          left: 10px;
+          top: 120px;
+          border-radius: 10px;
+          width: 100px;
+          height: 100px;
+          object-fit: cover;
+          border: 2px solid var(--white);
+        }
+    .profile__details h4 {
+      position: absolute;
+      top: 140px;
+      left: 120px;
+      font-size: 1.75em;
+    }
+
+  .profile__list {
+    padding: .5em;
+    display: flex;
+  }
+    .profile__list h3 {
+      flex: 1 40%;
+    }
+    .profile__list ul {
+      margin-left: 1.3em;
+      flex: 1 60%;
+    }
+      .profile__list li {}
+        .profile__list h5 {
+          font-size: .9em;
+        }
+          .profile__list h5 span {
+            color: var(--dark-grey);
+            font-size: 1.1em;
+          }
+
+
+
+
 @media screen and (min-width: 1024px){
 
   .app__children {
@@ -697,13 +768,42 @@ nav {}
 
 
 
-/*==========*/
-/*CHART-CREATOR*/
-/*==========*/
-.chart-creator {
-  font-size: 20px;
-}
+  /*==========*/
+  /*CHART-CREATOR*/
+  /*==========*/
+  .chart-creator {
+    font-size: 20px;
+  }
 
+
+
+  /*==========*/
+  /*PROFILE*/
+  /*==========*/
+  .profile {
+    font-size: 20px;
+  }
+    .profile__details {
+      margin-bottom: 140px;
+    }
+      .profile img.details--background {
+        height: 250px;
+      }
+      .profile img.details--profile-pic {
+        width: 150px;
+        height: 150px;
+        top: 185px;
+        left: 40px;
+      }
+      .profile__details h4 {
+        top: 225px;
+        left: 220px;
+        font-size: 2.2em;
+      }
+
+    .profile__list h3 {
+      text-align: center;
+    }
 
 
 }

@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import {browserHistory,Link} from 'react-router'
 import {connect} from 'react-redux'
+import moment from 'moment'
 
 import {updateUserProfilePic,getUserTables,getUserCharts,setVisualizerTable} from '../actions'
 
@@ -37,22 +38,23 @@ class ProfileManager extends Component {
   renderProfileDetails(user){
     const {first,last,profilePicUrl} = user
     return (
-      <div>
-        <img className="small-img" src={profilePicUrl} alt={first + ' ' + last}/>
+      <div className="profile__details">
+        <img className="details--background" src="/images/profile-bg.jpg" alt="user background"/>
+        <input type="text" id="profile-pic--file" type="file" onChange={this.handleProfilePicUpload}/>
+        <label htmlFor="profile-pic--file">
+          <img className="details--profile-pic" src={profilePicUrl} alt={first + ' ' + last}/>
+        </label>
         <h4>{first} {last}</h4>
-        <input type="file" onChange={this.handleProfilePicUpload}/>
       </div>
     )
   }
 
   renderUserTables(tablesList){
     return tablesList.map(table=>{
-      const {id,name,description,timestamp} = table
+      const {id,name,timestamp} = table
       return (
         <li onClick={e=>this.selectTable(id)}>
-          <h5>{name}</h5>
-          <p>{description}</p>
-          <h6>{timestamp}</h6>
+          <h5><span>{moment(timestamp).format('MM/YY')}</span> - {name}</h5>
         </li>
       )
     })
@@ -60,13 +62,11 @@ class ProfileManager extends Component {
 
   renderUserCharts(chartsList){
     return chartsList.map(chart=>{
-      const {id,name,description,timestamp} = chart
+      const {id,name,timestamp} = chart
       return (
         <li>
           <Link to={`/chart/${id}`}>
-            <h5>{name}</h5>
-            <p>{description}</p>
-            <h6>{timestamp}</h6>
+            <h5><span>{moment(timestamp).format('MM/YY')}</span> - {name}</h5>
           </Link>
         </li>
       )
@@ -76,23 +76,23 @@ class ProfileManager extends Component {
   render(){
     const {user,userTables,userCharts} = this.props
     return (
-      <div>
-
-        <h1>Profile Manager here</h1>
+      <div className="profile">
 
         {user && this.renderProfileDetails(user)}
 
-        <ul>
-          <h4>Tables:</h4>
-          <Link to="/tables">Upload a new table!</Link>
-          {userTables && this.renderUserTables(userTables)}
-        </ul>
+        <div className="profile__list">
+          <h3>TABLES</h3>
+          <ul>
+            {userTables && this.renderUserTables(userTables)}
+          </ul>
+        </div>
 
-        <ul>
-          <h4>Charts:</h4>
-          <Link to="/chart_creator">Create a new chart!</Link>
-          {userCharts && this.renderUserCharts(userCharts)}
-        </ul>
+        <div className="profile__list">
+          <h3>CHARTS</h3>
+          <ul>
+            {userCharts && this.renderUserCharts(userCharts)}
+          </ul>
+        </div>
 
       </div>
     )
