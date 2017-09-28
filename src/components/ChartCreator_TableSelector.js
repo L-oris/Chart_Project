@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 
+import {ChartCreator_SearchTable} from '.'
 import {getTables,setCreatorTableId} from '../actions'
 
 class ChartCreator_TableSelector extends Component {
@@ -35,6 +36,9 @@ class ChartCreator_TableSelector extends Component {
     const {tables} = this.props
     return (
       <div>
+
+        <ChartCreator_SearchTable/>
+
         {tables && this.renderTables(tables)}
       </div>
     )
