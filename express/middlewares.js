@@ -11,10 +11,16 @@ const fs = require('fs'),
 
 
 module.exports.middlewares = function(app){
+  let sessionSecret
+  if(process.env.SESSION_SECRET){
+    sessionSecret = process.env.SESSION_SECRET
+  } else {
+    sessionSecret = require('../secrets.json').sessionSecret
+  }
   //apply middlewares
   app.use(compression())
   app.use(cookieSession({
-    secret: require('../secrets.json').sessionSecret,
+    secret: sessionSecret,
     maxAge: 1000 * 60 * 60 * 24 * 14
   }))
   app.use(bodyParser.json())
@@ -48,9 +54,10 @@ module.exports.uploader = multer({
 })
 
 //setup 'knox' module to upload files to Amazon S3 Service
-let secrets
+let secret = {}
 if(process.env.NODE_ENV==='production'){
-  secrets = process.env
+  secret['key'] = process.env.AWS_KEY
+  secret['secret'] = process.env.AWS_SECRET
 } else {
   secret = require('../secrets.json')
 }

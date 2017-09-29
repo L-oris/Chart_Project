@@ -508,6 +508,7 @@ nav {}
         font-size: 1em;
         border-bottom: 1px solid var(--dark-grey);
         margin: 0 .5em;
+        cursor: pointer;
       }
         .table-visualizer__latest li h4 {
           display: inline;

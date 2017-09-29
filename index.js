@@ -35,7 +35,7 @@ app.use(function (err, req, res, next){
   res.status(500).json({success:false})
 })
 
-const port = 8000
+const port = process.env.PORT || 8000
 app.listen(port, function(){
   console.log(`Server listening on port ${port}`)
 })
