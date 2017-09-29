@@ -77,7 +77,7 @@ module.exports.addTable = function(userId,name,description,filename){
 module.exports.getTables = function(){
   const query = `
     SELECT first,last,profilepicurl,tables.id,tables.user_id,name,description,tableurl,tables.created_at
-    FROM tables INNER JOIN users ON tables.user_id = users.id LIMIT 20`
+    FROM tables INNER JOIN users ON tables.user_id = users.id ORDER BY created_at DESC LIMIT 20`
   return db.query(query)
   .then(function(dbTables){
     return dbTables.rows.map(table=>{
@@ -109,7 +109,7 @@ module.exports.getTableById = function(tableId){
 module.exports.getTablesByUserId = function(userId){
   const query = `
     SELECT first,last,profilepicurl,tables.id,tables.user_id,name,description,tableurl,tables.created_at
-    FROM tables INNER JOIN users ON tables.user_id = users.id WHERE tables.user_id = $1`
+    FROM tables INNER JOIN users ON tables.user_id = users.id WHERE tables.user_id = $1  ORDER BY created_at DESC`
   return db.query(query,[userId])
   .then(function(dbTables){
     return dbTables.rows.map(table=>{
@@ -134,7 +134,7 @@ module.exports.searchTable = function(searchType,searchText){
     query += 'WHERE first ILIKE $1 OR last ILIKE $1'
     searchText = searchText + '%'
   }
-  query += ' LIMIT 4'
+  query += ' ORDER BY created_at DESC LIMIT 4'
 
   return db.query(query,[searchText])
   .then(function(dbTables){
@@ -196,7 +196,7 @@ module.exports.getChartById = function(chartId){
 }
 
 module.exports.getChartsByUserId = function(userId){
-  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id WHERE users.id = $1'
+  const query = 'SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at FROM users INNER JOIN charts ON users.id = charts.user_id WHERE users.id = $1 ORDER BY created_at DESC'
   return db.query(query,[userId])
   .then(function(dbCharts){
     return dbCharts.rows.map(chart=>{
@@ -214,7 +214,7 @@ module.exports.searchChart = function(searchType,searchText){
   let query = `
     SELECT first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at
     FROM users INNER JOIN charts
-    ON users.id = charts.user_id  `
+    ON users.id = charts.user_id `
   if(searchType === 'name'){
     query += 'WHERE charts.name ILIKE $1'
     searchText = '%' + searchText + '%'
@@ -225,7 +225,7 @@ module.exports.searchChart = function(searchType,searchText){
     query += 'WHERE users.first ILIKE $1 OR users.last ILIKE $1'
     searchText = searchText + '%'
   }
-  query += ' LIMIT 4'
+  query += ' ORDER BY created_at DESC LIMIT 4'
 
   return db.query(query,[searchText])
   .then(function(dbCharts){
@@ -245,7 +245,7 @@ module.exports.getCommentsByChartId = function(chartId){
     SELECT comment, comments.created_at,first,last,profilepicurl FROM comments
     RIGHT OUTER JOIN charts ON charts.id = comments.chart_id
     INNER JOIN users ON users.id = comments.user_id
-    WHERE charts.id = $1`
+    WHERE charts.id = $1 ORDER BY created_at DESC`
   return db.query(query,[chartId])
   .then(function(dbComments){
     return dbComments.rows.map(dbComment=>{

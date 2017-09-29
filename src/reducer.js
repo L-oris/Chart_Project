@@ -22,7 +22,7 @@ export default function(state={},action){
 
   if(action.type==='ADD_TABLE'){
     return Object.assign({},state,{
-      tables: [...state.tables,action.table],
+      tables: [action.table,...state.tables],
       userTables: ''
     })
   }

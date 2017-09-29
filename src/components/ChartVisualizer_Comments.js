@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import moment from 'moment'
 
 import {addVisualizerChartComment} from '../actions'
 
@@ -36,10 +37,11 @@ class ChartVisualizer_Comments extends Component {
       return (
         <li>
           <img src={profilePicUrl} alt={first + ' ' + last}/>
-          <aside>
+          <article>
             <h6>{first} {last}</h6>
             <p>{comment}</p>
-          </aside>
+            <h5>{moment(timestamp).format('MMMM Do YY, hh:mm:ss')}</h5>
+          </article>
         </li>
       )
     })
@@ -60,7 +62,7 @@ class ChartVisualizer_Comments extends Component {
             <img src={user.profilePicUrl} alt={`${user.first} ${user.last}`}/>
             <textarea required name="newComment" value={this.state.newComment} onChange={this.handleInputChange}></textarea>
           </div>
-          <button type="submit">Send it</button>
+          <button type="submit">Comment</button>
         </form>
 
       </div>

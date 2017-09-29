@@ -65,7 +65,6 @@ class ChartCreator_ChartPreview extends Component {
 
   render(){
     const {creatorFields,creatorData} = this.props
-    console.log('creatorData',creatorData);
     return (
       <div className="chart-creator__chart-preview">
 
