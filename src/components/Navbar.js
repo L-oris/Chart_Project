@@ -15,15 +15,15 @@ function Navbar (props){
       </header>
 
       <main>
-        <Link to="/tables">
+        <Link activeClassName="current-link" to="/tables">
           <i className="fa fa-table" aria-hidden="true"></i>
           <h6>Tables</h6>
         </Link>
-        <Link to="/chart_creator">
+        <Link activeClassName="current-link" to="/chart_creator">
           <i className="fa fa-pie-chart" aria-hidden="true"></i>
           <h6>Creator</h6>
         </Link>
-        <Link to="/user">
+        <Link activeClassName="current-link" to="/user">
           <i className="fa fa-user" aria-hidden="true"></i>
           <h6>Profile</h6>
         </Link>

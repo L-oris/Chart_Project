@@ -178,6 +178,10 @@ nav {}
       font-size: 1.8em;
       color: var(--dark-blue);
     }
+    .current-link {
+      color: var(--blue);
+      transform: scale(1.2);
+    }
     nav main a h6 {
       display: none;
     }
@@ -199,6 +203,7 @@ nav {}
       border: 1px solid var(--dark-blue);
       margin: 1em 0;
       border-radius: 8px;
+      box-shadow: 1px 4px 5px var(--dark-blue);
     }
       .latest__charts li header {
         background-color: var(--dark-blue);
@@ -351,6 +356,7 @@ nav {}
     border-radius: 10px;
     background-color: var(--white);
     margin: 1em 0;
+    box-shadow: 1px 4px 5px var(--dark-blue);
   }
     .chart-visualizer__main header {
       position: relative;
@@ -477,8 +483,9 @@ nav {}
   .table-visualizer__latest {
     background-color: white;
     border-radius: 10px;
-    padding: .5em;
+    padding: .5em .5em 1em;
     margin: 1em 0;
+    box-shadow: 1px 4px 5px var(--dark-blue);
   }
     .table-visualizer__latest ul {
       display: flex;
@@ -506,13 +513,14 @@ nav {}
       font-weight: bold;
       color: green;
       text-decoration: underline;
-      margin-bottom: .8em;
+      margin-bottom: 1.5em;
     }
 
   .table-preview {
     background-color: var(--white);
     padding: 1em .5em;
     border-radius: 10px;
+    box-shadow: 1px 4px 5px var(--dark-blue);
   }
     .table-preview header {
       display: flex;
@@ -548,11 +556,101 @@ nav {}
           font-size: .85em;
         }
         .table-preview td {
-          padding: .3em;
+          padding: .5em .3em;
           border-right: 1px solid var(--dark-blue);
           text-align: center;
           font-size: .85em;
         }
+
+
+
+/*==========*/
+/*TABLE-UPLOADER*/
+/*==========*/
+.table-uploader {}
+  .table-uploader__overlay {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,.3);
+  }
+
+  .table-uploader section {
+    background-image: url('/images/upload-bg.jpeg');
+    background-size: cover;
+    background-position: top;
+    box-sizing: border-box;
+    position: absolute;
+    background-color: var(--white);
+    z-index: 11;
+    top: 150px;
+    left: 10%;
+    right: 10%;
+    border: 4px solid var(--dark-blue);
+    border-radius: 10px;
+    padding: .5em;
+    text-align: center;
+  }
+    .table-uploader .close-btn {
+      text-align: right;
+      font-size: 1.3em;
+      font-weight: bold;
+      margin: .5em .5em 0;
+    }
+
+    .table-uploader form {}
+      .table-uploader__field {}
+        .table-uploader__field h6 {
+          font-size: 1em;
+          margin: 2em 0 .5em;
+        }
+        .table-uploader__field input,
+        .table-uploader__field textarea {
+          background-color: inherit;
+          text-align: center;
+          border: none;
+          border-top: 2px solid var(--dark-blue);
+          border-bottom: 2px solid var(--dark-blue);
+          resize: none;
+        }
+
+      #table-uploader--file {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+      #table-uploader--file + label {
+        box-sizing: border-box;
+        display: block;
+        width: 150px;
+        margin: 2em auto 1em;
+        font-size: 1.3em;
+        font-weight: bold;
+        border-top: 2px solid var(--dark-blue);
+        border-bottom: 2px solid var(--dark-blue);
+        padding: .3em;
+      }
+
+      .table-uploader button {
+        margin: .5em 0 1em;
+        width: 150px;
+        background-color: transparent;
+        border: none;
+        border-top: 3px solid green;
+        border-bottom: 3px solid green;
+        padding: .3em;
+        font-size: 1.3em;
+        font-weight: bold;
+        color: green;
+      }
+
+
 
 
 
@@ -562,6 +660,7 @@ nav {}
 .chart-creator {
   background-color: white;
   border-radius: 10px;
+  box-shadow: 1px 4px 5px var(--dark-blue);
 }
   .chart-creator h1 {
     background-color: var(--dark-blue);
@@ -602,9 +701,6 @@ nav {}
         white-space: nowrap;
         text-overflow: ellipsis;
         cursor: pointer;
-      }
-      .chart-creator__table-selector li:last-child {
-        border: none;
       }
 
   .chart-creator__field-selector {
@@ -710,6 +806,7 @@ nav {}
 .profile {
   background-color: var(--white);
   border-radius: 10px;
+  box-shadow: 1px 4px 5px var(--dark-blue);
 }
   .profile__details {
     position: relative;
@@ -908,6 +1005,7 @@ nav {}
 
     .table-visualizer__latest li {
       flex: 1 40%;
+      margin: .8em .5em 0;
     }
 
     .table-visualizer th,
@@ -953,6 +1051,28 @@ nav {}
     .profile__list h3 {
       text-align: center;
     }
+
+
+
+  /*==========*/
+  /*TABLE-UPLOADER*/
+  /*==========*/
+  .table-uploader__overlay {
+    top: 89px;
+  }
+  .table-uploader section {
+    left: 22em;
+    right: 7em;
+    top: 20%;
+  }
+  .table-uploader__field input,
+  .table-uploader__field textarea {
+    width: 50%;
+  }
+  #table-uploader--file + label,
+  .table-uploader button {
+    width: 35%;
+  }
 
 
 }

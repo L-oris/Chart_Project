@@ -45,23 +45,33 @@ class TableUploader extends Component {
   render(){
     const {dispatch} = this.props
     return (
-      <div>
-        Table Uploader here
+      <div className="table-uploader">
 
-        <p onClick={e=>dispatch(setTableUploaderIsVisible())}>
-          X
-        </p>
+        <div className="table-uploader__overlay"></div>
 
+        <section>
+          <p className="close-btn" onClick={e=>dispatch(setTableUploaderIsVisible())}>
+            X
+          </p>
 
-        <form onSubmit={this.uploadTable}>
-          Name:
-          <input required name="name" onChange={this.handleInputChange}/>
-          Description:
-          <textarea required name="description" onChange={this.handleInputChange}></textarea>
-          Choose the table
-          <input required type="file" onChange={this.handleFileChange}/>
-          <button type="submit">Save it!</button>
-        </form>
+          <form onSubmit={this.uploadTable}>
+
+            <div className="table-uploader__field">
+              <h6>Name</h6>
+              <input required name="name" onChange={this.handleInputChange}/>
+            </div>
+
+            <div className="table-uploader__field">
+              <h6>Description</h6>
+              <textarea required name="description" onChange={this.handleInputChange}></textarea>
+            </div>
+
+            <input required type="file" id="table-uploader--file" onChange={this.handleFileChange}/>
+            <label htmlFor="table-uploader--file">Select a table</label>
+
+            <button type="submit">Upload</button>
+          </form>
+        </section>
 
       </div>
     )

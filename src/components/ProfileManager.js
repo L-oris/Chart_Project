@@ -81,16 +81,16 @@ class ProfileManager extends Component {
         {user && this.renderProfileDetails(user)}
 
         <div className="profile__list">
-          <h3>TABLES</h3>
+          <h3>CHARTS</h3>
           <ul>
-            {userTables && this.renderUserTables(userTables)}
+            {userCharts && this.renderUserCharts(userCharts)}
           </ul>
         </div>
 
         <div className="profile__list">
-          <h3>CHARTS</h3>
+          <h3>TABLES</h3>
           <ul>
-            {userCharts && this.renderUserCharts(userCharts)}
+            {userTables && this.renderUserTables(userTables)}
           </ul>
         </div>
 
