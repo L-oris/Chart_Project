@@ -53,6 +53,9 @@ class TableVisualizer_TablePreview extends Component {
     const {visualizerTable:{name,description,timestamp,first,last},visualizerTablePreview} = this.props
     return (
       <div className="table-preview">
+
+        <h2>Preview</h2>
+
         <header>
           <h5>Uploaded by {first} {last}</h5>
           <h6>{moment(timestamp).format("MMM Do, hh:mm")}</h6>

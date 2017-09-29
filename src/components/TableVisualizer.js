@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import moment from 'moment'
 
 import {TableVisualizer_TablePreview,TableUploader,SearchTable} from '.'
 import {getTables,setVisualizerTable,setTableUploaderIsVisible,deleteVisualizerTable} from '../actions'
@@ -30,9 +31,11 @@ class TableVisualizer extends Component {
   }
 
   renderTables(tablesList){
-    return tablesList.map(table=>(
+    const {user} = this.props
+    return tablesList.slice(0,6).map(table=>(
       <li onClick={e=>this.selectTable(table.id)}>
-        <h3>{table.name}</h3>
+        <h5>{moment(table.timestamp).format('MM/YY')} - </h5>
+        <h4>{table.name}</h4>
       </li>
     ))
   }
@@ -54,16 +57,19 @@ class TableVisualizer extends Component {
 
         <SearchTable/>
 
-        <h2>Latest Uploaded</h2>
-        <ul className="table-visualizer__tables">
-          {tables && this.renderTables(tables)}
-        </ul>
 
-        <div className="table-visualizer__upload-btn" onClick={e=>dispatch(setTableUploaderIsVisible())}>
-          Upload your table!
+        <div className="table-visualizer__latest">
+          <h2>Latest Uploaded</h2>
+
+          <div className="table-visualizer__upload-btn" onClick={e=>dispatch(setTableUploaderIsVisible())}>
+            Upload your table!
+          </div>
+
+          <ul>
+            {tables && this.renderTables(tables)}
+          </ul>
         </div>
 
-        <h2>Preview</h2>
         {visualizerTable && <TableVisualizer_TablePreview/>}
 
       </div>
@@ -74,6 +80,7 @@ class TableVisualizer extends Component {
 
 function mapStateToProps(reduxState){
   return {
+    user: reduxState.user,
     tables: reduxState.tables,
     visualizerTable: reduxState.visualizerTable,
     tableUploaderIsVisible: reduxState.tableUploaderIsVisible

@@ -53,16 +53,16 @@ class ChartCreator_FieldSelector extends Component {
 
             <h4>Select the type</h4>
             <ul className="type">
-              <li className={`${this.state.type === 'line' && 'active'}`} onClick={e=>this.chooseField('type','line')}>
+              <li className={`${this.state.type === 'line' ? 'active' : ''}`} onClick={e=>this.chooseField('type','line')}>
                 <i className="fa fa-line-chart" aria-hidden="true"></i>
               </li>
-              <li className={`${this.state.type === 'bar' && 'active'}`} onClick={e=>this.chooseField('type','bar')}>
+              <li className={`${this.state.type === 'bar' ? 'active' : ''}`} onClick={e=>this.chooseField('type','bar')}>
                 <i className="fa fa-bar-chart" aria-hidden="true"></i>
               </li>
-              <li className={`${this.state.type === 'radar' && 'active'}`} onClick={e=>this.chooseField('type','radar')}>
+              <li className={`${this.state.type === 'radar' ? 'active' : ''}`} onClick={e=>this.chooseField('type','radar')}>
                 <i className="fa fa-connectdevelop" aria-hidden="true"></i>
               </li>
-              <li className={`${this.state.type === 'doughnut' && 'active'}`} onClick={e=>this.chooseField('type','doughnut')}>
+              <li className={`${this.state.type === 'doughnut' ? 'active' : ''}`} onClick={e=>this.chooseField('type','doughnut')}>
                 <i className="fa fa-pie-chart" aria-hidden="true"></i>
               </li>
             </ul>
