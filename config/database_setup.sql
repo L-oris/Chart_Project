@@ -10,6 +10,7 @@ CREATE TABLE users(
   email VARCHAR(300) UNIQUE NOT NULL,
   password VARCHAR(200) NOT NULL,
   profilepicurl VARCHAR(200),
+  profile_background_url VARCHAR(200),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

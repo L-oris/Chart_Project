@@ -3,7 +3,13 @@ import {browserHistory,Link} from 'react-router'
 import {connect} from 'react-redux'
 import moment from 'moment'
 
-import {updateUserProfilePic,getUserTables,getUserCharts,setVisualizerTable} from '../actions'
+import {
+  updateUserProfilePic,
+  updateUserProfileBackground,
+  getUserTables,
+  getUserCharts,
+  setVisualizerTable
+} from '../actions'
 
 
 class ProfileManager extends Component {
@@ -13,6 +19,7 @@ class ProfileManager extends Component {
     this.state={}
     this.renderProfileDetails = this.renderProfileDetails.bind(this)
     this.handleProfilePicUpload = this.handleProfilePicUpload.bind(this)
+    this.handleProfileBackgroundUpload = this.handleProfileBackgroundUpload.bind(this)
   }
 
   componentDidMount(){
@@ -29,6 +36,14 @@ class ProfileManager extends Component {
     dispatch(updateUserProfilePic(formData))
   }
 
+  handleProfileBackgroundUpload(e){
+    const {dispatch} = this.props
+    //use built-in FormData API
+    const formData = new FormData()
+    formData.append('file',e.target.files[0])
+    dispatch(updateUserProfileBackground(formData))
+  }
+
   selectTable(tableId){
     const {dispatch} = this.props
     dispatch(setVisualizerTable(tableId))
@@ -36,14 +51,20 @@ class ProfileManager extends Component {
   }
 
   renderProfileDetails(user){
-    const {first,last,profilePicUrl} = user
+    const {first,last,profilePicUrl,profileBackgroundUrl} = user
     return (
       <div className="profile__details">
-        <img className="details--background" src="/images/profile-bg.jpg" alt="user background"/>
-        <input type="text" id="profile-pic--file" type="file" onChange={this.handleProfilePicUpload}/>
+
+        <input id="profile-pic--bg_file" type="file" onChange={this.handleProfileBackgroundUpload}/>
+        <label htmlFor="profile-pic--bg_file">
+          <img className="details--background" src={profileBackgroundUrl} alt="user background"/>
+        </label>
+
+        <input id="profile-pic--file" type="file" onChange={this.handleProfilePicUpload}/>
         <label htmlFor="profile-pic--file">
           <img className="details--profile-pic" src={profilePicUrl} alt={first + ' ' + last}/>
         </label>
+
         <h4>{first} {last}</h4>
       </div>
     )

@@ -24,6 +24,17 @@ export function updateUserProfilePic(formData){
 }
 
 
+export function updateUserProfileBackground(formData){
+  return axios.put('/api/update_profile_background',formData)
+  .then(serverResponse=>{
+    return {
+      type: 'UPDATE_USER_PROFILE_BACKGROUND',
+      profileBackgroundUrl: serverResponse.data.profileBackgroundUrl
+    }
+  })
+}
+
+
 export function getTables(){
   return axios.get('/api/get_tables')
   .then(serverResponse=>{

@@ -14,6 +14,14 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='UPDATE_USER_PROFILE_BACKGROUND'){
+    return Object.assign({},state,{
+      user: Object.assign({},state.user,{
+        profileBackgroundUrl: action.profileBackgroundUrl
+      })
+    })
+  }
+
   if(action.type==='GET_TABLES'){
     return Object.assign({},state,{
       tables: action.tables

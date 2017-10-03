@@ -7,6 +7,7 @@ const {
   createUser,
   loginUser,
   updateProfilePic,
+  updateProfileBackground,
   addTable,
   getTables,
   getTableById,
@@ -80,6 +81,23 @@ router.put('/api/update_profile_pic',uploader.single('file'),uploadToS3,function
   })
   .catch(function(err){
     next('Uploading of new profile image failed')
+  })
+})
+
+//UPDATE USER'S PROFILE BACKGROUND IMAGE
+router.put('/api/update_profile_background',uploader.single('file'),uploadToS3,function(req,res,next){
+  const {userId} = req.session.user
+  const {filename} = req.file
+  if(!filename){
+    throw 'No file to upload'
+  }
+  updateProfileBackground(userId,filename)
+  .then(function(userData){
+    req.session.user.profileBackgroundUrl = userData.profileBackgroundUrl
+    res.json(userData)
+  })
+  .catch(function(err){
+    next('Uploading of new profile background image failed')
   })
 })
 
