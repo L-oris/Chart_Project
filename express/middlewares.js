@@ -55,16 +55,18 @@ module.exports.uploader = multer({
 
 //setup 'knox' module to upload files to Amazon S3 Service
 let secret = {}
+let bucket = 'chart-loris--dev'
 if(process.env.NODE_ENV==='production'){
   secret['AWS_KEY'] = process.env.AWS_KEY
   secret['AWS_SECRET'] = process.env.AWS_SECRET
+  bucket = 'chart-loris'
 } else {
   secret = require('../secrets.json')
 }
 const client = knox.createClient({
+  bucket,
   key: secret.AWS_KEY,
-  secret: secret.AWS_SECRET,
-  bucket: 'chart-loris'
+  secret: secret.AWS_SECRET
 })
 
 module.exports.uploadToS3 = function(req,res,next){

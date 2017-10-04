@@ -1,3 +1,4 @@
 {
-  "s3Url": "https://s3.amazonaws.com/chart-loris/"
+  "s3Url": "https://s3.amazonaws.com/chart-loris/",
+  "s3UrlDev": "https://s3.amazonaws.com/chart-loris--dev/"
 }

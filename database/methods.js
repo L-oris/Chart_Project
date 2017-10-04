@@ -1,6 +1,11 @@
 const db = require('./db');
 const {hashPassword,checkPassword} = require('./hashing')
-const {s3Url} = require('../config/config.json')
+
+//use 2 different AWS buckets for development & production mode
+let s3Url = require('../config/config.json').s3UrlDev
+if(process.env.NODE_ENV==='production'){
+  s3Url = require('../config/config.json').s3Url
+}
 const defaultImageUrl = 'profile-default.jpg'
 const defaultProfileBackgroundUrl = 'profile-bg.jpg'
 
