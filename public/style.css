@@ -823,15 +823,8 @@ nav {}
     position: relative;
     margin-bottom: 100px;
   }
-    .profile img.details--background {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      border-bottom: 1px solid var(--dark-blue);
-    }
-    .profile #profile-pic--file {
+    .profile__details #profile-pic_file,
+    .profile__details #background_file {
       width: 0.1px;
       height: 0.1px;
       opacity: 0;
@@ -839,25 +832,34 @@ nav {}
       position: absolute;
       z-index: -1;
     }
-      .profile #profile-pic--file + label {
-        cursor: pointer;
+    .profile__details #profile-pic_file + label,
+    .profile__details #background_file + label {
+      cursor: pointer;
+    }
+      .profile__details img.profile-pic {
+        position: absolute;
+        width: 100%;
+        left: 10px;
+        top: 120px;
+        border-radius: 10px;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border: 2px solid var(--white);
       }
-        .profile img.details--profile-pic {
-          position: absolute;
-          width: 100%;
-          left: 10px;
-          top: 120px;
-          border-radius: 10px;
-          width: 100px;
-          height: 100px;
-          object-fit: cover;
-          border: 2px solid var(--white);
-        }
+      .profile__details .background {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom: 1px solid var(--dark-blue);
+      }
     .profile__details h4 {
       position: absolute;
       top: 140px;
       left: 120px;
-      font-size: 1.75em;
+      font-size: 1.3em;
     }
 
   .profile__list {
@@ -1054,9 +1056,9 @@ nav {}
         left: 40px;
       }
       .profile__details h4 {
-        top: 225px;
-        left: 220px;
-        font-size: 2.2em;
+        top: 125px;
+        left: 130px;
+        font-size: 1.8em;
       }
 
     .profile__list h3 {

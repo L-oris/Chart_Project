@@ -55,14 +55,14 @@ class ProfileManager extends Component {
     return (
       <div className="profile__details">
 
-        <input id="profile-pic--bg_file" type="file" onChange={this.handleProfileBackgroundUpload}/>
-        <label htmlFor="profile-pic--bg_file">
-          <img className="details--background" src={profileBackgroundUrl} alt="user background"/>
+        <input id="background_file" type="file" onChange={this.handleProfileBackgroundUpload}/>
+        <label htmlFor="background_file">
+          <img className="background" src={profileBackgroundUrl} alt="user background"/>
         </label>
 
-        <input id="profile-pic--file" type="file" onChange={this.handleProfilePicUpload}/>
-        <label htmlFor="profile-pic--file">
-          <img className="details--profile-pic" src={profilePicUrl} alt={first + ' ' + last}/>
+        <input id="profile-pic_file" type="file" onChange={this.handleProfilePicUpload}/>
+        <label htmlFor="profile-pic_file">
+          <img className="profile-pic" src={profilePicUrl} alt={first + ' ' + last}/>
         </label>
 
         <h4>{first} {last}</h4>
