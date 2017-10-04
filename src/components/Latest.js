@@ -24,7 +24,7 @@ class Latest extends Component {
 
   renderCharts(chartsList){
     return chartsList.map(chart=>{
-      const {id,name,description,chartPicUrl,timestamp,first,last,profilePicUrl} = chart
+      const {id,name,description,chartPicUrl,timestamp,first,last,profilePicUrl,commentsNumber} = chart
       return (
         <li>
 
@@ -47,7 +47,7 @@ class Latest extends Component {
             <h5>{moment(timestamp).format("MMM Do, hh:mm")}</h5>
             <h4>
               <i className="fa fa-comments-o" aria-hidden="true"></i>
-              13 comments
+              {commentsNumber} comments
             </h4>
           </footer>
         </li>
