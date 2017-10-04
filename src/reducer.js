@@ -106,13 +106,21 @@ export default function(state={},action){
 
   if(action.type==='SET_VISUALIZER_CHART_COMMENTS'){
     return Object.assign({},state,{
-      visualizerChartComments: action.visualizerChartComments
+      visualizerChartComments: action.visualizerChartComments.reverse()
     })
   }
 
   if(action.type==='ADD_VISUALIZER_CHART_COMMENT'){
     return Object.assign({},state,{
-      visualizerChartComments: [...state.visualizerChartComments, action.comment]
+      visualizerChartComments: [...state.visualizerChartComments, action.comment],
+      charts: state.charts && state.charts.map(chart=>{
+        if(action.chartId === chart.id){
+          return Object.assign({},chart,{
+            commentsNumber: (parseInt(chart.commentsNumber,10) + 1).toString()
+          })
+        }
+        return chart
+      })
     })
   }
 

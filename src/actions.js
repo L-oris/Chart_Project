@@ -182,7 +182,8 @@ export function addVisualizerChartComment(chartId,comment){
   .then(serverResponse=>{
     return {
       type: 'ADD_VISUALIZER_CHART_COMMENT',
-      comment: serverResponse.data
+      comment: serverResponse.data,
+      chartId
     }
   })
 }

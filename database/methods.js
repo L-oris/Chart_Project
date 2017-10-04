@@ -316,7 +316,7 @@ module.exports.getCommentsByChartId = function(chartId){
     RIGHT OUTER JOIN charts ON charts.id = comments.chart_id
     INNER JOIN users ON users.id = comments.user_id
     WHERE charts.id = $1
-    ORDER BY created_at DESC`
+    ORDER BY created_at DESC LIMIT 10`
   return db.query(query,[chartId])
   .then(function(dbComments){
     return dbComments.rows.map(dbComment=>{
