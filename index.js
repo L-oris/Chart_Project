@@ -2,7 +2,10 @@ const express = require('express')
       app = express()
 
 const {middlewares} = require('./express/middlewares'),
-      RESTfulRouter = require('./express/RESTfulRouter')
+      userRouter = require('./express/userRouter'),
+      tableRouter = require('./express/tableRouter'),
+      chartRouter = require('./express/chartRouter'),
+      mockRouter = require('./express/mockRouter')
 
 if(process.env.NODE_ENV != 'production'){
   app.use('/bundle.js',require('http-proxy-middleware')({
@@ -10,14 +13,20 @@ if(process.env.NODE_ENV != 'production'){
   }))
 }
 
+
+
 //apply middlewares
 middlewares(app)
 
 //serve static files
 app.use(express.static('./public'))
 
-//apply RESTful routes
-app.use('/',RESTfulRouter)
+//apply routes
+app.use('/',userRouter)
+app.use('/',tableRouter)
+app.use('/',chartRouter)
+app.use('/',mockRouter)
+
 
 //serve React application
 //(REDIRECT USER BASED ON HIS REGISTRATION STATUS)
@@ -34,6 +43,7 @@ app.use(function (err, req, res, next){
   console.log(`Server Error --> ${err}`)
   res.status(500).json({success:false})
 })
+
 
 const port = process.env.PORT || 8000
 app.listen(port, function(){
