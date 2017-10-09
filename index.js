@@ -31,7 +31,7 @@ app.get('*', function(req,res){
 
 //handle 'Express' errors
 app.use(function (err, req, res, next){
-  console.log(`Error Handling Middleware --> ${err}`)
+  console.log(`Server Error --> ${err}`)
   res.status(500).json({success:false})
 })
 
