@@ -80,6 +80,7 @@ module.exports.uploadToS3 = function(req,res,next){
     if(s3Response.statusCode !== 200){
       res.json({success: false})
     } else {
+      fs.unlink(req.file.path,e=>{})
       next()
     }
   })
