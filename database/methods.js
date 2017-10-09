@@ -201,7 +201,7 @@ module.exports.createChart = function({userId,tableId,XAxis,YAxis,type,name,desc
       SELECT comments.number AS comments_number, first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at
       FROM users
       INNER JOIN charts ON users.id = charts.user_id
-      INNER JOIN (SELECT COUNT(*) AS number, chart_id
+      LEFT OUTER JOIN (SELECT COUNT(*) AS number, chart_id
                   FROM comments
                   GROUP BY chart_id) AS comments ON charts.id = comments.chart_id
       WHERE charts.id = $1`
@@ -210,7 +210,8 @@ module.exports.createChart = function({userId,tableId,XAxis,YAxis,type,name,desc
   .then(function(dbChart){
     const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl,comments_number:commentsNumber} = dbChart.rows[0]
     return {
-      id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,commentsNumber,
+      id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+      commentsNumber: commentsNumber || 0,
       profilePicUrl: s3Url + profilepicurl,
       chartPicUrl: s3Url + chartpicurl
     }
@@ -222,7 +223,7 @@ module.exports.getCharts = function(){
     SELECT comments.number AS comments_number, first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at
     FROM users
     INNER JOIN charts ON users.id = charts.user_id
-    INNER JOIN (SELECT COUNT(*) AS number, chart_id
+    LEFT OUTER JOIN (SELECT COUNT(*) AS number, chart_id
                 FROM comments
                 GROUP BY chart_id) AS comments ON charts.id = comments.chart_id
     ORDER BY created_at DESC LIMIT 20`
@@ -231,7 +232,8 @@ module.exports.getCharts = function(){
     return dbCharts.rows.map(chart=>{
       const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl,comments_number:commentsNumber} = chart
       return {
-        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,commentsNumber,
+        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+        commentsNumber: commentsNumber || 0,
         profilePicUrl: s3Url + profilepicurl,
         chartPicUrl: s3Url + chartpicurl
       }
@@ -244,7 +246,7 @@ module.exports.getChartById = function(chartId){
     SELECT comments.number AS comments_number, first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at
     FROM users
     INNER JOIN charts ON users.id = charts.user_id
-    INNER JOIN (SELECT COUNT(*) AS number, chart_id
+    LEFT OUTER JOIN (SELECT COUNT(*) AS number, chart_id
                 FROM comments
                 GROUP BY chart_id) AS comments ON charts.id = comments.chart_id
     WHERE charts.id = $1`
@@ -252,7 +254,8 @@ module.exports.getChartById = function(chartId){
   .then(function(dbChart){
     const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl,comments_number:commentsNumber} = dbChart.rows[0]
     return {
-      id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,commentsNumber,
+      id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+      commentsNumber: commentsNumber || 0,
       profilePicUrl: s3Url + profilepicurl,
       chartPicUrl: s3Url + chartpicurl
     }
@@ -264,7 +267,7 @@ module.exports.getChartsByUserId = function(userId){
     SELECT comments.number AS comments_number, first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at
     FROM users
     INNER JOIN charts ON users.id = charts.user_id
-    INNER JOIN (SELECT COUNT(*) AS number, chart_id
+    LEFT OUTER JOIN (SELECT COUNT(*) AS number, chart_id
                 FROM comments
                 GROUP BY chart_id) AS comments ON charts.id = comments.chart_id
     WHERE users.id = $1
@@ -274,7 +277,8 @@ module.exports.getChartsByUserId = function(userId){
     return dbCharts.rows.map(chart=>{
       const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl,comments_number:commentsNumber} = chart
       return {
-        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,commentsNumber,
+        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+        commentsNumber: commentsNumber || 0,
         profilePicUrl: s3Url + profilepicurl,
         chartPicUrl: s3Url + chartpicurl
       }
@@ -287,7 +291,7 @@ module.exports.searchChart = function(searchType,searchText){
     SELECT comments.number AS comments_number, first, last, profilepicurl, charts.id, charts.table_id, charts.x_axis, charts.y_axis,charts.type, charts.name, charts.description, chartpicurl, charts.created_at
     FROM users
     INNER JOIN charts ON users.id = charts.user_id
-    INNER JOIN (SELECT COUNT(*) AS number, chart_id
+    LEFT OUTER JOIN (SELECT COUNT(*) AS number, chart_id
                 FROM comments
                 GROUP BY chart_id) AS comments ON charts.id = comments.chart_id `
   if(searchType === 'name'){
@@ -307,7 +311,8 @@ module.exports.searchChart = function(searchType,searchText){
     return dbCharts.rows.map(chart=>{
       const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl,comments_number:commentsNumber} = chart
       return {
-        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,commentsNumber,
+        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+        commentsNumber: commentsNumber || 0,
         profilePicUrl: s3Url + profilepicurl,
         chartPicUrl: s3Url + chartpicurl
       }
