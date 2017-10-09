@@ -39,6 +39,7 @@ router.post('/api/register', function(req,res,next){
   })
   .catch(function(err){
     next('Error happened adding user to database')
+    console.log(`Error POST '/api/register' --> ${err}`);
   })
 })
 
@@ -56,6 +57,7 @@ router.post('/api/login', function(req,res,next){
   })
   .catch(function(err){
     next('User not found')
+    console.log(`Error POST '/api/login' --> ${err}`);
   })
 })
 
@@ -81,6 +83,7 @@ router.put('/api/update_profile_pic',uploader.single('file'),uploadToS3,function
   })
   .catch(function(err){
     next('Uploading of new profile image failed')
+    console.log(`Error PUT '/api/update_profile_pic' --> ${err}`);
   })
 })
 
@@ -98,6 +101,7 @@ router.put('/api/update_profile_background',uploader.single('file'),uploadToS3,f
   })
   .catch(function(err){
     next('Uploading of new profile background image failed')
+    console.log(`Error PUT '/api/update_profile_background' --> ${err}`);
   })
 })
 
@@ -110,6 +114,7 @@ router.get('/api/get_user_tables',function(req,res,next){
   })
   .catch(function(err){
     next(`Error getting tables of user #${userId}`)
+    console.log(`Error GET '/api/get_user_tables' --> ${err}`);
   })
 })
 
@@ -122,6 +127,7 @@ router.get('/api/get_user_charts',function(req,res,next){
   })
   .catch(function(err){
     next(`Error getting charts of user #${userId}`)
+    console.log(`Error GET '/api/get_user_charts' --> ${err}`);
   })
 })
 
@@ -147,6 +153,7 @@ router.post('/api/upload_table',uploader.single('file'),uploadToS3,function(req,
   })
   .catch(function(err){
     next('error happened adding new table into database')
+    console.log(`Error POST '/api/upload_table' --> ${err}`);
   })
 })
 
@@ -159,6 +166,7 @@ router.get('/api/get_tables',function(req,res,next){
   })
   .catch(function(err){
     next(`Error converting csv table  to json`)
+    console.log(`Error GET '/api/get_tables' --> ${err}`);
   })
 })
 
@@ -172,6 +180,7 @@ router.get('/api/get_table/:tableId',function(req,res,next){
   })
   .catch(function(err){
     next(`Error retrieving table #${tableId}`)
+    console.log(`Error GET '/api/get_table/:tableId' --> ${err}`);
   })
 })
 
@@ -187,6 +196,7 @@ router.get('/api/get_table_fields/:tableId',function(req,res,next){
   })
   .catch(function(err){
     next(`Error getting available fields`)
+    console.log(`Error GET '/api/get_table_fields/:tableId' --> ${err}`);
   })
 })
 
@@ -202,6 +212,7 @@ router.get('/api/get_table_preview/:tableId',function(req,res,next){
   })
   .catch(function(err){
     next(`Error getting json preview of table #${tableId}`)
+    console.log(`Error GET '/api/get_table_preview/:tableId' --> ${err}`);
   })
 })
 
@@ -214,8 +225,8 @@ router.post('/api/search_table',function(req,res,next){
     res.json(tablesArr)
   })
   .catch(function(err){
-    console.log('error',err);
     next('Error searching for tables')
+    console.log(`Error POST '/api/search_table' --> ${err}`);
   })
 })
 
@@ -233,6 +244,7 @@ router.post('/api/create_chart',uploader.single('file'),uploadToS3,function(req,
     res.json(newChart)
   })
   .catch(function(err){
+    console.log(`Error POST '/api/create_chart' --> ${err}`);
     next(`Error creating new chart into database`)
   })
 })
@@ -246,6 +258,7 @@ router.get('/api/get_charts',function(req,res,next){
   })
   .catch(function(err){
     next('Error retrieving charts list from database')
+    console.log(`Error GET '/api/get_charts' --> ${err}`);
   })
 })
 
@@ -259,6 +272,7 @@ router.get('/api/get_chart/:chartId',function(req,res,next){
   })
   .catch(function(err){
     next(`Error retrieving chart #${chartId}`)
+    console.log(`Error GET '/api/get_chart/:chartId' --> ${err}`);
   })
 })
 
@@ -283,6 +297,7 @@ router.get('/api/get_chart_data/:chartId',function(req,res,next){
   })
   .catch(function(err){
     next(`Error retrieving chart data`)
+    console.log(`Error GET '/api/get_chart_data/:chartId' --> ${err}`);
   })
 })
 
@@ -302,6 +317,7 @@ router.post('/api/get_unsaved_chart_data',function(req,res,next){
   })
   .catch(function(err){
     next(`Error retrieving chart data`)
+    console.log(`Error POST '/api/get_unsaved_chart_data' --> ${err}`);
   })
 })
 
@@ -315,6 +331,7 @@ router.post('/api/search_chart',function(req,res,next){
   })
   .catch(function(err){
     next('Error searching for charts')
+    console.log(`Error POST '/api/search_chart' --> ${err}`);
   })
 })
 
@@ -328,6 +345,7 @@ router.get('/api/get_chart_comments/:chartId',function(req,res,next){
   })
   .catch(function(err){
     next(`Error retrieving comments for chart #${chartId}`)
+    console.log(`Error GET '/api/get_chart_comments/:chartId' --> ${err}`);
   })
 })
 
@@ -342,6 +360,7 @@ router.post('/api/add_chart_comment',function(req,res,next){
   })
   .catch(function(err){
     next(`Error adding new comment for chart #${chartId}`)
+    console.log(`Error POST '/api/addChartComment' --> ${err}`);
   })
 })
 
