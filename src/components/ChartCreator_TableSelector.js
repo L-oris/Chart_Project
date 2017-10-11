@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 
-import {ChartCreator_SearchTable} from '.'
+import {SearchTable} from '.'
 import {getTables,setCreatorTableId} from '../actions'
 
 class ChartCreator_TableSelector extends Component {
@@ -38,7 +38,7 @@ class ChartCreator_TableSelector extends Component {
       <div className="chart-creator__table-selector">
         {tables && !creatorTableFields &&
           <div>
-            <ChartCreator_SearchTable/>
+            <SearchTable selectedTableAction={setCreatorTableId}/>
 
             <h4>LATEST</h4>
             <ul>

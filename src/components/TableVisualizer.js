@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import moment from 'moment'
 
 import {TableVisualizer_TablePreview,TableUploader,SearchTable} from '.'
-import {getTables,setVisualizerTable,setTableUploaderIsVisible,deleteVisualizerTable} from '../actions'
+import {getTables,setVisualizerTable,deleteVisualizerTable,setTableUploaderIsVisible} from '../actions'
 
 
 class TableVisualizer extends Component {
@@ -55,8 +55,7 @@ class TableVisualizer extends Component {
 
         <h1>Table Visualizer</h1>
 
-        <SearchTable/>
-
+        <SearchTable selectedTableAction={setVisualizerTable}/>
 
         <div className="table-visualizer__latest">
           <h2>Latest Uploaded</h2>

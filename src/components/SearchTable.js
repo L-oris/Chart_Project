@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 
-import {getSearchTableResults,deleteSearchTableResults,setVisualizerTable} from '../actions'
+import {getSearchTableResults,deleteSearchTableResults} from '../actions'
 
 
 class SearchTable extends Component {
@@ -48,8 +48,8 @@ class SearchTable extends Component {
   }
 
   selectTable(tableId){
-    const {dispatch} = this.props
-    dispatch(setVisualizerTable(tableId))
+    const {dispatch,selectedTableAction} = this.props
+    dispatch(selectedTableAction(tableId))
     dispatch(deleteSearchTableResults())
     this.setState({
       searchTableText: ''
