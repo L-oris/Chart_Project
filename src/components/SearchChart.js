@@ -61,9 +61,9 @@ class SearchChart extends Component {
     const {searchChartResults} = this.props
     const {searchChartType} = this.state
     return (
-      <div className="search-chart">
+      <div className="search">
 
-        <div className="search-chart__input">
+        <div className="search__input">
           <input onChange={this.handleInputChange}/>
           <i className="fa fa-search" aria-hidden="true"></i>
 
@@ -72,17 +72,17 @@ class SearchChart extends Component {
           </ul>
         </div>
 
-        <div className="search-chart__radio">
-          <label for="search-chart--name">
-            <input onChange={this.handleRadioChange} checked={searchChartType === 'name'} type="radio" id="search-chart--name" name="searchChartType" value="name"/>
+        <div className="search__radio">
+          <label for="search--name">
+            <input onChange={this.handleRadioChange} checked={searchChartType === 'name'} type="radio" id="search--name" name="searchChartType" value="name"/>
             Name
           </label>
-          <label for="search-chart--user">
-            <input onChange={this.handleRadioChange} checked={searchChartType === 'user'} type="radio" id="search-chart--user" name="searchChartType" value="user"/>
+          <label for="search--user">
+            <input onChange={this.handleRadioChange} checked={searchChartType === 'user'} type="radio" id="search--user" name="searchChartType" value="user"/>
             User
           </label>
-          <label for="search-chart--type">
-            <input onChange={this.handleRadioChange} checked={searchChartType === 'type'} type="radio" id="search-chart--type" name="searchChartType" value="type"/>
+          <label for="search--type">
+            <input onChange={this.handleRadioChange} checked={searchChartType === 'type'} type="radio" id="search--type" name="searchChartType" value="type"/>
             Type
           </label>
         </div>
