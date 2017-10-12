@@ -31,6 +31,29 @@ module.exports.createUser = function({first,last,email,password}){
 }
 
 
+module.exports.createGithubUser = function({first,last,email,password,profilePicUrl}){
+  return hashPassword(password)
+  .then(function(hash){
+    const query = `
+      INSERT INTO users (first,last,email,password,profilepicurl,profile_background_url)
+      VALUES ($1,$2,$3,$4,$5,'${defaultProfileBackgroundUrl}')
+      RETURNING id,first,last,email,profilepicurl,profile_background_url`
+    return db.query(query,[first,last,email,hash,profilePicUrl])
+  })
+  .then(function(userData){
+    const {id:userId,first,last,email,profilepicurl,profile_background_url} = userData.rows[0]
+
+    let profilePicUrl
+    profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
+    return {
+      userId,first,last,email,profilePicUrl,
+      profileBackgroundUrl: s3Url + profile_background_url
+    }
+  })
+}
+
+
 module.exports.loginUser = function({email,password:plainTextPassword}){
   //here password passed in has been renamed to 'plainTextPassword'
   const query = `
@@ -40,9 +63,12 @@ module.exports.loginUser = function({email,password:plainTextPassword}){
   return db.query(query,[email])
   .then(function(userData){
     const {id:userId,first,last,email,password:hashedPassword,profilepicurl,profile_background_url} = userData.rows[0]
+
+    let profilePicUrl
+    profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
     return {
-      userId,first,last,email,hashedPassword,
-      profilePicUrl: s3Url + profilepicurl,
+      userId,first,last,email,hashedPassword,profilePicUrl,
       profileBackgroundUrl: s3Url + profile_background_url
     }
   })

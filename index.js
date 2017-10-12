@@ -61,7 +61,6 @@ app.use('/',mockRouter)
 
 //AUTH0
 const {
-  createUser,
   createGithubUser,
   loginUser
 } = require('./database/methods')
@@ -71,15 +70,15 @@ app.get('/auth/github', passport.authenticate('github'))
 
 //GitHub will then call this URL
 app.get('/auth/github/callback', passport.authenticate('github',{failureRedirect:'/'}), function(req,res){
-  const {name:first,email,id:password,avatar_url:profilePicUrl} = req.user['_json']
+  console.log('USER RECEIVED FROM GITHUB');
 
+  const {name:first,email,id,avatar_url:profilePicUrl} = req.user['_json']
+  const password = id.toString()
+
+  console.log('TRY TO LOGIN USER');
   loginUser({email,password})
-  .then(function(userData){
-    //set user info inside session
-    req.session.user = userData
-    res.json({success:true})
-  })
   .catch(function(err){
+    console.log('LOGIN OF USER FAILED, TRY TO REGISTER HIM');
     return createGithubUser({
       first,
       last:'',
@@ -89,10 +88,17 @@ app.get('/auth/github/callback', passport.authenticate('github',{failureRedirect
     })
   })
   .then(function(userData){
+    console.log('NEW GITHUB USER CORRECTLY REGISTERED-LOGGED IN');
     //set user info inside session
     req.session.user = userData
+    console.log('NOW SESSION CORRECTLY SETUP',req.session.user);
+    console.log('------------------');
     res.json({success:true})
   })
+  .catch(function(err){
+    console.log('SOME ERRORS HAPPENED CREATING NEW GITHUB USER',err);
+  })
+
 })
 
 
