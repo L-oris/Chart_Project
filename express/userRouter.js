@@ -98,6 +98,8 @@ router.put('/api/update_profile_background',uploader.single('file'),uploadToS3,f
 
 //LOGOUT USER
 router.get('/api/logout',function(req,res){
+  //'logout()' is method that 'passport' attaches to every request
+  req.logout()
   req.session = null
   res.redirect('/welcome')
 })

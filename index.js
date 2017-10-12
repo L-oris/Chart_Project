@@ -1,11 +1,16 @@
 const express = require('express')
       app = express()
 
+const passport = require('passport'),
+      GithubStrategy = require('passport-github').Strategy,
+      {Github_ClientID,Github_ClientSecret} = require('./secrets.json')
+
 const {middlewares} = require('./express/middlewares'),
       userRouter = require('./express/userRouter'),
       tableRouter = require('./express/tableRouter'),
       chartRouter = require('./express/chartRouter'),
       mockRouter = require('./express/mockRouter')
+
 
 if(process.env.NODE_ENV != 'production'){
   app.use('/bundle.js',require('http-proxy-middleware')({
@@ -18,6 +23,32 @@ if(process.env.NODE_ENV != 'production'){
 //apply middlewares
 middlewares(app)
 
+passport.use(new GithubStrategy({
+    clientID: Github_ClientID,
+    clientSecret: Github_ClientSecret,
+    callbackURL: 'http://localhost:8000/auth/github/callback'
+  },
+  function(accessToken, refreshToken, profile, done) {
+    return done(null, profile)
+  }
+))
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(function(user, done) {
+  // placeholder for custom user serialization
+  // null is for errors
+  done(null, user)
+})
+
+passport.deserializeUser(function(user, done) {
+  // placeholder for custom user deserialization.
+  // maybe you are going to get the user from mongo by id?
+  // null is for errors
+  done(null, user)
+})
+
+
 //serve static files
 app.use(express.static('./public'))
 
@@ -26,6 +57,15 @@ app.use('/',userRouter)
 app.use('/',tableRouter)
 app.use('/',chartRouter)
 app.use('/',mockRouter)
+
+//we will call this to start the GitHub Login process
+app.get('/auth/github', passport.authenticate('github'))
+
+//GitHub will then call this URL
+app.get('/auth/github/callback', passport.authenticate('github',{failureRedirect:'/'}), function(req, res){
+  console.log('user',req.user)
+  res.redirect('/')
+})
 
 
 //serve React application
