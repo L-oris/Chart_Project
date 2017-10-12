@@ -58,13 +58,41 @@ app.use('/',tableRouter)
 app.use('/',chartRouter)
 app.use('/',mockRouter)
 
+
+//AUTH0
+const {
+  createUser,
+  createGithubUser,
+  loginUser
+} = require('./database/methods')
+
 //we will call this to start the GitHub Login process
 app.get('/auth/github', passport.authenticate('github'))
 
 //GitHub will then call this URL
-app.get('/auth/github/callback', passport.authenticate('github',{failureRedirect:'/'}), function(req, res){
-  console.log('user',req.user)
-  res.redirect('/')
+app.get('/auth/github/callback', passport.authenticate('github',{failureRedirect:'/'}), function(req,res){
+  const {name:first,email,id:password,avatar_url:profilePicUrl} = req.user['_json']
+
+  loginUser({email,password})
+  .then(function(userData){
+    //set user info inside session
+    req.session.user = userData
+    res.json({success:true})
+  })
+  .catch(function(err){
+    return createGithubUser({
+      first,
+      last:'',
+      email,
+      password,
+      profilePicUrl
+    })
+  })
+  .then(function(userData){
+    //set user info inside session
+    req.session.user = userData
+    res.json({success:true})
+  })
 })
 
 
