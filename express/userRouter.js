@@ -1,9 +1,11 @@
 const express = require('express'),
-      router = express.Router()
+      router = express.Router(),
+      passport = require('passport')
 
 const {uploader,uploadToS3} = require('./middlewares')
 const {
   createUser,
+  createGithubUser,
   loginUser,
   updateProfilePic,
   updateProfileBackground,
@@ -45,6 +47,35 @@ router.post('/api/login', function(req,res,next){
   .catch(function(err){
     next('User not found')
     console.log(`Error POST '/api/login' --> ${err}`);
+  })
+})
+
+
+//START THE GITHUB LOGIN PROCESS
+router.get('/auth/github', passport.authenticate('github'))
+
+//GITHUB WILL THEN CALL THIS URL PASSING DOWN REQ.USER
+router.get('/auth/github/callback', passport.authenticate('github',{failureRedirect:'/'}), function(req,res,next){
+  const {name:first,html_url:email,id,avatar_url:profilePicUrl} = req.user['_json']
+  const password = id.toString()
+  loginUser({email,password})
+  .catch(function(err){
+    return createGithubUser({
+      first: first || 'Unknown Name',
+      last:'',
+      email,
+      password,
+      profilePicUrl
+    })
+  })
+  .then(function(userData){
+    //set user info inside session
+    req.session.user = userData
+    res.redirect('/')
+  })
+  .catch(function(err){
+    next('Error registering-logging Github user')
+    console.log(`Error GET '/auth/github/callback' --> ${err}`)
   })
 })
 

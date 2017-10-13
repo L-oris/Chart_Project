@@ -11,11 +11,6 @@ const {middlewares} = require('./express/middlewares'),
       chartRouter = require('./express/chartRouter'),
       mockRouter = require('./express/mockRouter')
 
-const {
-  createGithubUser,
-  loginUser
-} = require('./database/methods')
-
 
 if(process.env.NODE_ENV != 'production'){
   app.use('/bundle.js',require('http-proxy-middleware')({
@@ -65,32 +60,7 @@ app.use('/',mockRouter)
 
 
 //PASSPORT ROUTES
-//we will call this to start the GitHub Login process
-app.get('/auth/github', passport.authenticate('github'))
 
-//GitHub will then call this URL
-app.get('/auth/github/callback', passport.authenticate('github',{failureRedirect:'/'}), function(req,res){
-  const {name:first,email,id,avatar_url:profilePicUrl} = req.user['_json']
-  const password = id.toString()
-  loginUser({email,password})
-  .catch(function(err){
-    return createGithubUser({
-      first,
-      last:'',
-      email,
-      password,
-      profilePicUrl
-    })
-  })
-  .then(function(userData){
-    //set user info inside session
-    req.session.user = userData
-    res.redirect('/')
-  })
-  .catch(function(err){
-    console.log(`Error GET '/auth/github/callback' --> ${err}`);
-  })
-})
 
 
 //serve React application
