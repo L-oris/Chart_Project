@@ -1,17 +1,5 @@
 const express = require('express')
-      app = express(),
-      csrf = require('csurf')
-
-const fs = require('fs'),
-      path = require('path'),
-      compression = require('compression'),
-      bodyParser = require('body-parser'),
-      cookieParser = require('cookie-parser'),
-      cookieSession = require('cookie-session'),
-      multer = require('multer'),
-      uidSafe = require('uid-safe'),
-      knox = require('knox')
-
+      app = express()
 
 const passport = require('passport'),
       GithubStrategy = require('passport-github').Strategy,
@@ -37,43 +25,11 @@ if(process.env.NODE_ENV != 'production'){
 
 
 
-let sessionSecret
-if(process.env.SESSION_SECRET){
-  sessionSecret = process.env.SESSION_SECRET
-} else {
-  sessionSecret = require('./secrets.json').sessionSecret
-}
 //apply middlewares
-app.use(compression())
-app.use(cookieSession({
-  secret: sessionSecret,
-  maxAge: 1000 * 60 * 60 * 24 * 14,
-  name: 'funky'
-}))
-app.use(function(req,res,next){
-  console.log('AFTER COOKIE SESSION -->',Object.keys(req.session));
-  next()
-})
-
-app.use(bodyParser.json())
-app.use(function(req,res,next){
-  console.log('AFTER BODY PARSER -->',Object.keys(req.session));
-  next()
-})
-
-app.use(cookieParser())
-app.use(function(req,res,next){
-  console.log('AFTER COOKIE PARSER -->',Object.keys(req.session));
-  next()
-})
-
+middlewares(app)
 
 
 //PASSPORT MIDDLEWARES
-app.use(function(req,res,next){
-  console.log('BEFORE PASSPORT -->',Object.keys(req.session));
-  next()
-})
 passport.use(new GithubStrategy({
     clientID: Github_ClientID,
     clientSecret: Github_ClientSecret,
@@ -96,29 +52,6 @@ passport.deserializeUser(function(user, done) {
   // null is for errors
   done(null, {})
 })
-app.use(function(req,res,next){
-  console.log('AFTER PASSPORT -->',Object.keys(req.session));
-  next()
-})
-
-
-
-//CSURF MIDDLEWARES
-app.use(function(req,res,next){
-  console.log('BEFORE CSURF -->',Object.keys(req.session));
-  next()
-})
-//prevent csrf attacks
-app.use(csrf());
-app.use(function(req,res,next){
-  res.cookie('csrf-token-cookie', req.csrfToken());
-  next();
-})
-app.use(function(req,res,next){
-  console.log('AFTER CSURF -->',Object.keys(req.session));
-  next()
-})
-
 
 
 //serve static files
@@ -131,7 +64,7 @@ app.use('/',chartRouter)
 app.use('/',mockRouter)
 
 
-//AUTH0
+//PASSPORT ROUTES
 //we will call this to start the GitHub Login process
 app.get('/auth/github', passport.authenticate('github'))
 
@@ -152,11 +85,9 @@ app.get('/auth/github/callback', passport.authenticate('github',{failureRedirect
   .then(function(userData){
     //set user info inside session
     req.session.user = userData
-    console.log('APP.GET(/auth/github/callback) -->',Object.keys(req.session));
     res.redirect('/')
   })
   .catch(function(err){
-    next('Error happened logging Github User')
     console.log(`Error GET '/auth/github/callback' --> ${err}`);
   })
 })
@@ -165,7 +96,6 @@ app.get('/auth/github/callback', passport.authenticate('github',{failureRedirect
 //serve React application
 //(REDIRECT USER BASED ON HIS REGISTRATION STATUS)
 app.get('*', function(req,res){
-  console.log('APP.GET(*) -->',Object.keys(req.session));
   if(!req.session.user && req.url !== '/welcome'){
     return res.redirect('/welcome')
   }

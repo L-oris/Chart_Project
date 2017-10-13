@@ -4,14 +4,38 @@ const fs = require('fs'),
       bodyParser = require('body-parser'),
       cookieParser = require('cookie-parser'),
       cookieSession = require('cookie-session'),
+      csrf = require('csurf'),
       multer = require('multer'),
       uidSafe = require('uid-safe'),
       knox = require('knox')
 
+let sessionSecret
+if(process.env.SESSION_SECRET){
+  sessionSecret = process.env.SESSION_SECRET
+} else {
+  sessionSecret = require('../secrets.json').sessionSecret
+}
+
+
 
 module.exports.middlewares = function(app){
 
-}
+  app.use(compression())
+  app.use(cookieSession({
+    secret: sessionSecret,
+    maxAge: 1000 * 60 * 60 * 24 * 14
+  }))
+  app.use(bodyParser.json())
+  app.use(cookieParser())
+  //prevent csrf attacks
+  app.use(csrf());
+  app.use(function(req,res,next){
+    res.cookie('csrf-token-cookie', req.csrfToken());
+    next();
+  })
+
+} //end module.exports.middlewares
+
 
 
 //image uploading
@@ -32,6 +56,7 @@ module.exports.uploader = multer({
     filesize: 8097152
   }
 })
+
 
 //setup 'knox' module to upload files to Amazon S3 Service
 let secret = {}
