@@ -13,7 +13,16 @@ function RegistrationForm ({error,handleInputChange,handleSubmit}){
 
       <h4 className="text-error">{error}</h4>
 
-      <section className="registration">
+      <a href="/auth/github" className="welcome__service">
+        <i className="fa fa-github" aria-hidden="true"></i>
+        <h6>GitHub</h6>
+      </a>
+
+      <div className="welcome__separator">
+        <p>OR</p>
+      </div>
+
+      <div className="registration">
         <div className="welcome__field">
           <h6>First Name</h6>
           <input required name="first" onChange={handleInputChange} placeholder=""/>
@@ -33,7 +42,7 @@ function RegistrationForm ({error,handleInputChange,handleSubmit}){
           <h6>Password</h6>
           <input required type="password" name="password" onChange={handleInputChange} placeholder=""/>
         </div>
-      </section>
+      </div>
 
       <button type="submit">Submit</button>
 

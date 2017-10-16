@@ -13,7 +13,17 @@ function LoginForm ({error,handleInputChange,handleSubmit}){
 
       <h4 className="text-error">{error}</h4>
 
-      <section className="login">
+      <a href="/auth/github" className="welcome__service">
+        <i className="fa fa-github" aria-hidden="true"></i>
+        <h6>GitHub</h6>
+      </a>
+
+      <div className="welcome__separator">
+        <p>OR</p>
+      </div>
+
+      <div className="login">
+
         <div className="welcome__field">
           <h6>Email</h6>
           <input required type="email" name="email" onChange={handleInputChange} placeholder=""/>
@@ -23,7 +33,7 @@ function LoginForm ({error,handleInputChange,handleSubmit}){
           <h6>Password</h6>
           <input required type="password" name="password" onChange={handleInputChange} placeholder=""/>
         </div>
-      </section>
+      </div>
 
       <button type="submit">Submit</button>
 
