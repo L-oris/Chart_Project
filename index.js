@@ -1,10 +1,6 @@
 const express = require('express')
       app = express()
 
-const passport = require('passport'),
-      GithubStrategy = require('passport-github').Strategy,
-      {Github_ClientID,Github_ClientSecret} = require('./secrets.json')
-
 const {middlewares} = require('./express/middlewares'),
       userRouter = require('./express/userRouter'),
       tableRouter = require('./express/tableRouter'),
@@ -24,10 +20,22 @@ if(process.env.NODE_ENV != 'production'){
 middlewares(app)
 
 
-//PASSPORT MIDDLEWARES
+//PASSPORT CONFIGURATION
+const passport = require('passport'),
+GithubStrategy = require('passport-github').Strategy
+
+let GITHUB_KEY, GITHUB_SECRET
+if(process.env.NODE_ENV==='production'){
+  GITHUB_KEY = process.env.GITHUB_KEY
+  GITHUB_SECRET = process.env.GITHUB_SECRET
+} else {
+  GITHUB_KEY = require('./secrets.json').GITHUB_KEY
+  GITHUB_SECRET = require('./secrets.json').GITHUB_SECRET
+}
+
 passport.use(new GithubStrategy({
-    clientID: Github_ClientID,
-    clientSecret: Github_ClientSecret,
+    clientID: GITHUB_KEY,
+    clientSecret: GITHUB_SECRET,
     callbackURL: 'http://localhost:8000/auth/github/callback'
   },
   function(accessToken, refreshToken, profile, done) {
