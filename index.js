@@ -20,23 +20,24 @@ if(process.env.NODE_ENV != 'production'){
 middlewares(app)
 
 
-//PASSPORT CONFIGURATION
+//PASSPORT CONFIGURATION & MIDDLEWARES
 const passport = require('passport'),
 GithubStrategy = require('passport-github').Strategy
 
-let GITHUB_KEY, GITHUB_SECRET
+let secret = {}, callbackUrl
 if(process.env.NODE_ENV==='production'){
-  GITHUB_KEY = process.env.GITHUB_KEY
-  GITHUB_SECRET = process.env.GITHUB_SECRET
+  secret['GITHUB_KEY'] = process.env.GITHUB_KEY
+  secret['GITHUB_SECRET'] = process.env.GITHUB_SECRET
+  callbackUrl = 'https://awesome-charts.herokuapp.com/auth/github/callback'
 } else {
-  GITHUB_KEY = require('./secrets.json').GITHUB_KEY
-  GITHUB_SECRET = require('./secrets.json').GITHUB_SECRET
+  secret = require('./secrets.json')
+  callbackUrl = 'http://localhost:8000/auth/github/callback'
 }
 
 passport.use(new GithubStrategy({
-    clientID: GITHUB_KEY,
-    clientSecret: GITHUB_SECRET,
-    callbackURL: 'http://localhost:8000/auth/github/callback'
+    clientID: secret.GITHUB_KEY,
+    clientSecret: secret.GITHUB_SECRET,
+    callbackUrl
   },
   function(accessToken, refreshToken, profile, done) {
     return done(null, profile)
@@ -51,7 +52,6 @@ passport.serializeUser(function(user, done) {
 })
 passport.deserializeUser(function(user, done) {
   // placeholder for custom user deserialization.
-  // maybe you are going to get the user from mongo by id?
   // null is for errors
   done(null, {})
 })
@@ -65,9 +65,6 @@ app.use('/',userRouter)
 app.use('/',tableRouter)
 app.use('/',chartRouter)
 app.use('/',mockRouter)
-
-
-//PASSPORT ROUTES
 
 
 
