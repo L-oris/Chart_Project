@@ -1,0 +1,79 @@
+nav {}
+
+  nav header {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    background-color: $dark-blue;
+  }
+    nav .logo, nav .profile-pic {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+    }
+    nav .logo {}
+    nav .profile-pic {}
+
+  nav main {
+    position: fixed;
+    z-index: 100;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    background-color: $white;
+    box-shadow: 1px 4px 5px $dark-blue;
+  }
+    nav main a {
+      font-size: 1.8em;
+      color: $dark-blue;
+    }
+    .current-link {
+      color: $blue;
+      transform: scale(1.2);
+    }
+    nav main a h6 {
+      display: none;
+    }
+
+
+
+@media (min-width: 1024px){
+
+  nav header {
+    padding: .8em 2em;
+  }
+    nav .logo, nav .profile-pic {
+      width: 60px;
+      height: 60px;
+    }
+
+  nav main {
+    top: 18%;
+    left: 1em;
+    width: 15em;
+    height: inherit;
+    flex-direction: column;
+    background-color: $white;
+    box-shadow: 1px 4px 5px $dark-blue;
+  }
+  nav main a {
+    margin: 0 1em;
+  }
+  nav main a i {
+    vertical-align: middle;
+  }
+  nav main a h6 {
+    display: inline-block;
+    margin: 1.8em;
+  }
+
+}

@@ -1,0 +1,25 @@
+body, nav header {
+  font-family: $main-font;
+  box-sizing: border-box;
+  color: $dark-blue;
+}
+input, button {
+  font-family: $main-font;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.active, .text-error {
+  color: red;
+}
+
+
+
+@media (min-width: 1024px){}

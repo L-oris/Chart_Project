@@ -1,0 +1,100 @@
+.search {
+  text-align: center;
+  margin: 1.5em;
+}
+  .search__input {
+    display: inline-block;
+    position: relative;
+  }
+    .search__input input {
+      box-sizing: border-box;
+      border: 1px solid $dark-blue;
+      width: 180px;
+      height: 25px;
+      padding: 0 .2em;
+      border-radius: 5px;
+    }
+    .search__input i {
+      border-top-right-radius: 3px;
+      text-align: center;
+      box-sizing: border-box;
+      position: absolute;
+      right: 0;
+      height: 25px;
+      width: 25px;
+      padding: .2em;
+      background-color: $dark-blue;
+      color: $white;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    .search__input ul {
+      position: absolute;
+      top: 25px;
+      left: 0;
+      text-align: left;
+      width: 180px;
+      background-color: $white;
+    }
+      .search__input li {
+        border-left: 1px solid $dark-blue;
+        border-right: 1px solid $dark-blue;
+        padding: .5em .3em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .search__input li:last-child {
+        border-bottom: 1px solid $dark-blue;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+        .search__input img {
+          vertical-align: middle;
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+        .search__input li h6 {
+          display: inline;
+          margin-left: .4em;
+          font-size: .85em;
+        }
+
+
+  .search__radio {
+    display: inline-flex;
+    flex-flow: column;
+    margin-left: 1em;
+    vertical-align: top;
+  }
+    .search__radio label {
+      text-align: left;
+    }
+    .search__radio input {
+      margin: .4em;
+    }
+
+
+
+@media (min-width: 1024px){
+
+  .search {}
+    .search__input input {
+      width: 300px;
+      height: 40px;
+    }
+    .search__input i {
+      width: 40px;
+      height: 40px;
+      padding: .4em;
+    }
+
+    .search__input ul {
+      top: 40px;
+      width: 300px;
+    }
+
+}

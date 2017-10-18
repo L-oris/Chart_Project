@@ -1,0 +1,112 @@
+.table-visualizer {}
+  .table-visualizer h1 {
+    text-align: center;
+    margin: .3em;
+  }
+  .table-visualizer h2 {
+    text-align: center;
+    margin: 0 0 1em;
+  }
+
+  .table-visualizer__latest {
+    background-color: white;
+    border-radius: 10px;
+    padding: .5em .5em 1em;
+    margin: 1em 0;
+    box-shadow: 1px 4px 5px $dark-blue;
+  }
+    .table-visualizer__latest ul {
+      display: flex;
+      flex-wrap: wrap;
+    }
+      .table-visualizer__latest li {
+        flex: 1 100%;
+        font-size: 1.1em;
+        padding: .5em 0;
+        font-size: 1em;
+        border-bottom: 1px solid $dark-grey;
+        margin: 0 .5em;
+        cursor: pointer;
+      }
+        .table-visualizer__latest li h4 {
+          display: inline;
+        }
+        .table-visualizer__latest li h5 {
+          display: inline;
+          color: $dark-grey;
+        }
+
+    .table-visualizer__upload-btn {
+      text-align: center;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: green;
+      text-decoration: underline;
+      margin-bottom: 1.5em;
+    }
+
+  .table-preview {
+    background-color: $white;
+    padding: 1em .5em;
+    border-radius: 10px;
+    box-shadow: 1px 4px 5px $dark-blue;
+  }
+    .table-preview header {
+      display: flex;
+      justify-content: space-between;
+    }
+      .table-preview h5 {
+        color: $dark-grey;
+        margin: 0;
+      }
+      .table-preview h6 {
+        margin: 0;
+      }
+    .table-preview h3 {
+      text-transform: uppercase;
+      margin: .8em 0;
+    }
+    .table-preview p {
+      margin: 0;
+    }
+
+    .table-preview table {
+      width: 90%;
+      margin: 2em auto 0;
+      border: 1px solid $dark-blue;
+      border-collapse: collapse;
+    }
+      .table-preview tr {}
+        .table-preview th {
+          background-color: rgba(255,0,0,.5);
+          color: white;
+          border-bottom: 1px solid $dark-blue;
+          border-right: 1px solid $dark-blue;
+          font-size: .85em;
+        }
+        .table-preview td {
+          padding: .5em .3em;
+          border-right: 1px solid $dark-blue;
+          text-align: center;
+          font-size: .85em;
+        }
+
+
+
+@media (min-width: 1024px){
+
+  .table-visualizer {
+    font-size: 20px;
+  }
+
+    .table-visualizer__latest li {
+      flex: 1 40%;
+      margin: .8em .5em 0;
+    }
+
+    .table-visualizer th,
+    .table-visualizer tr {
+      padding: .5em;
+    }
+
+}
