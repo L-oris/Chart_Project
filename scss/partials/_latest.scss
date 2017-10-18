@@ -1,69 +1,83 @@
-.latest {}
-  .latest h1 {
+.latest {
+
+  h1 {
     text-align: center;
     margin: .3em;
   }
+}
+
 
   .latest__charts {}
+
     .latest__charts li {
       background-color: $white;
       border: 1px solid $dark-blue;
       margin: 1em 0;
       border-radius: 8px;
       box-shadow: 1px 4px 5px $dark-blue;
-    }
-      .latest__charts li header {
+
+      header {
         background-color: $dark-blue;
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
         padding: .3em .6em;
-      }
-        .latest__charts li header img {
+
+        img {
           width: 30px;
           height: 30px;
           object-fit: cover;
           border-radius: 50%;
           vertical-align: middle;
         }
-        .latest__charts li header h5 {
+
+        h5 {
           display: inline;
           color: white;
           margin-left: 10px;
         }
-      .latest__charts li main {
+      }
+
+
+      main {
         display: flex;
         padding: .8em;
-      }
-        .latest__charts li main img {
+
+        img {
           width: 100px;
           height: 80px;
           object-fit: cover;
         }
-        .latest__charts li aside {
+
+        aside {
           margin: 0 .5em;
-        }
-          .latest__charts li main h3 {
+
+          h3 {
             text-decoration: none;
             margin: 0;
           }
-          .latest__charts li main p {
+
+          p {
             font-size: .8em;
           }
+        }
+      }
 
-      .latest__charts li footer {
+
+      footer {
         padding: .5em .8em;
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: 14px;
         color: $dark-grey;
-      }
-        .latest__charts li footer h5,
-        .latest__charts li footer h4 {
+
+        h5, h4 {
           margin: 0;
           font-size: 1em;
         }
-        .latest__charts li footer i {}
+      }
+    }
+
 
 
 
