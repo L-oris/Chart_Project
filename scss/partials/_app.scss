@@ -3,23 +3,17 @@
   padding-top: 100px;
   padding-bottom: 1.5em;
   min-height: 100vh;
-}
 
-.app__children {
-  margin: 1em;
-  background-color: $light-blue;
-  box-shadow: 1px 4px 5px $dark-blue;
-  padding: .8em;
-}
+  &__children {
+    margin: 1em;
+    background-color: $light-blue;
+    box-shadow: 1px 4px 5px $dark-blue;
+    padding: .8em;
 
-
-
-@media (min-width: 1024px){
-
-  .app__children {
-    margin-left: 20em;
-    margin-right: 2em;
-    padding: 2em;
+    @media (min-width: 1024px){
+        margin-left: 20em;
+        margin-right: 2em;
+        padding: 2em;
+    }
   }
-  
 }

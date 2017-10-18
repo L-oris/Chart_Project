@@ -1,59 +1,62 @@
-.chart-visualizer {}
-  .chart-visualizer h1 {
+.chart-visualizer {
+
+  h1 {
     text-align: center;
     margin: .3em;
   }
+}
 
-  .chart-visualizer__main {
-    border-radius: 10px;
-    background-color: $white;
-    margin: 1em 0;
-    box-shadow: 1px 4px 5px $dark-blue;
+.chart-visualizer__main {
+  border-radius: 10px;
+  background-color: $white;
+  margin: 1em 0;
+  box-shadow: 1px 4px 5px $dark-blue;
+}
+  .chart-visualizer__main header {
+    position: relative;
   }
-    .chart-visualizer__main header {
-      position: relative;
+    .chart-visualizer__main header img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
     }
-      .chart-visualizer__main header img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-      }
-      .chart-visualizer__main header h2 {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 200px;
-        box-sizing: border-box;
-        padding-top: 25px;
-        background-color: rgba(0,0,0,.3);
-        margin: 0;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        text-align: center;
-        color: white;
-      }
-      .chart-visualizer__main header h6 {
-        position: absolute;
-        bottom: 10px;
-        right: 5px;
-        margin: 0;
-        color: white;
-      }
-    .chart-visualizer__main section {
-      padding: .5em;
+    .chart-visualizer__main header h2 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200px;
+      box-sizing: border-box;
+      padding-top: 25px;
+      background-color: rgba(0,0,0,.3);
+      margin: 0;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      text-align: center;
+      color: white;
     }
-      .chart-visualizer__main section p {
-        margin: .8em 0 2em;
-        text-align: center;
-      }
-      .chart-visualizer__main section h5 {
-        margin: .5em 0;
-        color: $dark-grey;
-        font-style: italic;
-      }
+    .chart-visualizer__main header h6 {
+      position: absolute;
+      bottom: 10px;
+      right: 5px;
+      margin: 0;
+      color: white;
+    }
+  .chart-visualizer__main section {
+    padding: .5em;
+  }
+    .chart-visualizer__main section p {
+      margin: .8em 0 2em;
+      text-align: center;
+    }
+    .chart-visualizer__main section h5 {
+      margin: .5em 0;
+      color: $dark-grey;
+      font-style: italic;
+    }
+
 
   .chart-comments {
     background-color: $white;
