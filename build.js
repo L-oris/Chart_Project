@@ -5,7 +5,7 @@ const plugins = [
         "process.env": {
             NODE_ENV: JSON.stringify("production")
         }
-   })
+    })
 ];
 
 if (process.env.NODE_ENV == 'production') {
@@ -31,7 +31,12 @@ const conf = {
                 presets: [['es2015'], ['react']],
                 plugins: ['transform-async-to-generator']
             }
-        }]
+        },
+        {
+            test: /\.scss$/,
+            loaders: ['style', 'css', 'sass']
+        }
+      ]
     }
 };
 
