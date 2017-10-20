@@ -1,5 +1,6 @@
-.table-uploader {}
-  .table-uploader__overlay {
+.table-uploader {
+
+  &__overlay {
     position: fixed;
     top: 100px;
     left: 0;
@@ -9,7 +10,7 @@
     background-color: rgba(0,0,0,.3);
   }
 
-  .table-uploader section {
+  section {
     background-image: url('/images/upload-bg.jpeg');
     background-size: cover;
     background-position: top;
@@ -25,81 +26,96 @@
     padding: .5em;
     text-align: center;
   }
-    .table-uploader .close-btn {
-      text-align: right;
-      font-size: 1.3em;
-      font-weight: bold;
-      margin: .5em .5em 0;
-    }
 
-    .table-uploader form {}
-      .table-uploader__field {}
-        .table-uploader__field h6 {
-          font-size: 1em;
-          margin: 2em 0 .5em;
-        }
-        .table-uploader__field input,
-        .table-uploader__field textarea {
-          background-color: inherit;
-          text-align: center;
-          border: none;
-          border-top: 2px solid $dark-blue;
-          border-bottom: 2px solid $dark-blue;
-          resize: none;
-        }
+  .close-btn {
+    text-align: right;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: .5em .5em 0;
+  }
+}
 
-      #table-uploader--file {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;
+
+
+  .table-uploader form {
+
+    .table-uploader__field {
+
+      h6 {
+        font-size: 1em;
+        margin: 2em 0 .5em;
       }
-      #table-uploader--file + label {
-        box-sizing: border-box;
-        display: block;
-        width: 150px;
-        margin: 2em auto 1em;
-        font-size: 1.3em;
-        font-weight: bold;
+
+      input,
+      textarea {
+        background-color: inherit;
+        text-align: center;
+        border: none;
         border-top: 2px solid $dark-blue;
         border-bottom: 2px solid $dark-blue;
-        padding: .3em;
+        resize: none;
       }
+    }
 
-      .table-uploader button {
-        margin: .5em 0 1em;
-        width: 150px;
-        background-color: transparent;
-        border: none;
-        border-top: 3px solid green;
-        border-bottom: 3px solid green;
-        padding: .3em;
-        font-size: 1.3em;
-        font-weight: bold;
-        color: green;
-      }
+    #table-uploader--file {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+    #table-uploader--file + label {
+      box-sizing: border-box;
+      display: block;
+      width: 150px;
+      margin: 2em auto 1em;
+      font-size: 1.3em;
+      font-weight: bold;
+      border-top: 2px solid $dark-blue;
+      border-bottom: 2px solid $dark-blue;
+      padding: .3em;
+    }
+
+    button {
+      margin: .5em 0 1em;
+      width: 150px;
+      background-color: transparent;
+      border: none;
+      border-top: 3px solid green;
+      border-bottom: 3px solid green;
+      padding: .3em;
+      font-size: 1.3em;
+      font-weight: bold;
+      color: green;
+    }
+  }
 
 
 
 @media (min-width: 1024px){
 
-  .table-uploader__overlay {
-    top: 89px;
-  }
-  .table-uploader section {
-    left: 22em;
-    right: 7em;
-    top: 20%;
-  }
-  .table-uploader__field input,
-  .table-uploader__field textarea {
-    width: 50%;
-  }
-  #table-uploader--file + label,
-  .table-uploader button {
-    width: 35%;
+  .table-uploader {
+
+    &__overlay {
+      top: 89px;
+    }
+
+    section {
+      left: 22em;
+      right: 7em;
+      top: 20%;
+
+      &__field input,
+      &__field textarea {
+        width: 50%;
+      }
+
+      #table-uploader--file + label,
+      button {
+        width: 35%;
+      }
+    }
   }
 
 }

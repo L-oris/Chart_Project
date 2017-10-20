@@ -4,106 +4,123 @@
   background-image: url("/images/welcome-bg.jpg");
   min-height: 100vh;
   background-size: cover;
-}
-  .welcome .hidden {
+
+
+  .hidden {
     margin: 0;
     padding: .01em;
   }
-  .welcome .title {
+
+  .title {
     font-size: 1.6em;
     text-align: center;
     padding: 1em 2em;
   }
 
-  .welcome form {
+
+  form {
     width: 90%;
     margin: 1em auto;
     background-color: rgba(0,0,0,.4);
     border-radius: 15px;
-  }
-    .welcome h5 {
+
+    h5 {
       display: inline-block;
       margin: 2em 1em 1em;
       font-size: 1.1em;
     }
-    .welcome h5.scale {
+    h5.scale {
       transform: scale(1.5);
     }
 
-    .welcome .registration,
-    .welcome .login {
-      display: flex;
-      flex-wrap: wrap;
-    }
+  }
+}
 
-      .welcome__service {
-        width: 50%;
-        margin: 0 auto;
-        font-size: 1.6em;
-        border-left: 1px solid white;
-        border-right: 1px solid white;
-        border-top: 2px solid white;
-        border-bottom: 2px solid white;
-        border-radius: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: .3em;
-      }
-        .welcome__service i {
-          margin-right: 1em;
-        }
-        .welcome__service h6 {
-          margin: 0;
-        }
 
-      .welcome__separator {
-        width: 20%;
-        margin: 2em auto .3em;
-        border-left: 1px solid white;
-        border-right: 1px solid white;
-      }
-        .welcome__separator p {
-          margin: 0;
-        }
+  .welcome .registration,
+  .welcome .login {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-      .registration .welcome__field {
-        flex: 1 50%;
-      }
-      .login .welcome__field {
-        flex: 1 100%;
-      }
-        .welcome__field h6 {
-          margin: 3em 0 1.5em;
-        }
-        .welcome__field input {
-          text-align: center;
-          color: white;
-          padding: .3em;
-          border: none;
-          background-color: transparent;
-          border-top: 2px solid white;
-          border-bottom: 2px solid white;
-        }
-        .registration .welcome__field input {
-          width: 80%;
-        }
-        .login .welcome__field input {
-          width: 50%;
-        }
-
-    .welcome button {
-      margin: 2em 0 1em;
-      background-color: transparent;
-      color: white;
+    .welcome__service {
+      width: 50%;
+      margin: 0 auto;
+      font-size: 1.6em;
       border-left: 1px solid white;
       border-right: 1px solid white;
       border-top: 2px solid white;
       border-bottom: 2px solid white;
-      padding: .3em 1em;
       border-radius: 5px;
-      font-size: 1.1em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: .3em;
+
+      i {
+        margin-right: 1em;
+      }
+      h6 {
+        margin: 0;
+      }
     }
+
+    .welcome__separator {
+      width: 20%;
+      margin: 2em auto .3em;
+      border-left: 1px solid white;
+      border-right: 1px solid white;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .registration .welcome__field {
+      flex: 1 50%;
+
+      input {
+        width: 80%;
+      }
+    }
+    .login .welcome__field {
+      flex: 1 100%;
+
+      input {
+        width: 50%;
+      }
+    }
+
+    .welcome__field {
+
+      h6 {
+        margin: 3em 0 1.5em;
+      }
+
+      input {
+        text-align: center;
+        color: white;
+        padding: .3em;
+        border: none;
+        background-color: transparent;
+        border-top: 2px solid white;
+        border-bottom: 2px solid white;
+      }
+    }
+
+
+  .welcome button {
+    margin: 2em 0 1em;
+    background-color: transparent;
+    color: white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+    padding: .3em 1em;
+    border-radius: 5px;
+    font-size: 1.1em;
+  }
 
 
 
