@@ -31,10 +31,13 @@ module.exports.createChart = function({userId,tableId,XAxis,YAxis,type,name,desc
   })
   .then(function(dbChart){
     const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl,comments_number:commentsNumber} = dbChart.rows[0]
+
+    let profilePicUrl
+    profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
     return {
-      id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+      id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,profilePicUrl,
       commentsNumber: commentsNumber || 0,
-      profilePicUrl: s3Url + profilepicurl,
       chartPicUrl: s3Url + chartpicurl
     }
   })
@@ -54,10 +57,13 @@ module.exports.getCharts = function(){
   .then(function(dbCharts){
     return dbCharts.rows.map(chart=>{
       const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl,comments_number:commentsNumber} = chart
+
+      let profilePicUrl
+      profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
       return {
-        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,profilePicUrl,
         commentsNumber: commentsNumber || 0,
-        profilePicUrl: s3Url + profilepicurl,
         chartPicUrl: s3Url + chartpicurl
       }
     })
@@ -77,10 +83,13 @@ module.exports.getChartById = function(chartId){
   return db.query(query,[chartId])
   .then(function(dbChart){
     const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl,comments_number:commentsNumber} = dbChart.rows[0]
+
+    let profilePicUrl
+    profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
     return {
-      id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+      id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,profilePicUrl,
       commentsNumber: commentsNumber || 0,
-      profilePicUrl: s3Url + profilepicurl,
       chartPicUrl: s3Url + chartpicurl
     }
   })
@@ -101,10 +110,13 @@ module.exports.getChartsByUserId = function(userId){
   .then(function(dbCharts){
     return dbCharts.rows.map(chart=>{
       const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl,comments_number:commentsNumber} = chart
+
+      let profilePicUrl
+      profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
       return {
-        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,profilePicUrl,
         commentsNumber: commentsNumber || 0,
-        profilePicUrl: s3Url + profilepicurl,
         chartPicUrl: s3Url + chartpicurl
       }
     })
@@ -136,10 +148,13 @@ module.exports.searchChart = function(searchType,searchText){
   .then(function(dbCharts){
     return dbCharts.rows.map(chart=>{
       const {id,table_id:tableId,x_axis:XAxis,y_axis:YAxis,type,name,description,chartpicurl,created_at:timestamp,first,last,profilepicurl,comments_number:commentsNumber} = chart
+
+      let profilePicUrl
+      profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
       return {
-        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,
+        id,tableId,XAxis,YAxis,type,name,description,timestamp,first,last,profilePicUrl,
         commentsNumber: commentsNumber || 0,
-        profilePicUrl: s3Url + profilepicurl,
         chartPicUrl: s3Url + chartpicurl
       }
     })
@@ -158,9 +173,12 @@ module.exports.getCommentsByChartId = function(chartId){
   .then(function(dbComments){
     return dbComments.rows.map(dbComment=>{
       const {comment,created_at:timestamp,first,last,profilepicurl} = dbComment
+
+      let profilePicUrl
+      profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
       return {
-        comment,timestamp,first,last,
-        profilePicUrl: s3Url + profilepicurl
+        comment,timestamp,first,last, profilePicUrl
       }
     })
   })
@@ -183,9 +201,12 @@ module.exports.addChartComment = function(userId,chartId,comment){
   })
   .then(function(dbComment){
     const {comment,created_at:timestamp,first,last,profilepicurl} = dbComment.rows[0]
+
+    let profilePicUrl
+    profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
     return {
-      comment,timestamp,first,last,
-      profilePicUrl: s3Url + profilepicurl
+      comment,timestamp,first,last,profilePicUrl
     }
   })
 }

@@ -26,9 +26,12 @@ module.exports.addTable = function(userId,name,description,filename){
   })
   .then(function(dbTable){
     const {first,last,profilepicurl,id,user_id:userId,name,description,tableurl,created_at:timestamp} = dbTable.rows[0]
+
+    let profilePicUrl
+    profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
     return {
-      first,last,id,userId,name,description,timestamp,
-      profilePicUrl: s3Url + profilepicurl,
+      first,last,id,userId,name,description,timestamp,profilePicUrl,
       tableUrl: s3Url + tableurl
     }
   })
@@ -45,9 +48,12 @@ module.exports.getTables = function(){
   .then(function(dbTables){
     return dbTables.rows.map(table=>{
       const {first,last,profilepicurl,id,user_id:userId,name,description,tableurl,created_at:timestamp} = table
+
+      let profilePicUrl
+      profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
       return {
-        first,last,id,userId,name,description,timestamp,
-        profilePicUrl: s3Url + profilepicurl,
+        first,last,id,userId,name,description,timestamp,profilePicUrl,
         tableUrl: s3Url + tableurl
       }
     })
@@ -64,9 +70,12 @@ module.exports.getTableById = function(tableId){
   return db.query(query,[tableId])
   .then(function(dbTable){
     const {first,last,profilepicurl,id,user_id:userId,name,description,tableurl,created_at:timestamp} = dbTable.rows[0]
+
+    let profilePicUrl
+    profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
     return {
-      first,last,id,userId,name,description,timestamp,
-      profilePicUrl: s3Url + profilepicurl,
+      first,last,id,userId,name,description,timestamp,profilePicUrl,
       tableUrl: s3Url + tableurl
     }
   })
@@ -83,9 +92,12 @@ module.exports.getTablesByUserId = function(userId){
   .then(function(dbTables){
     return dbTables.rows.map(table=>{
       const {first,last,profilepicurl,id,user_id:userId,name,description,tableurl,created_at:timestamp} = table
+
+      let profilePicUrl
+      profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
       return {
-        first,last,id,userId,name,description,timestamp,
-        profilePicUrl: s3Url + profilepicurl,
+        first,last,id,userId,name,description,timestamp,profilePicUrl,
         tableUrl: s3Url + tableurl
       }
     })
@@ -111,9 +123,12 @@ module.exports.searchTable = function(searchType,searchText){
   .then(function(dbTables){
     return dbTables.rows.map(table=>{
       const {first,last,profilepicurl,id,user_id:userId,name,description,tableurl,created_at:timestamp} = table
+
+      let profilePicUrl
+      profilepicurl.indexOf('http')===-1 ? profilePicUrl = s3Url + profilepicurl : profilePicUrl = profilepicurl
+
       return {
-        first,last,id,userId,name,description,timestamp,
-        profilePicUrl: s3Url + profilepicurl,
+        first,last,id,userId,name,description,timestamp,profilePicUrl,
         tableUrl: s3Url + tableurl
       }
     })
