@@ -88,28 +88,32 @@
     }
 
 
+    .table-preview--table {
+      overflow-x: scroll;
 
-    .table-preview table {
-      width: 90%;
-      margin: 2em auto 0;
-      border: 1px solid $dark-blue;
-      border-collapse: collapse;
+      table {
+        width: 90%;
+        margin: 2em auto 0;
+        border: 1px solid $dark-blue;
+        border-collapse: collapse;
 
-      tr {
+        tr {
 
-        th {
-          background-color: rgba(255,0,0,.5);
-          color: white;
-          border-bottom: 1px solid $dark-blue;
-          border-right: 1px solid $dark-blue;
-          font-size: .85em;
-        }
+          th {
+            background-color: rgba(255,0,0,.5);
+            color: white;
+            border-bottom: 1px solid $dark-blue;
+            border-right: 1px solid $dark-blue;
+            font-size: .85em;
+            padding: .5em .3em;
+          }
 
-        td {
-          padding: .5em .3em;
-          border-right: 1px solid $dark-blue;
-          text-align: center;
-          font-size: .85em;
+          td {
+            padding: .5em .3em;
+            border-right: 1px solid $dark-blue;
+            text-align: center;
+            font-size: .85em;
+          }
         }
       }
     }

@@ -63,10 +63,12 @@ class TableVisualizer_TablePreview extends Component {
         <h3>{name}</h3>
         <p>{description}</p>
 
-        <table>
-          {visualizerTablePreview && this.renderTableHeaders(visualizerTablePreview)}
-          {visualizerTablePreview && this.renderTableData(visualizerTablePreview)}
-        </table>
+        <div className="table-preview--table">
+          <table>
+            {visualizerTablePreview && this.renderTableHeaders(visualizerTablePreview)}
+            {visualizerTablePreview && this.renderTableData(visualizerTablePreview)}
+          </table>
+        </div>
 
       </div>
     )
