@@ -24,11 +24,13 @@ If users can also access to other's data and charts to make their own researches
 <br/>
 <br/>
 Technologies used:
+*   SCSS
 *   React JS
 *   Redux
 *   Express
 *   PostgreSQL
 *   AWS S3
+*   Passport.js
 
 
 ### Description
@@ -41,6 +43,12 @@ Registration and Login are required. Passwords are hashed and salted server side
 Once you log in, you can access to your profile page, and upload a new profile picture.<br/>
 On 'Profile' you can also take a look at your uploaded tables and your published charts.
 ![](./public/README_gifs/profile.gif)
+<br/>
+<br/>
+
+You can also register-login using your Github credentials.
+Then your name and profile picture will be automatically setup.
+![](./public/README_gifs/passport.gif)
 <br/>
 <br/>
 
@@ -86,6 +94,7 @@ Also, all my ajax call to the server has been made via Redux actions, to then it
 <br/>
 No CSS frameworks have been used for this project, just a ton of CSS, and the final result is really good.<br/>
 The app is totally responsive. Obviously big charts become quite difficult to display on small screens, but there's not really a solution to it.
+At the final step I decided to split my giant CSS file into smaller modules, each one related to a specific React component. Webpack settings have been modified in order to preprocess the '*.scss' files before build.
 ![](./public/README_gifs/responsive.gif)
 <br/>
 <br/>
